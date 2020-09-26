@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginGeneralComponent } from './login-general/login-general.component';
 import { TramoProductoComponent } from './tramo-producto/tramo-producto.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TramoProductoComponent } from './tramo-producto/tramo-producto.componen
     CounterComponent,
     FetchDataComponent,
     LoginGeneralComponent,
-    TramoProductoComponent
+    TramoProductoComponent,
+    SignUpComponent
    
   ],
   imports: [
@@ -32,7 +34,8 @@ import { TramoProductoComponent } from './tramo-producto/tramo-producto.componen
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: '', component: LoginGeneralComponent },
-      { path: 'tramo-producto', component: TramoProductoComponent }
+      { path: 'tramo-producto', component: TramoProductoComponent },
+      { path: 'signup', component: SignUpComponent}
     ])
   ],
   providers: [],
