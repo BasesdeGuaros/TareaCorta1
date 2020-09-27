@@ -9,6 +9,9 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { LoginGeneralComponent } from './login-general/login-general.component';
+import { TramoProductoComponent } from './tramo-producto/tramo-producto.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
+    LoginGeneralComponent,
+    TramoProductoComponent,
+    SignUpComponent
    
   ],
   imports: [
@@ -24,9 +30,12 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', component: LoginGeneralComponent },
+      { path: 'tramo-producto', component: TramoProductoComponent },
+      { path: 'signup', component: SignUpComponent}
     ])
   ],
   providers: [],
