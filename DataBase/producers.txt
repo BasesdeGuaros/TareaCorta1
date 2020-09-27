@@ -1,0 +1,3 @@
+product,stock,price
+Yuca,1000,600
+Yuca,1000,600

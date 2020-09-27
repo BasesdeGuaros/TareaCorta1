@@ -23,7 +23,6 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     LoginGeneralComponent,
     TramoProductoComponent,
     SignUpComponent
-   
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
