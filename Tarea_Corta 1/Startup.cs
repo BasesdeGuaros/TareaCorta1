@@ -10,8 +10,6 @@ namespace Tarea_Corta_1
 {
     public class Startup
     {
-        readonly string myCors = "myCors";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,31 +20,17 @@ namespace Tarea_Corta_1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //permitir el acceso de Web Services
-            services.AddCors(options =>
+            services.AddControllersWithViews();
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
             {
-                options.AddPolicy(name: myCors,
-                    builder =>
-                    {
-                        builder.WithHeaders("*"); // aceptar metodo post
-                        builder.WithOrigins("*"); // * => a cualquier dominio
-                    });
+                configuration.RootPath = "ClientApp/dist";
             });
-                services.AddControllersWithViews();
-                // In production, the Angular files will be served from this directory
-                services.AddSpaStaticFiles(configuration =>
-                {
-                    configuration.RootPath = "ClientApp/dist";
-                });
-           
-            }
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //anadir, configurar cors
-            app.UseCors(myCors);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
