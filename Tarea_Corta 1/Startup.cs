@@ -84,6 +84,7 @@ namespace Tarea_Corta_1
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+
                 }
             });
         }

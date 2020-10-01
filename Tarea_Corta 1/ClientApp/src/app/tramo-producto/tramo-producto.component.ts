@@ -12,6 +12,7 @@ export class TramoProductoComponent implements OnInit{
   public listCustomers: any[];
   public listProducers: any[];
 
+
     /** tramoProducto ctor */
   constructor(
     private apiCustomer: ApicustomerService,

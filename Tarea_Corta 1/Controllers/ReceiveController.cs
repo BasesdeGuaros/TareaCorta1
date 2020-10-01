@@ -8,15 +8,11 @@ using Tarea_Corta_1.Models;
 using Tarea_Corta_1.Models.Request;
 
 
-/*
- * Hay que aprender a cambiar el datatype de la base de datos
- * Aprender a usar los diferentes datatypes de Sql y los casteos
- */
 namespace Tarea_Corta_1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class ReceiveController : ControllerBase
     {
         //IActionResult es una inteface
         [HttpGet] //protocolo get
@@ -28,7 +24,7 @@ namespace Tarea_Corta_1.Controllers
                 //el codigo se elimina una vez ejecutado lo que tenga dentro del using()
                 using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
                 {
-                    var list = db.Customers.ToList(); //variable con la lista de datos de la tabla cliente
+                    var list = db.Receive.ToList(); //variable con la lista de datos de la tabla cliente
                     reply.conexionSuccess = 1;
                     reply.data = list;
                 }
@@ -40,9 +36,8 @@ namespace Tarea_Corta_1.Controllers
             }
             return Ok(reply); //convierte la lista a Json
         }
-
         [HttpPost] //protocolo Post
-        public IActionResult Post(ClientRequest request)
+        public IActionResult Post(ReceiveRequest request)
         {
             MyReply reply = new MyReply();
 
@@ -50,20 +45,15 @@ namespace Tarea_Corta_1.Controllers
             {
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
-                    Customers customer = new Customers();
-                    customer.Id = request.id;
-                    customer.Name = request.name;
-                    customer.LastName = request.last_name;
-                    customer.Address = request.address;
-                    customer.BirthDate = request.birth_date;
-                    customer.PhoneNumber = request.phone_number;
-                    customer.UserName = request.user_name;
-                    customer.Password = request.password;
-                
-                    db.Customers.Add(customer);
+                    Receive receive = new Receive();
+                    receive.ReceiveId = request.id;
+                    receive.Products = request.product;
+                    receive.Price = request.totalPrice;
+
+                    db.Receive.Add(receive);
                     db.SaveChanges();
                     reply.conexionSuccess = 1;
-                    reply.message = "Cliente agregado";
+                    reply.message = "Nuevo recivo";
 
                 }
             }

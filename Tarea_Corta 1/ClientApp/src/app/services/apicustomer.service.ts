@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reply } from '../Models/reply'
+import { customer } from '../Models/customer';
+
 
 //ng generate service services/apicustomer
 //obtener propiedades de http
@@ -11,14 +13,13 @@ const httpOption = {
   })
 };
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class ApicustomerService {
 
   url: string = "https://localhost:44372/api/customer";
+
 
   constructor(
     //atributo para hacer solicitudes
@@ -31,8 +32,8 @@ export class ApicustomerService {
     return this._http.get<Reply>(this.url);
   }
 
- /* add(client: Client): Observable<Response> {
-    return this._http.post<Response>(this.url, client, httpOption)
-  }*/
+  add(customer: customer): Observable<Reply> {
+    return this._http.post<Reply>(this.url, customer, httpOption)
+  }
 }
 

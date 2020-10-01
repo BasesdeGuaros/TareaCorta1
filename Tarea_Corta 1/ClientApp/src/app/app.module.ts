@@ -12,6 +12,12 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginGeneralComponent } from './login-general/login-general.component';
 import { TramoProductoComponent } from './tramo-producto/tramo-producto.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ProducersComponent } from './producers/producers.component';
+import { MainWindowComponent } from './main-window/main-window.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +28,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     FetchDataComponent,
     LoginGeneralComponent,
     TramoProductoComponent,
-    SignUpComponent
+    SignUpComponent,
+    CheckoutComponent,
+    ProducersComponent,
+    MainWindowComponent
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,9 +42,12 @@ import { SignUpComponent } from './sign-up/sign-up.component';
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: '', component: LoginGeneralComponent },
+      { path: '', component: MainWindowComponent },
+      { path: 'loginG', component: LoginGeneralComponent },
       { path: 'tramo-producto', component: TramoProductoComponent },
-      { path: 'signup', component: SignUpComponent}
+      { path: 'signup', component: SignUpComponent },
+      { path: 'checkout', component: CheckoutComponent },
+      { path: 'producers', component: ProducersComponent}
     ])
   ],
   providers: [],

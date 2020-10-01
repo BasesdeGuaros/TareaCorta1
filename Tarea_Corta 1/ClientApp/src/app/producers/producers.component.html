@@ -1,0 +1,24 @@
+<h2>Productos del vendedor X</h2>
+<table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Producto</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Cantidad a comprar</th>
+      <th scope="col"></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let producer of listProducers; let i = index; let n of listNumber">
+      <td>{{producer.product}}</td>
+      <td>{{producer.stock}}</td>
+      <td>{{producer.price}}</td>
+      <td>{{n-producer.stock}}</td>
+      <td>
+        <button class="btn btn-primary" (click)="buy(i)">Comprar 1 kg</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

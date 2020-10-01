@@ -4,12 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Tarea_Corta_1.Models
 {
-    //Para hacer la conexion a la base de datos en el Nuget Console
-    //Scaffold-DBContext "Server=localhost; Database=TareaCorta1; Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
-
-    //Para hacer update a la base de datos, cuando se cambia una opcion en Sql
-    //Scaffold-DbContext -Connection "Server=localhost; Database=TareaCorta1; Trusted_Connection=True;" -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -context TareaCorta1Context -Project Tarea_Corta1 -force
-
     public partial class TareaCorta1Context : DbContext
     {
         public TareaCorta1Context()
@@ -23,6 +17,8 @@ namespace Tarea_Corta_1.Models
 
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Producers> Producers { get; set; }
+        public virtual DbSet<Producers2> Producers2 { get; set; }
+        public virtual DbSet<Receive> Receive { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,30 +33,35 @@ namespace Tarea_Corta_1.Models
         {
             modelBuilder.Entity<Customers>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("customers");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasColumnName("address")
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.BirthDate)
+                    .IsRequired()
                     .HasColumnName("birth_date")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasColumnName("last_name")
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
@@ -92,6 +93,69 @@ namespace Tarea_Corta_1.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Stock).HasColumnName("stock");
+            });
+
+            modelBuilder.Entity<Producers2>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("producers2");
+
+                entity.Property(e => e.Address)
+                    .HasColumnName("address")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Birthdate)
+                    .HasColumnName("birthdate")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.LastName)
+                    .HasColumnName("last_name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Phone).HasColumnName("phone");
+
+                entity.Property(e => e.Sinpe).HasColumnName("sinpe");
+
+                entity.Property(e => e.Username)
+                    .HasColumnName("username")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Receive>(entity =>
+            {
+                entity.ToTable("receive");
+
+                entity.Property(e => e.ReceiveId).HasColumnName("receive_id");
+
+                entity.Property(e => e.Customer)
+                    .IsRequired()
+                    .HasColumnName("customer")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.Products)
+                    .IsRequired()
+                    .HasColumnName("products")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);
