@@ -8,7 +8,11 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminviewComponent } from './adminview/adminview.component';
+import { AfiliacionesComponent } from './afiliaciones/afiliaciones.component';
+import { CategoriasComponent } from './categorias/categorias.component';
+import { ReportesComponent } from './reportes/reportes.component';
 import { LoginGeneralComponent } from './login-general/login-general.component';
 import { TramoProductoComponent } from './tramo-producto/tramo-producto.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -19,7 +23,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
+    AdminComponent,
+    AdminviewComponent,
+    AfiliacionesComponent,
+    CategoriasComponent,
+    ReportesComponent,
     LoginGeneralComponent,
     TramoProductoComponent,
     SignUpComponent
@@ -31,8 +39,12 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: '', component: LoginGeneralComponent },
+      { path: 'admin', component: AdminComponent },
+      { path: '', component: AdminviewComponent },
+      { path: 'afiliaciones', component: AfiliacionesComponent },
+      { path: 'categorias', component: CategoriasComponent },
+      { path: 'reportes', component: ReportesComponent},
+      { path: 'loging', component: LoginGeneralComponent },
       { path: 'tramo-producto', component: TramoProductoComponent },
       { path: 'signup', component: SignUpComponent}
     ])
@@ -41,3 +53,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+

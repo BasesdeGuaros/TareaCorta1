@@ -34,11 +34,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\adminview - Copy (2)\adminview.component.ts" />
+    <None Remove="ClientApp\src\app\adminview - Copy (3)\adminview.component.ts" />
+    <None Remove="ClientApp\src\app\adminview\adminview.component.ts" />
+    <None Remove="ClientApp\src\app\afiliaciones\afiliaciones.component.ts" />
     <None Remove="ClientApp\src\app\Models\reply.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\app\sign-up\sign-up.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\app\afiliaciones\afiliaciones.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Update="ClientApp\src\app\categorias\categorias.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Update="ClientApp\src\app\reportes\reportes.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
