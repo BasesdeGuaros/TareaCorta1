@@ -13,6 +13,8 @@ export class LoginGeneralComponent implements OnInit{
   public listCustomers;
   model: any = {};
 
+
+
     /** loginGeneral ctor */
   constructor(
     private apiCustomer: ApicustomerService,
@@ -25,15 +27,20 @@ export class LoginGeneralComponent implements OnInit{
     this.getCustomer();
   }
   
-  public authorization() {
-    if (this.model.user == this.listCustomers[0].userName && this.model.password == this.listCustomers[0].password) {
-      this.router.navigateByUrl('/tramo-producto');
+  public authorization(listCustomers) {
+    var i;
+    for (i = 0; i <= this.listCustomers.length-1; i++) {
+      if (this.model.user == this.listCustomers[i].userName && this.model.password == this.listCustomers[i].password) {
+        this.router.navigate(['/tramo-producto', this.listCustomers[i].userName]);
+      }
+      
+       // $('#exampleModal').modal('show')
+      
     }
-    $('#exampleModal').modal('show')
-    
+
+    console.log(this.listCustomers.length);
     console.log(this.model.user);
     console.log(this.model.password);
-    console.log(this.model.user == this.listCustomers[0].userName && this.model.password == this.listCustomers[0].password);
   }
 
   getCustomer() {

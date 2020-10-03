@@ -25,7 +25,7 @@
           <div class="col-sm-4 offset-md-1 py-4">
             <h4 class="text-white">Acciones</h4>
             <ul class="list-unstyled">
-              <li><a href="#" class="text-white" [routerLink]="['/checkout']">Carrito de compras</a></li>
+              <li><a href="#" class="text-white" (click)="checkout()">Carrito de compras</a></li>
               <li><a href="#" class="text-white" [routerLink]="['/signup']">Editar Perfil</a></li>
 
             </ul>
@@ -47,31 +47,31 @@
     </div>
   </header>
 
+  <img class="mb-4 rounded float-right" typeof="button" (click)="checkout()" src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="75" height="75">
+
   <hr style="height:30px">
   <main role="main">
 
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading">Tramos de productores</h1>
-        <p class="lead text-muted">Aca se encuentran los productores</p>
+        <p class="lead text-muted">Aca se encuentran los productores disponibles para {{firstName}}</p>
       </div>
     </section>
 
     <hr />
-      
 
-      <div class="album py-5 bg-dark" *ngFor="let producer of listProducers; let i = index">
-        <div class="container" > 
-          <div class="row d-flex justify-content-center" >
-            <div class="col-xl-4">
-              <div class="card mb-auto box-shadow">
-                <img class="mb-4 justify-content-center" src="https://www.tec.ac.cr/sites/default/files/styles/node/public/media/img/main/rsz_alimentos_0.jpg" alt="" width="335" height="250">
-                <div class="card-body">
-                  <p class="card-text">{{producer.product}}</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="['/producers']">Ver</button>
-                    </div>
+    <div class="album py-5 bg-dark">
+      <div class="container">
+        <div class="row d-flex justify-content-lg-start">
+          <div class="col-xl-4 py-3" *ngFor="let producer of listProducers; let i = index">
+            <div class="card mb-auto box-shadow">
+              <img class="mb-4 justify-content-center" [routerLink]="['/producers']" src="https://www.tec.ac.cr/sites/default/files/styles/node/public/media/img/main/rsz_alimentos_0.jpg" alt="" width="335" height="250">
+              <div class="card-body">
+                <p class="card-text">{{producer.product}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="['/producers']">Ver</button>
                   </div>
                 </div>
               </div>
@@ -79,17 +79,14 @@
           </div>
         </div>
       </div>
-  
+    </div>
+
 
   </main>
 
   <footer class="text-muted">
     <div class="container">
-      <p class="float-right">
-        <a href="#">Back to top</a>
-      </p>
-      <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-      <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+      
     </div>
   </footer>
 

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -44,9 +44,9 @@ import { MainWindowComponent } from './main-window/main-window.component';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: '', component: MainWindowComponent },
       { path: 'loginG', component: LoginGeneralComponent },
-      { path: 'tramo-producto', component: TramoProductoComponent },
+      { path: 'tramo-producto/:userName', component: TramoProductoComponent },
       { path: 'signup', component: SignUpComponent },
-      { path: 'checkout', component: CheckoutComponent },
+      { path: 'checkout/:userName', component: CheckoutComponent },
       { path: 'producers', component: ProducersComponent}
     ])
   ],
@@ -54,3 +54,8 @@ import { MainWindowComponent } from './main-window/main-window.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export const routingComponents =
+  [TramoProductoComponent,
+    CheckoutComponent
+];

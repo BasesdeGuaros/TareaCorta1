@@ -11,6 +11,7 @@ import { ApireceiveService } from '../services/apireceive.service';
 /** checkout component*/
 export class CheckoutComponent implements OnInit{
   public listReceives;
+  public size;
 
     /** checkout ctor */
   constructor(
@@ -27,10 +28,11 @@ export class CheckoutComponent implements OnInit{
     this.apiReceive.getReceive().subscribe(reply => {
       console.log(reply);
       this.listReceives = reply.data;
+      this.size = this.listReceives.length;
     });
   }
   
-  addReceive() {
+/*  addReceive() {
     const receive: receive = { id:2, customer: 'sing', price: 500, products: 'Tomate' };
     this.apiReceive.add(receive).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
@@ -43,5 +45,5 @@ export class CheckoutComponent implements OnInit{
         //});
       }
     });
-  }
+  }*/
 }
