@@ -27,7 +27,7 @@
   <div class="container">
     <div class="py-5 text-center">
       <img class="d-block mx-auto mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRylQWd17Z0GEXA2HLvEFJ2piVRzHRGzWKBGg&usqp=CAU" alt="" width="150" height="150">
-      <h2>Crear Usuario</h2>
+      <h2>{{isNew == 'null' ? 'Crear Usuario' : 'Editar Usuario'}}</h2>
     </div>
 
     <div class="row">
@@ -143,17 +143,17 @@
           </div>
 
           <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" name="submit" (click)="addCustomer()">Crear nuevo Usuario</button>
+          <button class="btn btn-primary btn-lg btn-block" name="submit" (click)="addCustomer()">{{isNew == 'null' ? 'Crear Usuario' : 'Editar Usuario'}}</button>
+          <button class="btn btn-secondary btn-lg btn-block" name="submit" (click)="editCustomer(isNew)">Editar Usuario</button>
+          <button class="btn btn-danger btn-lg btn-block" name="submit" (click)="addCustomer()">Eliminar Usuario</button>
+
+
         </form>
       </div>
     </div>
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Privacy</a></li>
-        <li class="list-inline-item"><a href="#">Terms</a></li>
-        <li class="list-inline-item"><a href="#">Support</a></li>
-      </ul>
+
     </footer>
   </div>
 

@@ -35,5 +35,13 @@ export class ApicustomerService {
   add(customer: customer): Observable<Reply> {
     return this._http.post<Reply>(this.url, customer, httpOption)
   }
+
+  edit(customer: customer): Observable<Reply> {
+    return this._http.put<Reply>(this.url, customer, httpOption)
+  }
+
+  delete(userName: string): Observable<Reply> {
+    return this._http.delete<Reply>('$(this.url)/${username}')
+  }
 }
 

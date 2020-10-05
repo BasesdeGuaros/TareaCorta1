@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { customer } from '../Models/customer';
 import { ApicustomerService } from '../services/apicustomer.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -10,35 +10,74 @@ import { Router } from '@angular/router';
     styleUrls: ['./sign-up.component.scss']
 })
 /** signUp component*/
-export class SignUpComponent {
+export class SignUpComponent implements OnInit{
   model: any = {};
+  public listCustomers;
+  public isNew;
 
 
     /** signUp ctor */
   constructor(
     private apiCustomer: ApicustomerService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
 
-) {
+) { }
 
+  ngOnInit(): void {
+    this.getCustomer();
+    this.isNew = this.activatedRoute.snapshot.paramMap.get('userName');
+  }
+
+  getCustomer() {
+    this.apiCustomer.getCustomer().subscribe(reply => {
+      console.log(reply);
+      this.listCustomers = reply.data;
+    });
   }
 
 
   addCustomer() {
     const customer: customer = { id: parseInt(this.model.id), name: this.model.name, last_name: this.model.lastName, address: this.model.address, birth_date: this.model.birth_date, phone_number: parseInt(this.model.phone_number), user_name: this.model.username, password: this.model.password };
 
-    this.apiCustomer.add(customer).subscribe(Reply => {
-      console.log(Reply.conexionSuccess);
-      
-      if (Reply.conexionSuccess === 1) {
-        this.router.navigateByUrl('/loginG');
-        console.log(customer);
-        alert("Cliente agregado exitosamente");
-        //this.dialogRef.close(); MATERIAL
-        //this.snackBar.open('Cliente agregado', '', { MATERIAL
-          //duration: 2000
-        //});
+    if (this.isNew == null) {
+      this.apiCustomer.add(customer).subscribe(Reply => {
+        console.log(Reply.conexionSuccess);
+
+        if (Reply.conexionSuccess === 1) {
+          this.router.navigateByUrl('/loginG');
+          console.log(customer);
+          alert("Cliente agregado exitosamente");
+        }
+      });
+    } else {
+      this.apiCustomer.edit(customer).subscribe(Reply => {
+        console.log(Reply.conexionSuccess);
+
+        if (Reply.conexionSuccess === 1) {
+          //this.router.navigateByUrl('/loginG');
+          console.log(customer);
+          alert("Cliente editado exitosamente");
+        }
+      });
+    }
+    
+  }
+
+  editCustomer(userName: string) {
+    console.log(userName);
+    var i;
+    for (i = 0; i <= this.listCustomers.length - 1; i++) {
+      if (userName == this.listCustomers[i].userName) {
+        this.model.id = this.listCustomers[i].id;
+        this.model.name = this.listCustomers[i].name;
+        this.model.lastName = this.listCustomers[i].lastName;
+        this.model.address = this.listCustomers[i].address;
+        this.model.birth_date = this.listCustomers[i].birthDate;
+        this.model.phone_number = this.listCustomers[i].phoneNumber;
+        this.model.username = this.listCustomers[i].userName;
+        this.model.password = this.listCustomers[i].password;
       }
-    });
+    }
   }
 }

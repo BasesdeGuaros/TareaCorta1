@@ -30,10 +30,13 @@ export class TramoProductoComponent implements OnInit{
   }
 
   checkout() {
-
     this.router.navigate(['/checkout', this.userName]);
-
   }
+
+  editDelete() {
+    this.router.navigate(['/signup', this.userName]);
+  }
+
 
   getCustomer() {
     this.apiCustomer.getCustomer().subscribe(reply => {

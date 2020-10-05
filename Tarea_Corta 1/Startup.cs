@@ -30,6 +30,7 @@ namespace Tarea_Corta_1
                     {
                         builder.WithHeaders("*"); // aceptar metodo post
                         builder.WithOrigins("*"); // * => a cualquier dominio
+                        builder.WithMethods("*"); // permite todos los metodos
                     });
             });
                 services.AddControllersWithViews();
