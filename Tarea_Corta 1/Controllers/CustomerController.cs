@@ -75,5 +75,58 @@ namespace Tarea_Corta_1.Controllers
 
             return Ok(reply);
         }
+
+        [HttpPut] //protocolo Put (editar)
+        public IActionResult Put(ClientRequest request)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    Customers customer = db.Customers.Find(request.id);
+                    customer.Name = request.name;
+                    db.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Cliente editado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
+
+        [HttpDelete("{id}")] //protocolo Delete
+        public IActionResult Delete(int id)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    Customers customer = db.Customers.Find(id);
+                    db.Remove(customer);
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Cliente eliminado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
     }
 }

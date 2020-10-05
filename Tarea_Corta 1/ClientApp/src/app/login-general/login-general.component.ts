@@ -12,6 +12,7 @@ export class LoginGeneralComponent implements OnInit{
   public inputPassword;
   public listCustomers;
   model: any = {};
+  public cond = true;
 
 
 
@@ -32,10 +33,13 @@ export class LoginGeneralComponent implements OnInit{
     for (i = 0; i <= this.listCustomers.length-1; i++) {
       if (this.model.user == this.listCustomers[i].userName && this.model.password == this.listCustomers[i].password) {
         this.router.navigate(['/tramo-producto', this.listCustomers[i].userName]);
+        this.cond = false;
       }
       
-       // $('#exampleModal').modal('show')
-      
+       
+    }
+    if (this.cond) {
+      $('#exampleModal').modal('show')  
     }
 
     console.log(this.listCustomers.length);

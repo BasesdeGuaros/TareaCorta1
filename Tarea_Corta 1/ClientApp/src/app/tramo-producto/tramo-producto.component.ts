@@ -3,7 +3,6 @@ import { ApicustomerService } from '../services/apicustomer.service';
 import { ApiproducerService } from '../services/apiproducer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
     selector: 'app-tramo-producto',
     templateUrl: './tramo-producto.component.html',
