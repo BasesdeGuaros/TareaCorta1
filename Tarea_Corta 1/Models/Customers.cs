@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tarea_Corta_1.Models
 {
-    public partial class Customers
+    public class Customers
     {
         public Customers()
         {

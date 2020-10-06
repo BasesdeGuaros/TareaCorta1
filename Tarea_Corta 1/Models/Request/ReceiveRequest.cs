@@ -6,7 +6,7 @@ namespace Tarea_Corta_1.Models
     public class ReceiveRequest
     {
         public int id { get; set; }
-        public string customer_id { get; set; }
+        public int customer_id { get; set; }
         public int product_id { get; set; }
         public int amount { get; set; }
         public List<Products> Products { get; set; }
@@ -26,7 +26,7 @@ namespace Tarea_Corta_1.Models
         public int category_id { get; set; }
     }
 
-    public partial class Customers
+   /* public partial class Customers
     {
         public string name { get; set; }
         public string last_name { get; set; }
@@ -36,6 +36,6 @@ namespace Tarea_Corta_1.Models
         public string user_name { get; set; }
         public string password { get; set; }
 
-    }
+    }*/
 
 }

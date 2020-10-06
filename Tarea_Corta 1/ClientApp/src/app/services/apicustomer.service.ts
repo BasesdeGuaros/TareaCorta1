@@ -12,13 +12,13 @@ const httpOption = {
   })
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApicustomerService {
 
   url: string = "https://localhost:44372/api/customer";
-
 
 
   constructor(

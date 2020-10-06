@@ -119,6 +119,8 @@ namespace Tarea_Corta_1.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.IsAccepted).HasColumnName("isAccepted");
+
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasColumnName("last_name")
@@ -202,7 +204,7 @@ namespace Tarea_Corta_1.Models
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_receive_customers");
-
+               
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Receive)
                     .HasForeignKey(d => d.ProductId)

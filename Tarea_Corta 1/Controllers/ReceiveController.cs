@@ -25,8 +25,9 @@ namespace Tarea_Corta_1.Controllers
                 using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
                 {
                     var list = db.Receive.ToList(); //variable con la lista de datos de la tabla cliente
+                    var products = db.Products.ToList();
                     reply.conexionSuccess = 1;
-                    reply.data = list;
+                    reply.data = products;
                 }
             }
             catch (Exception ex)
@@ -48,14 +49,25 @@ namespace Tarea_Corta_1.Controllers
                     Receive receive = new Receive();
               
                     receive.Id = request.id;
-                    receive.ProductId = request.product;
-                    receive.Amount = request.totalPrice;
+                    receive.ProductId = request.product_id;
+                    receive.Amount = request.amount;
+                    receive.CustomerId = request.customer_id;
 
                     db.Receive.Add(receive);
                     db.SaveChanges();
-                    reply.conexionSuccess = 1;
-                    reply.message = "Nuevo recivo";
 
+                    foreach (var requestProducts in request.Products)
+                    {
+                        var products = new Models.Products();
+                        products.Product = requestProducts.Product;
+                        products.Stock = requestProducts.Stock;
+                        products.sales_mode = requestProducts.sales_mode;
+                        products.Id = requestProducts.Id;
+                        products.category_id = requestProducts.category_id;
+                        db.Products.Add(products);
+                        db.SaveChanges();
+                    }
+                    reply.conexionSuccess = 1;
                 }
             }
             catch (Exception ex)
