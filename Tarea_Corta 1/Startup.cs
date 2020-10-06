@@ -8,6 +8,13 @@ using Microsoft.Extensions.Hosting;
 
 namespace Tarea_Corta_1
 {
+
+    //Para hacer la conexion a la base de datos en el Nuget Console
+    //Scaffold-DBContext "Server=localhost; Database=TareaCorta1; Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+    //Para hacer update a la base de datos, cuando se cambia una opcion en Sql
+    //Scaffold-DbContext -Connection "Server=localhost; Database=TareaCorta1; Trusted_Connection=True;" -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -context TareaCorta1Context -force
+
     public class Startup
     {
         readonly string myCors = "myCors";

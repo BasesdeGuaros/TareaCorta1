@@ -59,6 +59,7 @@ namespace Tarea_Corta_1.Controllers
                     customer.PhoneNumber = request.phone_number;
                     customer.UserName = request.user_name;
                     customer.Password = request.password;
+                    customer.Receive = null;
                 
                     db.Customers.Add(customer);
                     db.SaveChanges();
@@ -86,7 +87,15 @@ namespace Tarea_Corta_1.Controllers
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
                     Customers customer = db.Customers.Find(request.id);
+                    customer.Id = request.id;
                     customer.Name = request.name;
+                    customer.LastName = request.last_name;
+                    customer.Address = request.address;
+                    customer.BirthDate = request.birth_date;
+                    customer.PhoneNumber = request.phone_number;
+                    customer.UserName = request.user_name;
+                    customer.Password = request.password;
+
                     db.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  
                     db.SaveChanges();
                     reply.conexionSuccess = 1;

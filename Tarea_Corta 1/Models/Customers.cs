@@ -5,6 +5,11 @@ namespace Tarea_Corta_1.Models
 {
     public partial class Customers
     {
+        public Customers()
+        {
+            ReceiveNavigation = new HashSet<Receive>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -13,5 +18,8 @@ namespace Tarea_Corta_1.Models
         public int PhoneNumber { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Receive { get; set; }
+
+        public virtual ICollection<Receive> ReceiveNavigation { get; set; }
     }
 }

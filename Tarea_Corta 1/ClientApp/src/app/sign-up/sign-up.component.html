@@ -143,9 +143,8 @@
           </div>
 
           <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" name="submit" (click)="addCustomer()">{{isNew == 'null' ? 'Crear Usuario' : 'Editar Usuario'}}</button>
-          <button class="btn btn-secondary btn-lg btn-block" name="submit" (click)="editCustomer(isNew)">Editar Usuario</button>
-          <button class="btn btn-danger btn-lg btn-block" name="submit" (click)="addCustomer()">Eliminar Usuario</button>
+          <button class="btn btn-primary btn-lg btn-block" name="submit" (click)="addCustomer()">{{isNew == 'null' ? 'Crear Usuario' : 'Guardar Usuario'}}</button>
+          <button class="btn btn-danger btn-lg btn-block" name="submit" (click)="deleteCustomer(isNew)">Eliminar Usuario</button>
 
 
         </form>

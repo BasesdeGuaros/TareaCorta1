@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Reply } from '../Models/reply'
 import { customer } from '../Models/customer';
 
-
 //ng generate service services/apicustomer
 //obtener propiedades de http
 const httpOption = {
@@ -19,6 +18,7 @@ const httpOption = {
 export class ApicustomerService {
 
   url: string = "https://localhost:44372/api/customer";
+
 
 
   constructor(
@@ -41,7 +41,7 @@ export class ApicustomerService {
   }
 
   delete(userName: string): Observable<Reply> {
-    return this._http.delete<Reply>('$(this.url)/${username}')
+    return this._http.delete<Reply>(`${this.url}/${userName}`)
   }
 }
 

@@ -46,9 +46,10 @@ namespace Tarea_Corta_1.Controllers
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
                     Receive receive = new Receive();
-                    receive.ReceiveId = request.id;
-                    receive.Products = request.product;
-                    receive.Price = request.totalPrice;
+              
+                    receive.Id = request.id;
+                    receive.ProductId = request.product;
+                    receive.Amount = request.totalPrice;
 
                     db.Receive.Add(receive);
                     db.SaveChanges();

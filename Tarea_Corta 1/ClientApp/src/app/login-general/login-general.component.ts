@@ -15,7 +15,6 @@ export class LoginGeneralComponent implements OnInit{
   public cond = true;
 
 
-
     /** loginGeneral ctor */
   constructor(
     private apiCustomer: ApicustomerService,

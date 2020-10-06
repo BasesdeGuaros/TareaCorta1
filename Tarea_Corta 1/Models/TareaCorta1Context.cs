@@ -15,9 +15,10 @@ namespace Tarea_Corta_1.Models
         {
         }
 
+        public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Producers> Producers { get; set; }
-        public virtual DbSet<Producers2> Producers2 { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Receive> Receive { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +32,21 @@ namespace Tarea_Corta_1.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("category");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Customers>(entity =>
             {
                 entity.ToTable("customers");
@@ -71,6 +87,11 @@ namespace Tarea_Corta_1.Models
 
                 entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
 
+                entity.Property(e => e.Receive)
+                    .HasColumnName("receive")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasColumnName("user_name")
@@ -80,9 +101,68 @@ namespace Tarea_Corta_1.Models
 
             modelBuilder.Entity<Producers>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("producers");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasColumnName("address")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Birthdate)
+                    .IsRequired()
+                    .HasColumnName("birthdate")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasColumnName("last_name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasColumnName("password")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Phone).HasColumnName("phone");
+
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.Sinpe).HasColumnName("sinpe");
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasColumnName("username")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Producers)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_producers_products");
+            });
+
+            modelBuilder.Entity<Products>(entity =>
+            {
+                entity.ToTable("products");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
@@ -92,70 +172,42 @@ namespace Tarea_Corta_1.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.SaleMode)
+                    .HasColumnName("sale_mode")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Stock).HasColumnName("stock");
-            });
 
-            modelBuilder.Entity<Producers2>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("producers2");
-
-                entity.Property(e => e.Address)
-                    .HasColumnName("address")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Birthdate)
-                    .HasColumnName("birthdate")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.LastName)
-                    .HasColumnName("last_name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .HasColumnName("password")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Phone).HasColumnName("phone");
-
-                entity.Property(e => e.Sinpe).HasColumnName("sinpe");
-
-                entity.Property(e => e.Username)
-                    .HasColumnName("username")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.CategoryId)
+                    .HasConstraintName("FK_products_category");
             });
 
             modelBuilder.Entity<Receive>(entity =>
             {
                 entity.ToTable("receive");
 
-                entity.Property(e => e.ReceiveId).HasColumnName("receive_id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Customer)
-                    .IsRequired()
-                    .HasColumnName("customer")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Amount).HasColumnName("amount");
 
-                entity.Property(e => e.Price).HasColumnName("price");
+                entity.Property(e => e.CustomerId).HasColumnName("customer_id");
 
-                entity.Property(e => e.Products)
-                    .IsRequired()
-                    .HasColumnName("products")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.ReceiveNavigation)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_receive_customers");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Receive)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_receive_products");
             });
 
             OnModelCreatingPartial(modelBuilder);

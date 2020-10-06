@@ -16,33 +16,43 @@ export class SignUpComponent implements OnInit{
   public isNew;
 
 
+
     /** signUp ctor */
   constructor(
     private apiCustomer: ApicustomerService,
     private router: Router,
     private activatedRoute: ActivatedRoute
 
-) { }
+  ) { }
 
   ngOnInit(): void {
-    this.getCustomer();
+    
     this.isNew = this.activatedRoute.snapshot.paramMap.get('userName');
+    this.getCustomer();
+
   }
 
   getCustomer() {
     this.apiCustomer.getCustomer().subscribe(reply => {
       console.log(reply);
       this.listCustomers = reply.data;
+
+      if (this.isNew != 'null') {
+        console.log(this.listCustomers.length);
+        this.editCustomer(this.isNew);
+      }
     });
   }
+
 
 
   addCustomer() {
     const customer: customer = { id: parseInt(this.model.id), name: this.model.name, last_name: this.model.lastName, address: this.model.address, birth_date: this.model.birth_date, phone_number: parseInt(this.model.phone_number), user_name: this.model.username, password: this.model.password };
 
-    if (this.isNew == null) {
+    if (this.isNew == 'null') {
       this.apiCustomer.add(customer).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
+        console.log(Reply.message);
 
         if (Reply.conexionSuccess === 1) {
           this.router.navigateByUrl('/loginG');
@@ -50,12 +60,12 @@ export class SignUpComponent implements OnInit{
           alert("Cliente agregado exitosamente");
         }
       });
-    } else {
+    } else{
       this.apiCustomer.edit(customer).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
 
         if (Reply.conexionSuccess === 1) {
-          //this.router.navigateByUrl('/loginG');
+          //this.router.navigateByUrl('/tramo-');
           console.log(customer);
           alert("Cliente editado exitosamente");
         }
@@ -79,5 +89,25 @@ export class SignUpComponent implements OnInit{
         this.model.password = this.listCustomers[i].password;
       }
     }
+  }
+
+  deleteCustomer(userName: string) {
+    var i;
+    for (i = 0; i <= this.listCustomers.length - 1; i++) {
+      if (userName == this.listCustomers[i].userName) {
+   
+        this.apiCustomer.delete(this.listCustomers[i].id).subscribe(Reply => {
+          console.log(Reply.conexionSuccess);
+      
+
+          if (Reply.conexionSuccess === 1) {
+            this.router.navigateByUrl('/loginG');
+            alert("Cliente eliminado exitosamente");
+          }
+        });
+      }
+    }
+
+    
   }
 }
