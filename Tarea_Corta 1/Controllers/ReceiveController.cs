@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Tarea_Corta_1.Models;
 using Tarea_Corta_1.Models.Request;
 
@@ -24,10 +25,17 @@ namespace Tarea_Corta_1.Controllers
                 //el codigo se elimina una vez ejecutado lo que tenga dentro del using()
                 using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
                 {
-                    var list = db.Receive.ToList(); //variable con la lista de datos de la tabla cliente
-                    var products = db.Products.ToList();
+                    var list = db.Receive
+                        .Include(s => s.Customer) //obtener info de customer por medio de la llave foranea
+                        .ToList(); //variable con la lista de datos de la tabla cliente
                     reply.conexionSuccess = 1;
-                    reply.data = products;
+
+                    reply.data = list;
+                    /* var studentWithGrade = context.Students
+                            .Where(s => s.FirstName == "Bill")
+                            .Include(s => s.Grade)
+                            .FirstOrDefault();*/
+
                 }
             }
             catch (Exception ex)
@@ -61,9 +69,9 @@ namespace Tarea_Corta_1.Controllers
                         var products = new Models.Products();
                         products.Product = requestProducts.Product;
                         products.Stock = requestProducts.Stock;
-                        products.sales_mode = requestProducts.sales_mode;
+                        products.SaleMode = requestProducts.SaleMode;
                         products.Id = requestProducts.Id;
-                        products.category_id = requestProducts.category_id;
+                        products.CategoryId = requestProducts.CategoryId;
                         db.Products.Add(products);
                         db.SaveChanges();
                     }

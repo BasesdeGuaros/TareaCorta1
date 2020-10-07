@@ -33,6 +33,10 @@ export class TramoProductoComponent implements OnInit{
     this.router.navigate(['/checkout', this.userName]);
   }
 
+  producers() {
+    this.router.navigate(['/producers', this.userName]);
+  }
+
   editDelete() {
     this.router.navigate(['/signup', this.userName]);
   }
@@ -55,10 +59,12 @@ export class TramoProductoComponent implements OnInit{
     });
   }
 
+
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
       console.log(reply);
       this.listProducers = reply.data;
+      console.log(this.listProducers[0].product.product);
     })
   }
 

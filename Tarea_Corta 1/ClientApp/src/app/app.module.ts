@@ -47,7 +47,7 @@ import { MainWindowComponent } from './main-window/main-window.component';
       { path: 'tramo-producto/:userName', component: TramoProductoComponent },
       { path: 'signup/:userName', component: SignUpComponent },
       { path: 'checkout/:userName', component: CheckoutComponent },
-      { path: 'producers', component: ProducersComponent}
+      { path: 'producers/:userName', component: ProducersComponent}
     ])
   ],
   providers: [],
@@ -58,5 +58,6 @@ export class AppModule { }
 export const routingComponents =
   [TramoProductoComponent,
     CheckoutComponent,
-    SignUpComponent
+    SignUpComponent,
+    ProducersComponent
 ];

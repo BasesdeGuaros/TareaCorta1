@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Tarea_Corta_1.Models;
 
 namespace Tarea_Corta_1.Controllers
@@ -22,7 +23,9 @@ namespace Tarea_Corta_1.Controllers
                 //el codigo se elimina una vez ejecutado lo que tenga dentro del using()
                 using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
                 {
-                    var list = db.Producers.ToList(); //variable con la lista de datos de la tabla productores
+                    var list = db.Producers
+                        .Include(s => s.Product)
+                        .ToList(); //variable con la lista de datos de la tabla productores
                     reply.conexionSuccess = 1;
                     reply.data = list;
                 }

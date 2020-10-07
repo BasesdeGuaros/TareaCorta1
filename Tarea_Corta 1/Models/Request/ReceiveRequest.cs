@@ -17,7 +17,7 @@ namespace Tarea_Corta_1.Models
         }
     }
 
-    public partial class Products
+    public class ProductsReceive
     {
         public string product { get; set; }
         public int stock { get; set; }

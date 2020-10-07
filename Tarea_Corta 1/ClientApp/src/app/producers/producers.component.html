@@ -1,4 +1,4 @@
-<img class="mb-4 rounded float-right" typeof="button" [routerLink]="['/checkout']" src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="75" height="75">
+<img class="mb-4 rounded float-right" typeof="button" (click)="checkout()" src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="75" height="75">
 
 <h2>Productos del vendedor X</h2>
 <table class="table table-hover table-dark">
@@ -14,13 +14,32 @@
   </thead>
   <tbody>
     <tr *ngFor="let producer of listProducers; let i = index; let n of listNumber">
-      <td>{{producer.product}}</td>
-      <td>{{producer.stock}}</td>
-      <td>{{producer.price}}</td>
-      <td>{{n-producer.stock}}</td>
+      <td>{{producer.product.product}}</td>
+      <td>{{producer.product.stock}}</td>
+      <td>{{producer.product.price}}</td>
+      <td>{{amount}}</td>
       <td>
         <button class="btn btn-primary" (click)="buy(i)">Comprar 1 kg</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        No hay mas inventario
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

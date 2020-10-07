@@ -65,7 +65,6 @@ export class SignUpComponent implements OnInit{
         console.log(Reply.conexionSuccess);
 
         if (Reply.conexionSuccess === 1) {
-          //this.router.navigateByUrl('/tramo-');
           console.log(customer);
           alert("Cliente editado exitosamente");
         }
@@ -102,7 +101,7 @@ export class SignUpComponent implements OnInit{
 
           if (Reply.conexionSuccess === 1) {
             this.router.navigateByUrl('/loginG');
-            alert("Cliente eliminado exitosamente");
+            $('#exampleModal').modal('show');
           }
         });
       }

@@ -46,8 +46,11 @@ namespace Tarea_Corta_1
                 {
                     configuration.RootPath = "ClientApp/dist";
                 });
-           
-            }
+            services.AddControllers().AddNewtonsoftJson(options => //anadir dependencia newtonsoft.jason y agregar este par de lineas para obtener info de las llaves foraneas
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
