@@ -15,7 +15,9 @@ export class ProducersComponent implements OnInit{
   public listNumber: number[];
   public userName;
   url: string = "https://localhost:44372/producers";
- 
+
+
+
     /** producers ctor */
   constructor(
     private apiProducer: ApiproducerService,
