@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiproducerService } from '../services/apiproducer.service';
+import { ApistockService } from '../services/apistock.service';
 
 @Component({
     selector: 'app-producers',
@@ -10,6 +11,7 @@ import { ApiproducerService } from '../services/apiproducer.service';
 /** producers component*/
 export class ProducersComponent implements OnInit{
   public listProducers: any[];
+  public listStock: any[];
   public amount = 0;
   public number = 0;
   public listNumber: number[];
@@ -19,6 +21,7 @@ export class ProducersComponent implements OnInit{
     /** producers ctor */
   constructor(
     private apiProducer: ApiproducerService,
+    private apiStock: ApistockService,
     private router: Router,
     private route: ActivatedRoute) {
 
@@ -26,7 +29,7 @@ export class ProducersComponent implements OnInit{
 
   ngOnInit(): void {
     this.getProducer();
-
+    this.getStock();
     for (let i = 0; i < this.number; i++) {
       this.listNumber[i] = this.listProducers[i].stock;
     }
@@ -34,20 +37,28 @@ export class ProducersComponent implements OnInit{
 
   public buy(i) {
     //this.listNumber[i]++;
-    if (this.listProducers[i].product.stock > 0) {
-      this.listProducers[i].product.stock = this.listProducers[i].product.stock - 1;
+    if (this.listStock[i].quantity > 0) {
+      this.listStock[i].quantity = this.listStock[i].quantity - 1;
       this.amount++;
     } else {
       $('#exampleModal').modal('show')  
-
     }
-    
   }
 
   checkout() {
     let user = this.route.snapshot.paramMap.get('userName')
     console.log(user);
     this.router.navigate(['/checkout', user]);
+  }
+
+  getStock() {
+    this.apiStock.getStock().subscribe(reply => {
+      console.log(reply);
+      this.listStock = reply.data;
+
+      console.log("hora ci")
+
+    })
   }
 
   getProducer() {

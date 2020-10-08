@@ -59,7 +59,6 @@ namespace Tarea_Corta_1.Controllers
                     customer.PhoneNumber = request.phone_number;
                     customer.UserName = request.user_name;
                     customer.Password = request.password;
-                    customer.Receive = null;
                 
                     db.Customers.Add(customer);
                     db.SaveChanges();

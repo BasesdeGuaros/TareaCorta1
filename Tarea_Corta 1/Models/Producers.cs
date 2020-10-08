@@ -16,7 +16,5 @@ namespace Tarea_Corta_1.Models
         public string Password { get; set; }
         public int? ProductId { get; set; }
         public int IsAccepted { get; set; }
-
-        public virtual Products Product { get; set; }
     }
 }

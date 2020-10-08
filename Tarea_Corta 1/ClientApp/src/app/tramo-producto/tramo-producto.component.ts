@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApicustomerService } from '../services/apicustomer.service';
 import { ApiproducerService } from '../services/apiproducer.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApistockService } from '../services/apistock.service';
 
 @Component({
     selector: 'app-tramo-producto',
@@ -12,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TramoProductoComponent implements OnInit{
   public listCustomers: any[];
   public listProducers: any[];
+  public listStock: any[];
   public userName;
   public firstName;
 
@@ -20,13 +22,16 @@ export class TramoProductoComponent implements OnInit{
   constructor(
     private apiCustomer: ApicustomerService,
     private apiProducer: ApiproducerService,
+    private apiStock: ApistockService,
     private route: ActivatedRoute,
     private router: Router) {
   }
 
   ngOnInit(): void {
     this.getCustomer();
-    this.getProducer();   
+    this.getProducer();
+    this.getStock();
+ 
   }
 
   checkout() {
@@ -42,11 +47,20 @@ export class TramoProductoComponent implements OnInit{
   }
 
 
+  getStock() {
+    this.apiStock.getStock().subscribe(reply => {
+      console.log(reply);
+      this.listStock = reply.data;
+
+      console.log("hora ci")
+
+    })
+  }
+
   getCustomer() {
     this.apiCustomer.getCustomer().subscribe(reply => {
       console.log(reply);
       this.listCustomers = reply.data;
-
 
       let user = this.route.snapshot.paramMap.get('userName'); //agarrar el userName del link
       this.userName = user;
@@ -58,7 +72,6 @@ export class TramoProductoComponent implements OnInit{
       }
     });
   }
-
 
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
