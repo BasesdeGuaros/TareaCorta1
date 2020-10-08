@@ -1,0 +1,647 @@
+<div class="row">
+
+  <div class=" text-center">
+    <h1 class="h3 mb-3 font-weight-normal">
+      Admin
+    </h1>
+  </div>
+
+  <div style="position:absolute; left: 1010px; top: 60px">
+
+    <a class="notification btn btn-secondary dropdown-toggle" (click)="resetAfiliationNumber()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+
+      <span (click)="resetAfiliationNumber()">Solicitudes</span>
+      <span class="badge">{{afilNumber+1}}</span>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+
+        <tr *ngFor="let productor of productors; let i = index">
+          <ng-container *ngIf="productor.afil == 0">
+
+            <a class="dropdown-item" (click)="activateModal3(i)">Afiliation {{i}}</a>
+
+
+          </ng-container>
+
+        </tr>
+
+     
+
+      </div>
+
+    </a>
+  </div>
+
+</div>
+  
+
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Options</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample01">
+
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" (click) ="activateModal()" >Añadir Productor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/categorias']" > Categorías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/reportes']">Reportes</a>
+        </li>
+
+      </ul>
+
+    </div>
+  </nav>
+
+  
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Ususario</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">Actions</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let productor of productors; let i = index">
+          <ng-container *ngIf="productor.afil == 1">
+            <td>{{i+1}}</td>
+            <td>{{productor.user}}</td>
+            <td>{{productor.id}}</td>
+
+
+            <td>
+
+              <a>
+                <button type="button" id="button1" class="btn btn-secondary" (click)="editProductor(i)" data-toggle="modal" data-target="#editModal" data-whatever="@mdo">Edit</button>
+              </a>
+
+              <a (click)="deleteProductor(i)" class="btn btn-danger">
+                Delete
+              </a>
+
+            </td>
+          </ng-container>
+
+        </tr>
+
+
+      </tbody>
+    </table>
+
+
+    <div style="position:absolute; left: 800px; top: 300px">
+
+
+
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit productor</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="col sm-8">
+                <h2>Update data</h2>
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+
+                    <div class="row">
+                      <div class="col-sm-5">
+
+                        <label for="name" class="control-label col-sm-2">
+                          Nombre
+                        </label>
+
+                        <input type="text" class="form-control" id="name"
+                               name="name" [(ngModel)]=model2.name
+                               placeholder="Nombre">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="id" class="control-label col-sm-2">
+                          Cedula
+                        </label>
+
+                        <input type="text" class="form-control" id="id"
+                               name="id" [(ngModel)]=model2.id
+                               placeholder="Cedula">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="lastName" class="control-label col-sm-2">
+                          Apellidos
+                        </label>
+
+                        <input type="text" class="form-control" id="lastName"
+                               name="lastName" [(ngModel)]=model2.lastName
+                               placeholder="Apellidos">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="location" class="control-label col-sm-2">
+                          Dirección
+                        </label>
+
+                        <input type="text" class="form-control" id="location"
+                               name="location" [(ngModel)]=model2.location
+                               placeholder="Dirección">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="birthD" class="control-label col-sm-2">
+                          Nacimiento
+                        </label>
+
+                        <input type="text" class="form-control" id="birthD"
+                               name="birthD" [(ngModel)]=model2.birthD
+                               placeholder="Nacimiento">
+
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="phone" class="control-label col-sm-2">
+                          Teléfono
+                        </label>
+
+                        <input type="text" class="form-control" id="phone"
+                               name="phone" [(ngModel)]=model2.phone
+                               placeholder="Teléfono">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="sinpe" class="control-label col-sm-2">
+                          Sinpe#
+                        </label>
+
+                        <input type="text" class="form-control" id="sinpe"
+                               name="sinpe" [(ngModel)]=model2.sinpe
+                               placeholder="Sinpe#">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="places" class="control-label col-sm-2">
+                          Lugares
+                        </label>
+
+                        <input type="text" class="form-control" id="places"
+                               name="places" [(ngModel)]=model2.places
+                               placeholder="Lugares">
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="user" class="control-label col-sm-2">
+                          Usuario
+                        </label>
+
+                        <input type="text" class="form-control" id="user"
+                               name="user" [(ngModel)]=model2.user
+                               placeholder="Usuario">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="password" class="control-label col-sm-2">
+                          Contraseña
+                        </label>
+
+                        <input type="text" class="form-control" id="password"
+                               name="password" [(ngModel)]=model2.password
+                               placeholder="Contraseña">
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </form>
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success" (click)="updateProductor()" data-dismiss="modal">
+                Save
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Nuevo Productor</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="row">
+
+                <div class="col-md-8 order-md-1">
+                  <form class="needs-validation " novalidate id="form1">
+                    <div class="row">
+
+                      <div class="col-md-6 mb-3">
+                        <label for="firstName">Nombre</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" name="name" [(ngModel)]=model.name required>
+                        <div class="invalid-feedback">
+                          Ingrese un nombre valido
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="lastName">Apellido</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" name="lastName" [(ngModel)]=model.lastName required>
+                        <div class="invalid-feedback">
+                          Ingrese apellido Valido
+                        </div>
+                      </div>
+
+
+
+                    </div>
+
+                    <div class="row ">
+
+                      <div class="col-md-6 mb-3">
+                        <label for="username">Usuario</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                          </div>
+                          <input type="text" class="form-control" id="username" placeholder="Nombre_Usuario" name=" user" [(ngModel)]=model.user required>
+                          <div class="invalid-feedback" style="width: 100%;">
+                            Ingrese un usuario valido
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="email">Cédula <span class="text-muted"></span></label>
+                        <input type="email" class="form-control" id="ced" name="id" [(ngModel)]=" model.id">
+                        <div class="invalid-feedback">
+                          Ingrese un número de identificación valido
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="email">Télefono <span class="text-muted"></span></label>
+                        <input type="email" class="form-control" id="email" name="phone" [(ngModel)]=model.phone>
+                        <div class="invalid-feedback">
+                          Ingrese un número de telefono valido
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="address">Dirección</label>
+                        <input type="text" class="form-control" id="address" placeholder="" name="location" [(ngModel)]=model.location required>
+                        <div class="invalid-feedback">
+                          Ingrese su dirección
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                      <div class="col-md-5 mb-3">
+                        <label for="country">Provincia</label>
+                        <select class="custom-select d-block w-100" id="country" required>
+                          <option value="">Choose...</option>
+                          <option>San José</option>
+                          <option>Heredia</option>
+                          <option>Alajuela</option>
+                          <option>Cartago</option>
+                          <option>Guanacaste</option>
+                          <option>Limón</option>
+                          <option>El Puerto</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Por favor seleccione una provincia
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label for="zip">Cantón</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                        <div class="invalid-feedback">
+                          Se requiere ingresar un cantón
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label for="zip">Distrito</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                        <div class="invalid-feedback">
+                          Se requiere ingresar un distrito
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-6 mb-3">
+                        <label for="zip">Fecha de nacimiento</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" name="birthD" [(ngModel)]=model.birthD required>
+                        <div class="invalid-feedback">
+                          Se requiere ingresar una fecha de nacimiento
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="zip">Lugares de entrega</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" name="places" [(ngModel)]=model.places required>
+                        <div class="invalid-feedback">
+                          Se requiere que ingrese lugares de entrega
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+                      <label>Contraseña</label>
+                      <div class="input-group" id="show_hide_password">
+                        <input class="form-control" type="password" name="password" [(ngModel)]=model.password>
+                        <div class="input-group-addon">
+                          <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <hr class="mb-4">
+
+                  </form>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success" (click)="addProductor()" data-dismiss="modal">
+                Add
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="aceptAfilModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Nueva Afiliacion</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="col sm-8">
+               
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+
+                    <div class="row">
+                      <div class="col-sm-5">
+
+                        <label for="name" class="control-label col-sm-2">
+                          Nombre
+                        </label>
+
+                        <input type="text" class="form-control" id="name"
+                               name="name" [(ngModel)]=model4.name
+                               placeholder="Nombre">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="id" class="control-label col-sm-2">
+                          Cedula
+                        </label>
+
+                        <input type="text" class="form-control" id="id"
+                               name="id" [(ngModel)]=model4.id
+                               placeholder="Cedula">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="lastName" class="control-label col-sm-2">
+                          Apellidos
+                        </label>
+
+                        <input type="text" class="form-control" id="lastName"
+                               name="lastName" [(ngModel)]=model4.lastName
+                               placeholder="Apellidos">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="location" class="control-label col-sm-2">
+                          Dirección
+                        </label>
+
+                        <input type="text" class="form-control" id="location"
+                               name="location" [(ngModel)]=model4.location
+                               placeholder="Dirección">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="birthD" class="control-label col-sm-2">
+                          Nacimiento
+                        </label>
+
+                        <input type="text" class="form-control" id="birthD"
+                               name="birthD" [(ngModel)]=model4.birthD
+                               placeholder="Nacimiento">
+
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="phone" class="control-label col-sm-2">
+                          Teléfono
+                        </label>
+
+                        <input type="text" class="form-control" id="phone"
+                               name="phone" [(ngModel)]=model4.phone
+                               placeholder="Teléfono">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="sinpe" class="control-label col-sm-2">
+                          Sinpe#
+                        </label>
+
+                        <input type="text" class="form-control" id="sinpe"
+                               name="sinpe" [(ngModel)]=model4.sinpe
+                               placeholder="Sinpe#">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="places" class="control-label col-sm-2">
+                          Lugares
+                        </label>
+
+                        <input type="text" class="form-control" id="places"
+                               name="places" [(ngModel)]=model4.places
+                               placeholder="Lugares">
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+
+                    <div class="row">
+
+                      <div class="col-sm-5">
+                        <label for="user" class="control-label col-sm-2">
+                          Usuario
+                        </label>
+
+                        <input type="text" class="form-control" id="user"
+                               name="user" [(ngModel)]=model4.user
+                               placeholder="Usuario">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <label for="password" class="control-label col-sm-2">
+                          Contraseña
+                        </label>
+
+                        <input type="text" class="form-control" id="password"
+                               name="password" [(ngModel)]=model4.password
+                               placeholder="Contraseña">
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </form>
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="deleteAfiliation(model4.id)">Rechazar</button>
+              <button type="submit" class="btn btn-success" (click)="addAfiliation()" data-dismiss="modal">
+                Aceptar
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        $('#editModal').on('shown.bs.modal', function () {
+          $('#button1').trigger('focus')
+        })
+      </script>
+
+      <script>
+        $('#addModal').on('shown.bs.modal', function () {
+          $('#buttonAdd').trigger('focus')
+        })
+      </script>
+
+    </div>
+
+
+
+
+
+

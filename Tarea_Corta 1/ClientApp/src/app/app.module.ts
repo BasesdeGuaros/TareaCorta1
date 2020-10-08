@@ -15,6 +15,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ProducersComponent } from './producers/producers.component';
 import { MainWindowComponent } from './main-window/main-window.component';
+import { AdminComponent } from './admin/admin.component';
+import { CategoriasComponent } from './categorias/categorias.component';
+import { ReportesComponent } from './reportes/reportes.component'; 
 
 
 
@@ -31,8 +34,10 @@ import { MainWindowComponent } from './main-window/main-window.component';
     SignUpComponent,
     CheckoutComponent,
     ProducersComponent,
-    MainWindowComponent
-
+    MainWindowComponent,
+    AdminComponent,
+    CategoriasComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -47,7 +52,11 @@ import { MainWindowComponent } from './main-window/main-window.component';
       { path: 'tramo-producto/:userName', component: TramoProductoComponent },
       { path: 'signup/:userName', component: SignUpComponent },
       { path: 'checkout/:userName', component: CheckoutComponent },
-      { path: 'producers/:userName', component: ProducersComponent}
+      { path: 'producers/:userName', component: ProducersComponent },
+      { path: 'admin', component: AdminComponent },
+      { path: 'categorias', component: CategoriasComponent },
+      { path: 'reportes', component: ReportesComponent },
+
     ])
   ],
   providers: [],
