@@ -39,8 +39,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'admin', component: AdminComponent },
-      { path: '', component: AdminviewComponent },
+      { path: '', component: AdminComponent },
+      { path: 'adminview', component: AdminviewComponent },
       { path: 'afiliaciones', component: AfiliacionesComponent },
       { path: 'categorias', component: CategoriasComponent },
       { path: 'reportes', component: ReportesComponent},
@@ -53,6 +53,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
+
 
 
 
