@@ -11,9 +11,9 @@ namespace Tarea_Corta_1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StockController : ControllerBase
+    public class ProductsProducerController : ControllerBase
     {
-
+        
         //IActionResult es una inteface
         [HttpGet] //protocolo get
         public IActionResult Get()
@@ -24,7 +24,7 @@ namespace Tarea_Corta_1.Controllers
                 //el codigo se elimina una vez ejecutado lo que tenga dentro del using()
                 using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
                 {
-                    var list = db.Stock
+                    var list = db.ProductsProducer
                         .Include(s => s.IdProducerNavigation)
                         .Include(s => s.IdProductNavigation)
                         .ToList(); //variable con la lista de datos de la tabla productores
@@ -40,4 +40,5 @@ namespace Tarea_Corta_1.Controllers
             return Ok(reply); //convierte la lista a Json
         }
     }
+       
 }

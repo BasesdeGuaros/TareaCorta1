@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ApicustomerService } from './apicustomer.service';
+import { ApiuserService } from './apiuser.service';
 
-describe('ApicustomerService', () => {
+describe('ApiuserService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ApicustomerService = TestBed.get(ApicustomerService);
+    const service: ApiuserService = TestBed.get(ApiuserService);
     expect(service).toBeTruthy();
   });
 });

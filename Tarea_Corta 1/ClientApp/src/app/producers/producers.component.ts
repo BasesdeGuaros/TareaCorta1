@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiproducerService } from '../services/apiproducer.service';
-import { ApistockService } from '../services/apistock.service';
+import { ApiproductsproducerService } from '../services/apiproductsproducer.service';
 
 @Component({
     selector: 'app-producers',
@@ -11,7 +11,7 @@ import { ApistockService } from '../services/apistock.service';
 /** producers component*/
 export class ProducersComponent implements OnInit{
   public listProducers: any[];
-  public listStock: any[];
+  public listPP: any[];
   public amount = 0;
   public number = 0;
   public listNumber: number[];
@@ -21,7 +21,7 @@ export class ProducersComponent implements OnInit{
     /** producers ctor */
   constructor(
     private apiProducer: ApiproducerService,
-    private apiStock: ApistockService,
+    private apiPP: ApiproductsproducerService,
     private router: Router,
     private route: ActivatedRoute) {
 
@@ -29,16 +29,17 @@ export class ProducersComponent implements OnInit{
 
   ngOnInit(): void {
     this.getProducer();
-    this.getStock();
+    this.getPP();
     for (let i = 0; i < this.number; i++) {
       this.listNumber[i] = this.listProducers[i].stock;
     }
   }
 
+
   public buy(i) {
     //this.listNumber[i]++;
-    if (this.listStock[i].quantity > 0) {
-      this.listStock[i].quantity = this.listStock[i].quantity - 1;
+    if (this.listPP[i].quantity > 0) {
+      this.listPP[i].quantity = this.listPP[i].quantity - 1; //aca va un edit
       this.amount++;
     } else {
       $('#exampleModal').modal('show')  
@@ -50,17 +51,17 @@ export class ProducersComponent implements OnInit{
     console.log(user);
     this.router.navigate(['/checkout', user]);
   }
-
-  getStock() {
-    this.apiStock.getStock().subscribe(reply => {
+  
+  getPP() {
+    this.apiPP.getPP().subscribe(reply => {
       console.log(reply);
-      this.listStock = reply.data;
+      this.listPP = reply.data;
 
       console.log("hora ci")
 
     })
   }
-
+  
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
       

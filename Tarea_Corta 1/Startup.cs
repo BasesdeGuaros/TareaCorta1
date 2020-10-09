@@ -78,6 +78,7 @@ namespace Tarea_Corta_1
 
             app.UseRouting();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

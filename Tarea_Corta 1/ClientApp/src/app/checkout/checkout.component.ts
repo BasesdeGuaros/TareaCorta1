@@ -15,15 +15,15 @@ export class CheckoutComponent implements OnInit{
 
     /** checkout ctor */
   constructor(
-    private apiReceive: ApireceiveService
+    //private apiReceive: ApireceiveService
     ) {
 
   }
   
   ngOnInit(): void {
-    this.getReceive();
   }
 
+  /*
   getReceive() {
     this.apiReceive.getReceive().subscribe(reply => {
       console.log(reply);

@@ -4,16 +4,145 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Tarea_Corta_1.Models;
 using Tarea_Corta_1.Models.Request;
 
-
-/*
- * Hay que aprender a cambiar el datatype de la base de datos
- * Aprender a usar los diferentes datatypes de Sql y los casteos
- */
 namespace Tarea_Corta_1.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
+    {
+
+        //IActionResult es una inteface
+        [HttpGet] //protocolo get
+        public IActionResult Get()
+        {
+            MyReply reply = new MyReply();
+            try
+            {
+                //el codigo se elimina una vez ejecutado lo que tenga dentro del using()
+                using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
+                {
+                    var list = db.User
+                        .ToList(); //variable con la lista de datos de la tabla 
+                    reply.conexionSuccess = 1;
+                    reply.data = list;
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+            return Ok(reply); //convierte la lista a Json
+        }
+
+
+        [HttpPost] //protocolo Post
+        public IActionResult Post(UserRequest request)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    User user = new User();
+                    user.IdUser = request.IdUser;
+                    user.Name = request.Name;
+                    user.LastName = request.LastName;
+                    user.Address = request.Address;
+                    user.BirthDate = request.BirthDate;
+                    user.PhoneNumber = request.PhoneNumber;
+                    user.Username = request.Username;
+                    user.Password = request.Password;
+                    user.Rol = request.Rol;
+
+                    db.User.Add(user);
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Cliente agregado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
+
+        [HttpPut] //protocolo Put (editar)
+        public IActionResult Put(UserRequest request)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    User user = new User();
+                    user.IdUser = request.IdUser;
+                    user.Name = request.Name;
+                    user.LastName = request.LastName;
+                    user.Address = request.Address;
+                    user.BirthDate = request.BirthDate;
+                    user.PhoneNumber = request.PhoneNumber;
+                    user.Username = request.Username;
+                    user.Password = request.Password;
+                    user.Rol = request.Rol;
+
+                    db.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Cliente editado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
+
+        [HttpDelete("{id}")] //protocolo Delete
+        public IActionResult Delete(int id)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    User user = db.User.Find(id);
+                    db.Remove(user);
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Cliente eliminado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
+    }
+
+}
+
+
+/* Controlador de customer
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
@@ -137,4 +266,4 @@ namespace Tarea_Corta_1.Controllers
             return Ok(reply);
         }
     }
-}
+    */

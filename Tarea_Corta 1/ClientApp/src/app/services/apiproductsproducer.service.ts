@@ -3,28 +3,25 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reply } from '../Models/reply'
 
+//ng generate service services/apiuser
 const httpOption = {
   headers: new HttpHeaders({
     'Contend-Type': 'appliacation/json'
   })
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class ApireceiveService {
+export class ApiproductsproducerService {
 
-  url: string = "https://localhost:44372/api/receive";
-
+  url: string = "https://localhost:44372/api/productsproducer";
 
   constructor(
     private _http: HttpClient) { }
 
-  getReceive(): Observable<Reply> {
+  getPP(): Observable<Reply> {
     return this._http.get<Reply>(this.url);
   }
-
-  /*add(Receive: receive): Observable<Reply> {
-    return this._http.post<Reply>(this.url, receive, httpOption)
-  }*/
 }

@@ -7,9 +7,10 @@ namespace Tarea_Corta_1.Models
     {
         public int Id { get; set; }
         public int IdCustomer { get; set; }
-        public int IdProduct { get; set; }
+        public int Subtotal { get; set; }
+        public double Tax { get; set; }
+        public double Total { get; set; }
 
-        public virtual Customers IdCustomerNavigation { get; set; }
-        public virtual Products IdProductNavigation { get; set; }
+        public virtual User IdCustomerNavigation { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApicustomerService } from '../services/apicustomer.service';
 import { ApiproducerService } from '../services/apiproducer.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApistockService } from '../services/apistock.service';
+import { ApiuserService } from '../services/apiuser.service';
 
 @Component({
     selector: 'app-tramo-producto',
@@ -11,27 +10,28 @@ import { ApistockService } from '../services/apistock.service';
 })
 /** tramoProducto component*/
 export class TramoProductoComponent implements OnInit{
-  public listCustomers: any[];
-  public listProducers: any[];
-  public listStock: any[];
+  //public listCustomers: any[];
+  public listProducers: any[] = [];
+  public listUser;
   public userName;
   public firstName;
 
 
     /** tramoProducto ctor */
   constructor(
-    private apiCustomer: ApicustomerService,
     private apiProducer: ApiproducerService,
-    private apiStock: ApistockService,
+    private apiUser: ApiuserService,
     private route: ActivatedRoute,
     private router: Router) {
   }
 
   ngOnInit(): void {
-    this.getCustomer();
-    this.getProducer();
-    this.getStock();
- 
+  
+   // this.getCustomer();
+    //this.getProducer();
+    this.getUser();
+    //this.getStock();
+    
   }
 
   checkout() {
@@ -47,7 +47,7 @@ export class TramoProductoComponent implements OnInit{
   }
 
 
-  getStock() {
+  /*getStock() {
     this.apiStock.getStock().subscribe(reply => {
       console.log(reply);
       this.listStock = reply.data;
@@ -72,7 +72,30 @@ export class TramoProductoComponent implements OnInit{
       }
     });
   }
+  */
 
+  getUser() {
+    this.apiUser.getUser().subscribe(reply => {
+      console.log(reply);
+      this.listUser = reply.data;
+
+      let user = this.route.snapshot.paramMap.get('userName'); //agarrar el userName del link
+      this.userName = user;
+      var i;
+      for (i = 0; i <= this.listUser.length - 1; i++) { //recorrer la lista con el userName que agarramos 
+        if (this.listUser[i].username == user) {
+          this.firstName = this.listUser[i].name;
+        }
+        if (this.listUser[i].rol == "producer") {
+          this.listProducers.push(this.listUser[i]);
+          console.log(this.listProducers);
+        }
+      }
+    });
+  }
+
+
+  /*
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
       console.log(reply);
@@ -80,6 +103,6 @@ export class TramoProductoComponent implements OnInit{
       console.log(this.listProducers[0].product.product);
     })
   }
-
+  */
 
 }

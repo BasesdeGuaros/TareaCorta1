@@ -9,7 +9,10 @@ import { Component } from '@angular/core';
 export class MainWindowComponent {
     /** MainWindow ctor */
     constructor() {
-
     }
 }
+
+
+
+
 

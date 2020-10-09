@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApicustomerService } from '../services/apicustomer.service';
 import { Router } from '@angular/router';
+import { ApiuserService } from '../services/apiuser.service';
 
 @Component({
     selector: 'app-login-general',
@@ -10,28 +10,29 @@ import { Router } from '@angular/router';
 /** loginGeneral component*/
 export class LoginGeneralComponent implements OnInit{
   public inputPassword;
-  public listCustomers;
+  public listUser;
   model: any = {};
   public cond = true;
 
 
+
     /** loginGeneral ctor */
   constructor(
-    private apiCustomer: ApicustomerService,
+    private apiUser: ApiuserService,
     private router: Router
 ) {
 
   }
 
   ngOnInit(): void {
-    this.getCustomer();
+    this.getUser();
   }
   
-  public authorization(listCustomers) {
+  public authorization() {
     var i;
-    for (i = 0; i <= this.listCustomers.length-1; i++) {
-      if (this.model.user == this.listCustomers[i].userName && this.model.password == this.listCustomers[i].password) {
-        this.router.navigate(['/tramo-producto', this.listCustomers[i].userName]);
+    for (i = 0; i <= this.listUser.length - 1; i++) {
+      if (this.model.user == this.listUser[i].username && this.model.password == this.listUser[i].password && this.listUser[i].rol == "customer") {
+        this.router.navigate(['/tramo-producto', this.listUser[i].username]);
         this.cond = false;
       }
       
@@ -41,15 +42,16 @@ export class LoginGeneralComponent implements OnInit{
       $('#exampleModal').modal('show')  
     }
 
-    console.log(this.listCustomers.length);
+    console.log(this.listUser.length);
     console.log(this.model.user);
     console.log(this.model.password);
   }
 
-  getCustomer() {
-    this.apiCustomer.getCustomer().subscribe(reply => {
+  getUser() {
+    this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
-      this.listCustomers = reply.data;
+      this.listUser = reply.data;
+      
     });
   }
 

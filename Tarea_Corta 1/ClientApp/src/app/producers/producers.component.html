@@ -13,10 +13,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let stock of listStock; let i = index; let n of listNumber">
-      <td>{{stock.idProductNavigation.product}}</td>
-      <td>{{stock.quantity}}</td>
-      <td>{{stock.idProductNavigation.price}}</td>
+    <tr *ngFor="let PP of listPP; let i = index; let n of listNumber">
+      <td>{{PP.idProductNavigation.product}}</td>
+      <td>{{PP.quantity}}</td>
+      <td>{{PP.price}}</td>
       <td>{{amount}}</td>
       <td>
         <button class="btn btn-primary" (click)="buy(i)">Comprar 1 kg</button>

@@ -27,7 +27,6 @@
             <ul class="list-unstyled">
               <li><a href="#" class="text-white" (click)="checkout()">Carrito de compras</a></li>
               <li><a class="text-white" (click)="editDelete()">Editar Perfil</a></li>
-
             </ul>
           </div>
         </div>
@@ -65,10 +64,11 @@
       <div class="container">
         <div class="row d-flex justify-content-lg-start">
           <div class="col-xl-4 py-3" *ngFor="let producer of listProducers; let i = index">
+
             <div class="card mb-auto box-shadow">
               <img class="mb-4 justify-content-center" (click)="producers()" src="https://www.tec.ac.cr/sites/default/files/styles/node/public/media/img/main/rsz_alimentos_0.jpg" alt="" width="335" height="250">
               <div class="card-body">
-                <p class="card-text">Tramo del productor <b>{{producer.name}} {{producer.lastName}}</b> </p>
+                <p class="card-text">Tramo del productor <b> {{producer.name}} {{producer.lastName}} </b> </p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary" (click)="producers()">Ver</button>

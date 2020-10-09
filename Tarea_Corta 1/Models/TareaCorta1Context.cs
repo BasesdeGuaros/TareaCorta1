@@ -16,12 +16,12 @@ namespace Tarea_Corta_1.Models
         }
 
         public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderProducts> OrderProducts { get; set; }
         public virtual DbSet<Producers> Producers { get; set; }
         public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<Stock> Stock { get; set; }
+        public virtual DbSet<ProductsProducer> ProductsProducer { get; set; }
+        public virtual DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,9 +38,7 @@ namespace Tarea_Corta_1.Models
             {
                 entity.ToTable("category");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -49,12 +47,136 @@ namespace Tarea_Corta_1.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Customers>(entity =>
+            modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToTable("customers");
+                entity.ToTable("order");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IdCustomer).HasColumnName("id_customer");
+
+                entity.Property(e => e.Subtotal).HasColumnName("subtotal");
+
+                entity.Property(e => e.Tax).HasColumnName("tax");
+
+                entity.Property(e => e.Total).HasColumnName("total");
+
+                entity.HasOne(d => d.IdCustomerNavigation)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.IdCustomer)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_order_user");
+            });
+
+            modelBuilder.Entity<OrderProducts>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("order_products");
+
+                entity.Property(e => e.IdOrder).HasColumnName("id_order");
+
+                entity.Property(e => e.IdProduct).HasColumnName("id_product");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.Property(e => e.Total).HasColumnName("total");
+
+                entity.HasOne(d => d.IdOrderNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdOrder)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_order_products_order");
+
+                entity.HasOne(d => d.IdProductNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdProduct)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_order_products_products");
+            });
+
+            modelBuilder.Entity<Producers>(entity =>
+            {
+                entity.HasKey(e => e.IdProducer);
+
+                entity.ToTable("producers");
+
+                entity.Property(e => e.IdProducer).HasColumnName("id_producer");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.IsAccepted).HasColumnName("isAccepted");
+
+                entity.Property(e => e.Sinpe).HasColumnName("sinpe");
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithMany(p => p.Producers)
+                    .HasForeignKey(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_producers_user");
+            });
+
+            modelBuilder.Entity<Products>(entity =>
+            {
+                entity.ToTable("products");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
+
+                entity.Property(e => e.Product)
+                    .IsRequired()
+                    .HasColumnName("product")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.SaleMode)
+                    .HasColumnName("sale_mode")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_products_category");
+            });
+
+            modelBuilder.Entity<ProductsProducer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("productsProducer");
+
+                entity.Property(e => e.IdProducer).HasColumnName("id_producer");
+
+                entity.Property(e => e.IdProduct).HasColumnName("id_product");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.IdProducerNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdProducer)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_productsProducer_producers");
+
+                entity.HasOne(d => d.IdProductNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdProduct)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_stock_products");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.IdUser);
+
+                entity.ToTable("user");
+
+                entity.Property(e => e.IdUser)
+                    .HasColumnName("id_user")
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Address)
@@ -89,162 +211,17 @@ namespace Tarea_Corta_1.Models
 
                 entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
 
-                entity.Property(e => e.UserName)
+                entity.Property(e => e.Rol)
                     .IsRequired()
-                    .HasColumnName("user_name")
+                    .HasColumnName("rol")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Order>(entity =>
-            {
-                entity.ToTable("order");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdCustomer).HasColumnName("id_customer");
-
-                entity.Property(e => e.IdProduct).HasColumnName("id_product");
-
-                entity.HasOne(d => d.IdCustomerNavigation)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.IdCustomer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_order_customers");
-
-                entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.IdProduct)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_order_products");
-            });
-
-            modelBuilder.Entity<OrderProducts>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("order_products");
-
-                entity.Property(e => e.IdOrder).HasColumnName("id_order");
-
-                entity.Property(e => e.IdProduct).HasColumnName("id_product");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.HasOne(d => d.IdOrderNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.IdOrder)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_order_products_order");
-            });
-
-            modelBuilder.Entity<Producers>(entity =>
-            {
-                entity.ToTable("producers");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasColumnName("address")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Birthdate)
-                    .IsRequired()
-                    .HasColumnName("birthdate")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.IsAccepted).HasColumnName("isAccepted");
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasColumnName("last_name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasColumnName("password")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Phone).HasColumnName("phone");
-
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-                entity.Property(e => e.Sinpe).HasColumnName("sinpe");
 
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasColumnName("username")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Products>(entity =>
-            {
-                entity.ToTable("products");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.CategoryId).HasColumnName("category_id");
-
-                entity.Property(e => e.Price).HasColumnName("price");
-
-                entity.Property(e => e.Product)
-                    .IsRequired()
-                    .HasColumnName("product")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SaleMode)
-                    .HasColumnName("sale_mode")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_products_category");
-            });
-
-            modelBuilder.Entity<Stock>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("stock");
-
-                entity.Property(e => e.IdProducer).HasColumnName("id_producer");
-
-                entity.Property(e => e.IdProduct).HasColumnName("id_product");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.HasOne(d => d.IdProducerNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.IdProducer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_stock_producers");
-
-                entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.IdProduct)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_stock_products");
             });
 
             OnModelCreatingPartial(modelBuilder);
