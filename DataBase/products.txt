@@ -1,0 +1,2 @@
+product,sale_mode,id,category_id
+Tomate,Virtual,1,1

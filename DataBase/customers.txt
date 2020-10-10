@@ -1,3 +1,0 @@
-id,name,last_name,address,birth_date,phone_number,user_name,password
-304990227,Daniel,Sing,Desampa,dic,83158235,danielsing,danielsing
-304990227,Daniel,Sing,Desampa,dic,83158235,danielsing,danielsing

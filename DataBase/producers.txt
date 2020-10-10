@@ -1,3 +1,2 @@
-product,stock,price
-Yuca,1000,600
-Yuca,1000,600
+id,sinpe,isAccepted,id_producer
+304,8887,1,1

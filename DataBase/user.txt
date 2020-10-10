@@ -1,0 +1,6 @@
+id_user,password,username,name,last_name,address,phone_number,birth_date,rol
+111,charlie,charlie,Carlos,Alvarado,Casa del Presi,555,noc,customer
+117,garza,garza,Daniel,Garcia,Desamp,554,Junio     ,admin
+304,sing,sing,Daniel,Sing,Desamp,888,Dic       ,producer
+305,elias,elias,Elias,Arce,Cartago,999,Octubre,customer
+345,edu,edu,Eduardo,Chamorro,Desampa,64565,Dic,customer
