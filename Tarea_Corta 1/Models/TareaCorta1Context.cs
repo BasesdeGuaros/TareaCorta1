@@ -55,6 +55,8 @@ namespace Tarea_Corta_1.Models
 
                 entity.Property(e => e.IdCustomer).HasColumnName("id_customer");
 
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+
                 entity.Property(e => e.Subtotal).HasColumnName("subtotal");
 
                 entity.Property(e => e.Tax).HasColumnName("tax");
@@ -70,9 +72,9 @@ namespace Tarea_Corta_1.Models
 
             modelBuilder.Entity<OrderProducts>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("order_products");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.IdOrder).HasColumnName("id_order");
 
@@ -83,13 +85,13 @@ namespace Tarea_Corta_1.Models
                 entity.Property(e => e.Total).HasColumnName("total");
 
                 entity.HasOne(d => d.IdOrderNavigation)
-                    .WithMany()
+                    .WithMany(p => p.OrderProducts)
                     .HasForeignKey(d => d.IdOrder)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_order_products_order");
 
                 entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany()
+                    .WithMany(p => p.OrderProducts)
                     .HasForeignKey(d => d.IdProduct)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_order_products_products");

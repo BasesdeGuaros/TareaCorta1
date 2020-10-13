@@ -36,13 +36,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\Models\order.ts" />
     <None Remove="ClientApp\src\app\Models\reply.ts" />
-    <None Remove="ClientApp\src\app\Models\stock.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\app\checkout\checkout.component.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\feedback\feedback.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\main-window\main-window.component.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\Models\orderproducts.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\producers\producers.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\sign-up\sign-up.component.ts" />
   </ItemGroup>

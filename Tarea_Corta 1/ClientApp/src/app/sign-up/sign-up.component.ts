@@ -33,6 +33,7 @@ export class SignUpComponent implements OnInit{
     this.getUser();
   }
 
+
   getUser() {
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
@@ -44,21 +45,6 @@ export class SignUpComponent implements OnInit{
       }
     });
   }
-
-  /*
-  getCustomer() {
-    this.apiCustomer.getCustomer().subscribe(reply => {
-      console.log(reply);
-      this.listCustomers = reply.data;
-
-      if (this.isNew != 'null') {
-        console.log(this.listCustomers.length);
-        this.editCustomer(this.isNew);
-      }
-    });
-  }*/
-
-
 
   addUserC() {
     const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.address, birthDate: this.model.birth_date, phoneNumber: parseInt(this.model.phone_number), username: this.model.username, password: this.model.password, rol: "customer" };

@@ -38,8 +38,9 @@ export class TramoProductoComponent implements OnInit{
     this.router.navigate(['/checkout', this.userName]);
   }
 
-  producers() {
-    this.router.navigate(['/producers', this.userName]);
+  producers(i) {
+    console.log(this.listProducers[i].idProducer);
+    this.router.navigate(['/producers', this.userName, this.listProducers[i].name]);
   }
 
   editDelete() {

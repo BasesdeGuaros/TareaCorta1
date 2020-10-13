@@ -17,7 +17,6 @@ export class CheckoutComponent implements OnInit{
   constructor(
     //private apiReceive: ApireceiveService
     ) {
-
   }
   
   ngOnInit(): void {

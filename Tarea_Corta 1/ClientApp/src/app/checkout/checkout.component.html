@@ -36,10 +36,11 @@
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let receive of listReceives; let i = index">
             <div>
-              <h6 class="my-0">{{receive.products}}</h6>
+              <h6 class="my-0">{{receive.products}} ola</h6>
             </div>
             <span class="text-muted">{{receive.price}}</span>
           </li>
+
           <li class="list-group-item d-flex justify-content-between lh-condensed">
             <span>Total (CRC)</span>
             <strong>20000 Rojos</strong>
@@ -52,7 +53,7 @@
         <form class="needs-validation" novalidate>
 
           <hr class="mb-4">
-          <h4>Ingrese los datos de su tarjeta para proceder con la compra 100% no seguro</h4>
+          <h4>Pago por medio de SINPE movil</h4>
           <hr class="mb-4">
 
           <div class="row">
@@ -65,31 +66,16 @@
               </div>
             </div>
             <div class="col-md-6 mb-3">
-              <label for="cc-number">Numero de tarjeta</label>
+              <label for="cc-number">Numero de Telefono asociado al SINPE Movil</label>
               <input type="text" class="form-control" id="cc-number" placeholder="" required>
               <div class="invalid-feedback">
                 Se requiere un numero de tarjeta para continuar con la compra
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <label for="cc-expiration">Fecha de vencimiento</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-              <div class="invalid-feedback">
-                Se requiere ingresar la fecha de vencimiento de la tarjeta
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="cc-expiration">Código de seguridad</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-              <div class="invalid-feedback">
-                Se requiere ingresar el código de seguridad válido
-              </div>
-            </div>
-          </div>
+
           <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Comprar</button>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" [routerLink]="['/feedback']">Comprar</button>
         </form>
       </div>
     </div>

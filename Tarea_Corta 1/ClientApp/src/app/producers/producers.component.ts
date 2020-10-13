@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { orderproducts } from '../Models/orderproducts';
+import { order } from '../Models/order'
+import { ApiorderService } from '../services/apiorder.service';
 import { ApiproducerService } from '../services/apiproducer.service';
 import { ApiproductsproducerService } from '../services/apiproductsproducer.service';
+import { ApiuserService } from '../services/apiuser.service';
+import { data } from 'jquery';
+import { ApiorderproductsService } from '../services/apiorderproducts.service';
 
 @Component({
     selector: 'app-producers',
@@ -11,11 +17,21 @@ import { ApiproductsproducerService } from '../services/apiproductsproducer.serv
 /** producers component*/
 export class ProducersComponent implements OnInit{
   public listProducers: any[];
-  public listPP: any[];
+  public listPP = [];
   public amount = 0;
   public number = 0;
-  public listNumber: number[];
+  public subtotal = 0;
+  public totalOrder = 0;
+  public listUser = [];
   public userName;
+  public listNumber;
+  public listPurchase = [];
+  public producer;
+  public listOrder = [];
+  public listOrderP;
+  public listMyProducers = [];
+  model: any = {};
+
   url: string = "https://localhost:44372/producers";
  
     /** producers ctor */
@@ -23,32 +39,75 @@ export class ProducersComponent implements OnInit{
     private apiProducer: ApiproducerService,
     private apiPP: ApiproductsproducerService,
     private router: Router,
+    private apiUser: ApiuserService,
+    private apiOrderP: ApiorderproductsService,
+    private apiOrder: ApiorderService,
     private route: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.getProducer();
-    this.getPP();
-    for (let i = 0; i < this.number; i++) {
-      this.listNumber[i] = this.listProducers[i].stock;
+    //this.getProducer();
+    this.userName = this.route.snapshot.paramMap.get('userName');
+    //this.getPP();
+    this.getUser();
+    this.getOrder();
+    let produ = this.route.snapshot.paramMap.get('producerName'); //agarrar el producerId del link
+    this.producer = produ;
+    
+  }
+
+  public refresh(i) {
+    if (this.listMyProducers[i].quantity > this.model.quantity && this.model.quantity > 0) {
+      this.listMyProducers[i].quantity -= this.model.quantity;
+      let p = { idProduct: this.listMyProducers[i].idProductNavigation.id, product: this.listMyProducers[i].idProductNavigation.product, quantity: this.model.quantity, price: this.listMyProducers[i].price };
+      this.listPurchase.push(p);
+      console.log(this.listPurchase);
+      this.subtotal += this.model.quantity * this.listMyProducers[i].price;
+    } else {
+      $('#exampleModal').modal('show') 
     }
   }
 
+  public delete() { //hay que arreglarlo
+    var i;
+    for (i = 0; i <= this.listPurchase.length - 1; i++) {
+      
+        if (this.listPurchase[i].product == this.listMyProducers[i].idProductNavigation.product) {
+          this.listPurchase.splice(i, 1);
+          console.log(this.listPurchase);
+        } else {
+          alert('No hay productos agregados');
+        
+      }
+    }
+    
+  }
 
-  public buy(i) {
+  public add(i) {
     //this.listNumber[i]++;
-    if (this.listPP[i].quantity > 0) {
-      this.listPP[i].quantity = this.listPP[i].quantity - 1; //aca va un edit
+    if (this.listMyProducers[i].quantity > 0) {
+      this.listMyProducers[i].quantity = this.listMyProducers[i].quantity - 1; //aca va un edit
       this.amount++;
+      this.subtotal = this.amount * this.listMyProducers[i].price; //cambiar esto porque solo sirve para un solo producto
     } else {
       $('#exampleModal').modal('show')  
     }
   }
 
-  checkout() {
+  public less(i) {
+    //this.listNumber[i]++;
+    if (this.amount > 0) {
+      this.listMyProducers[i].quantity = this.listMyProducers[i].quantity + 1; //aca va un edit
+      this.amount--;
+      this.subtotal = this.amount * this.listMyProducers[i].price; //cambiar esto porque solo sirve para un solo producto
+    }
+  }
+
+
+
+  checkout() { //aca se hace la orden HAY QUE HACERLA 
     let user = this.route.snapshot.paramMap.get('userName')
-    console.log(user);
     this.router.navigate(['/checkout', user]);
   }
   
@@ -56,17 +115,161 @@ export class ProducersComponent implements OnInit{
     this.apiPP.getPP().subscribe(reply => {
       console.log(reply);
       this.listPP = reply.data;
-
-      console.log("hora ci")
-
     })
   }
   
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
-      
-      this.listProducers = reply.data;
-      this.number = this.listProducers.length;
+    this.listProducers = reply.data;
+    this.number = this.listProducers.length;
     })
+  }
+
+  getUser() {
+    this.apiUser.getUser().subscribe(reply => {
+      console.log(reply);
+      this.listUser = reply.data;
+      this.apiPP.getPP().subscribe(reply => {
+        console.log(reply);
+        this.listPP = reply.data;
+        this.myProducers();
+      });
+    });
+  }
+
+  getOrderp() {
+    this.apiOrderP.getOrderP().subscribe(reply => {
+      console.log(reply);
+      this.listOrderP = reply;
+    })
+  }
+
+
+  addOrderP(k, idcustomer) {
+    
+    var w;
+    for (w = 0; w <= this.listPurchase.length - 1; w++) {
+      var totalP = this.listPurchase[w].quantity * this.listPurchase[w].price;
+      console.log('multi')
+      console.log(totalP);
+    
+      const orderP: orderproducts = { idorder: this.listOrder[k].id, idproduct: this.listPurchase[w].idProduct, quantity: this.listPurchase[w].quantity, total: totalP};
+      this.apiOrderP.add(orderP).subscribe(Reply => {
+        console.log(Reply.conexionSuccess);
+        console.log(Reply.message);
+
+
+        if (Reply.conexionSuccess === 1) {
+          console.log(orderP);
+
+          this.getOrder();
+          console.log(this.listOrder);
+          var idP;
+          var j;
+          for (j = 0; j <= this.listOrder.length - 1; j++) {
+            if (this.listOrder[j].idCustomer == idcustomer) {
+              idP = this.listOrder[j].id;
+              this.totalOrder = this.listOrder[j].subtotal + this.subtotal;
+            }
+          }
+
+          //aca se hace el edit
+          const order: order = {
+            id: idP,
+            idCustomer: idcustomer,
+            subtotal: this.totalOrder,
+            tax: 0,
+            total: 0,
+            isActive: 1
+          };
+          console.log('este es el total');
+          console.log(this.totalOrder);
+          this.apiOrder.edit(order).subscribe(Reply => {
+            console.log(Reply.conexionSuccess);
+            console.log(Reply.message);
+          })
+        }
+      });
+    }
+  }
+
+  getOrder() {
+    this.apiOrder.getOrder().subscribe(reply => {
+      console.log(reply);
+      this.listOrder = reply.data;
+    });
+  }
+
+  addOrder() {
+    console.log(this.listOrder);
+    
+    var idcustomer;
+    var i;
+    for (i = 0; i <= this.listUser.length - 1; i++) {
+      if (this.listUser[i].username == this.userName) {
+        idcustomer = this.listUser[i].idUser;
+      }
+    }
+
+    console.log(idcustomer);
+    console.log(this.listOrder[k]);
+    //busca si hay una orden a nombre del cliente y si esa orden esta activa
+    var k;
+    for (k = 0; k <= this.listOrder.length - 1; k++) {
+      if (this.listOrder[k].idCustomer == idcustomer && this.listOrder[k].isActive == 1) {
+        //si la orden esta activa entonces se crea una ordenP
+        console.log('Esta activo');
+        this.addOrderP(k, idcustomer); //meter nueva orden de productos
+        return;
+      }
+    }
+      
+        //si no hay una orden activa, se crea una nueva orden
+        
+
+    const order: order = {
+          id: null,
+          idCustomer: idcustomer,
+          subtotal: 0, 
+          tax: 0,
+          total: 0,
+          isActive: 1
+        };
+
+        this.apiOrder.add(order).subscribe(Reply => {
+          console.log(Reply.conexionSuccess);
+          console.log(Reply.message);
+
+          if (Reply.conexionSuccess === 1) {
+            console.log(order);
+          }
+        });
+
+        var w;
+        for (w = 0; w <= this.listOrder.length - 1; w++) {
+          if (this.listOrder[w].username) {
+            this.addOrderP(w, idcustomer) //igual se inserta una orden de productos
+          }
+        }
+  }
+
+  myProducers() {
+    let produ = this.route.snapshot.paramMap.get('producerName');
+    var idProducer;
+
+    console.log(this.listUser);
+    var k;
+    for (k = 0; k <= this.listUser.length - 1; k++) {
+      if (this.listUser[k].name == produ) {
+        idProducer = this.listUser[k].idUser;
+      }
+    }
+
+    var i;
+    for (i = 0; i <= this.listPP.length - 1; i++) {
+      if (this.listPP[i].idProducerNavigation.id == idProducer) {
+        this.listMyProducers.push(this.listPP[i]);
+      }
+    }
   }
 }

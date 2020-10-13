@@ -46,7 +46,7 @@
     </div>
   </header>
 
-  <img class="mb-4  " typeof="button" (click)="checkout()" src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="75" height="75">
+  <img class="mb-4  rounded float-right" typeof="button" (click)="checkout()" src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="75" height="75">
 
   <hr style="height:30px">
   <main role="main">
@@ -66,12 +66,12 @@
           <div class="col-xl-4 py-3" *ngFor="let producer of listProducers; let i = index">
 
             <div class="card mb-auto box-shadow">
-              <img class="mb-4 justify-content-center" (click)="producers()" src="https://www.tec.ac.cr/sites/default/files/styles/node/public/media/img/main/rsz_alimentos_0.jpg" alt="" width="335" height="250">
+              <img class="mb-4 justify-content-center" (click)="producers(i)" src="https://www.tec.ac.cr/sites/default/files/styles/node/public/media/img/main/rsz_alimentos_0.jpg" alt="" width="335" height="250">
               <div class="card-body">
                 <p class="card-text">Tramo del productor <b> {{producer.name}} {{producer.lastName}} </b> </p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="producers()">Ver</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="producers(i)">Ver</button>
                   </div>
                 </div>
               </div>

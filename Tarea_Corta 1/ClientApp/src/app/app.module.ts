@@ -18,7 +18,7 @@ import { MainWindowComponent } from './main-window/main-window.component';
 import { AdminComponent } from './admin/admin.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { ReportesComponent } from './reportes/reportes.component'; 
-
+import { FeedbackComponent } from  './feedback/feedback.component';
 
 
 
@@ -37,7 +37,8 @@ import { ReportesComponent } from './reportes/reportes.component';
     MainWindowComponent,
     AdminComponent,
     CategoriasComponent,
-    ReportesComponent
+    ReportesComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,10 +53,12 @@ import { ReportesComponent } from './reportes/reportes.component';
       { path: 'tramo-producto/:userName', component: TramoProductoComponent },
       { path: 'signup/:userName', component: SignUpComponent },
       { path: 'checkout/:userName', component: CheckoutComponent },
-      { path: 'producers/:userName', component: ProducersComponent },
+      { path: 'producers/:userName/:producerName', component: ProducersComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'categorias', component: CategoriasComponent },
       { path: 'reportes', component: ReportesComponent },
+      { path: 'feedback', component: FeedbackComponent }
+
 
     ])
   ],
