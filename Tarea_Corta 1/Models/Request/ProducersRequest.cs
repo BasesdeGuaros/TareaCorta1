@@ -7,9 +7,12 @@ namespace Tarea_Corta_1.Models.Reply
 {
     public class ProducersRequest
     {
-        public string product { get; set; }
-        public int stock { get; set; }
-        public int price { get; set; }
+        public int Id { get; set; }
+        public int Sinpe { get; set; }
+        public int IsAccepted { get; set; }
+        public int IdProducer { get; set; }
+
+        public virtual User IdNavigation { get; set; }
     }
 
 

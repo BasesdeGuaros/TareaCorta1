@@ -1,0 +1,297 @@
+
+<div class="row">
+
+  <div class=" text-center">
+    <a [routerLink]="['/admin']">
+      <h1 class="h3 mb-3 font-weight-normal">
+        Productos !
+      </h1>
+    </a>
+    
+  </div>
+
+  <div style="position:absolute; left: 1010px; top: 60px">
+
+    <button type="submit" class="btn btn-success" (click)="activateModal()" >Agregar producto</button>
+
+  </div>
+
+</div>
+
+
+
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Cantidad</th>
+      <th scope="col">Foto</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Modo/Venta</th>
+      <th scope="col">Acciones</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let product of products; let i = index">
+
+
+      <td>{{i+1}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.category}}</td>
+      <td>{{product.cuantity}}</td>
+      <td>{{product.photo}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.mode}}</td>
+
+
+      <td>
+
+
+        <button type="button" id="button1" class="btn btn-secondary" (click)="editCategory(i)" data-toggle="modal" data-target="#editModal" data-whatever="@mdo">Edit</button>
+
+
+        <a (click)="deleteCategory(i)" class="btn btn-danger">
+          Delete
+        </a>
+
+      </td>
+
+
+    </tr>
+
+
+  </tbody>
+</table>
+
+
+<div style="position:absolute; left: 800px; top: 300px">
+
+
+  <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit productor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="row">
+
+            <div class="col-md-8 order-md-1">
+              <form class="needs-validation " novalidate id="form1">
+
+                <div class="row">
+
+                  <div class="col-md-6 mb-3">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" placeholder="Nombre" value="" name="name" [(ngModel)]=model.name required>
+                    <div class="invalid-feedback">
+                      Ingrese un nombre valido
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="category">Categoria</label>
+                    <input type="text" class="form-control" id="category" placeholder="Categoria" value="" name="category" [(ngModel)]=model.category required>
+                    <div class="invalid-feedback">
+                      Ingrese categoria valida
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6 mb-3">
+                    <label for="photo">Foto</label>
+                    <input type="text" class="form-control" id="photo" placeholder="Foto" value="" name="photo" [(ngModel)]=model.photo required>
+                    <div class="invalid-feedback">
+                      Ingrese una imagen valida
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="price">Precio</label>
+                    <input type="text" class="form-control" id="price" placeholder="Precio" value="" name="price" [(ngModel)]=model.price required>
+                    <div class="invalid-feedback">
+                      Ingrese precio valido
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6 mb-3">
+                    <label for="mode">Modo de venta</label>
+                    <input type="text" class="form-control" id="mode" placeholder="Modo de venta" value="" name="mode" [(ngModel)]=model.mode required>
+                    <div class="invalid-feedback">
+                      Ingrese una entrada valida
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="cuantity">Cantidad</label>
+                    <input type="text" class="form-control" id="cuantity" placeholder="Cantidad" value="" name="cuantity" [(ngModel)]=model.cuantity required>
+                    <div class="invalid-feedback">
+                      Ingrese una cantidad valida
+                    </div>
+                  </div>
+
+                </div>
+
+                <hr class="mb-4">
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" (click)="addCategory()" data-dismiss="modal">
+            Add
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit productor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="col sm-8">
+            <h2>Update data</h2>
+            <form class="form-horizontal">
+
+              <div class="form-group">
+
+                <div class="row">
+                  <div class="col-sm-5">
+
+                    <label for="name" class="control-label col-sm-2">
+                      Nombre
+                    </label>
+
+                    <input type="text" class="form-control" id="name"
+                           name="name" [(ngModel)]=model2.name
+                           placeholder="Nombre">
+                  </div>
+
+                  <div class="col-sm-5">
+                    <label for="category" class="control-label col-sm-2">
+                      Categoria
+                    </label>
+
+                    <input type="text" class="form-control" id="category"
+                           name="category" [(ngModel)]=model2.category
+                           placeholder="Categoria">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-5">
+
+                    <label for="photo" class="control-label col-sm-2">
+                      Foto
+                    </label>
+
+                    <input type="text" class="form-control" id="photo"
+                           name="photo" [(ngModel)]=model2.photo
+                           placeholder="Foto">
+                  </div>
+
+                  <div class="col-sm-5">
+                    <label for="price" class="control-label col-sm-2">
+                      Precio
+                    </label>
+
+                    <input type="text" class="form-control" id="price"
+                           name="price" [(ngModel)]=model2.price
+                           placeholder="Precio">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-5">
+
+                    <label for="mode" class="control-label col-sm-2">
+                      Modo de venta
+                    </label>
+
+                    <input type="text" class="form-control" id="mode"
+                           name="mode" [(ngModel)]=model2.mode
+                           placeholder="Modo">
+                  </div>
+
+                  <div class="col-sm-5">
+                    <label for="cuantity" class="control-label col-sm-2">
+                      Cantidad
+                    </label>
+
+                    <input type="text" class="form-control" id="cuantity"
+                           name="cuantity" [(ngModel)]=model2.cuantity
+                           placeholder="Cantidad">
+                  </div>
+                </div>
+
+
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" (click)="updateCategory()" data-dismiss="modal">
+            Save
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    $('#editModal').on('shown.bs.modal', function () {
+      $('#button1').trigger('focus')
+    })
+  </script>
+
+</div>
+
+
+
+
+
+

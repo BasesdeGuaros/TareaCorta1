@@ -5,6 +5,15 @@ namespace Tarea_Corta_1.Models
 {
     public partial class ProductsProducer
     {
+        public ProductsProducer()
+        {
+        }
+
+        public ProductsProducer(int idProduct)
+        {
+            IdProduct = idProduct;
+        }
+
         public int? Quantity { get; set; }
         public int IdProduct { get; set; }
         public int IdProducer { get; set; }

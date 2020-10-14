@@ -19,7 +19,8 @@ import { AdminComponent } from './admin/admin.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { ReportesComponent } from './reportes/reportes.component'; 
 import { FeedbackComponent } from  './feedback/feedback.component';
-
+import { ProductorComponent } from './productor/productor.component';
+import { ProductosComponent } from './productos/productos.component';
 
 
 @NgModule({
@@ -38,7 +39,10 @@ import { FeedbackComponent } from  './feedback/feedback.component';
     AdminComponent,
     CategoriasComponent,
     ReportesComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ProductorComponent,
+    ProductosComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -57,7 +61,9 @@ import { FeedbackComponent } from  './feedback/feedback.component';
       { path: 'admin', component: AdminComponent },
       { path: 'categorias', component: CategoriasComponent },
       { path: 'reportes', component: ReportesComponent },
-      { path: 'feedback', component: FeedbackComponent }
+      { path: 'feedback', component: FeedbackComponent },
+      { path: 'productor', component: ProductorComponent },
+      { path: 'productos', component: ProductosComponent},
 
 
     ])

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tarea_Corta_1.Models;
+using Tarea_Corta_1.Models.Reply;
+using Tarea_Corta_1.Models.Request;
 
 namespace Tarea_Corta_1.Controllers
 {
@@ -37,5 +39,40 @@ namespace Tarea_Corta_1.Controllers
             }
             return Ok(reply); //convierte la lista a Json
         }
+
+        [HttpPost] //protocolo Post
+        public IActionResult Post(ProducersRequest request)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    Producers producer = new Producers();
+
+                    producer.Id = request.Id;
+                    producer.Sinpe = request.Sinpe;
+                    producer.IsAccepted = request.IsAccepted;
+                    producer.IdProducer = request.IdProducer;
+                    
+
+                    db.Producers.Add(producer);
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Productor agregado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
+
+
     }
 }

@@ -50,7 +50,7 @@ namespace Tarea_Corta_1.Controllers
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
                     OrderProducts orderP = new OrderProducts();
-                   // orderP.Id = request.Id;
+                    //orderP.Id = request.Id;
                     orderP.IdOrder = request.IdOrder;
                     orderP.Quantity = request.Quantity;
                     orderP.IdProduct = request.IdProduct;
@@ -83,7 +83,7 @@ namespace Tarea_Corta_1.Controllers
             {
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
-                    OrderProducts orderP = new OrderProducts(request.IdOrder);
+                    OrderProducts orderP = new OrderProducts(request.Id);
                     orderP.Id = request.Id;
                     orderP.IdOrder = request.IdOrder;
                     orderP.Quantity = request.Quantity;

@@ -33,17 +33,27 @@
           <span class="text-muted">Su compra</span>
           <span class="badge badge-secondary badge-pill">{{size}}</span>
         </h4>
+        <h6 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Producto</span>
+          <span class="text-muted">Cantidad</span>
+          <span class="text-muted">Precio</span>
+          
+        </h6>
         <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let receive of listReceives; let i = index">
+          <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let products of listMyOrders; let i = index">
             <div>
-              <h6 class="my-0">{{receive.products}} ola</h6>
+              <h6 class="my-0">{{products.idProductNavigation.product}}</h6>
             </div>
-            <span class="text-muted">{{receive.price}}</span>
+            <span class="text-muted">{{products.quantity}}</span>
+            <span class="text-muted">₡ {{products.total}}</span>
+
+            <button class="btn btn-primary" (click)="add(i)">+</button>
+            <button class="btn btn-primary" (click)="less(i)">-</button>
           </li>
 
           <li class="list-group-item d-flex justify-content-between lh-condensed">
             <span>Total (CRC)</span>
-            <strong>20000 Rojos</strong>
+            <strong>₡ {{total}}</strong>
           </li>
         </ul>
       </div>
@@ -75,7 +85,7 @@
           </div>
 
           <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" type="submit" [routerLink]="['/feedback']">Comprar</button>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="editOrder()">Comprar</button>
         </form>
       </div>
     </div>

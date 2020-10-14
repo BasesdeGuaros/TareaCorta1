@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reply } from '../Models/reply'
+import { Producer } from '../Models/producer';
 
 
 const httpOption = {
@@ -24,4 +25,17 @@ export class ApiproducerService {
   getProducer(): Observable<Reply> {
     return this._http.get<Reply>(this.url);
   }
+
+  add(user: Producer): Observable<Reply> {
+    return this._http.post<Reply>(this.url, user, httpOption)
+  }
+
+  edit(producer: Producer): Observable<Reply> {
+    return this._http.put<Reply>(this.url, producer, httpOption)
+  }
+
+  delete(userName: string): Observable<Reply> {
+    return this._http.delete<Reply>(`${this.url}/${userName}`)
+  }
+
 }

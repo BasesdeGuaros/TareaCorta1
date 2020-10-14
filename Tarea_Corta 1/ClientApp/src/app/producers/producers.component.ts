@@ -6,7 +6,6 @@ import { ApiorderService } from '../services/apiorder.service';
 import { ApiproducerService } from '../services/apiproducer.service';
 import { ApiproductsproducerService } from '../services/apiproductsproducer.service';
 import { ApiuserService } from '../services/apiuser.service';
-import { data } from 'jquery';
 import { ApiorderproductsService } from '../services/apiorderproducts.service';
 
 @Component({
@@ -81,7 +80,6 @@ export class ProducersComponent implements OnInit{
         
       }
     }
-    
   }
 
   public add(i) {
@@ -182,7 +180,6 @@ export class ProducersComponent implements OnInit{
             total: 0,
             isActive: 1
           };
-          console.log('este es el total');
           console.log(this.totalOrder);
           this.apiOrder.edit(order).subscribe(Reply => {
             console.log(Reply.conexionSuccess);
@@ -212,7 +209,7 @@ export class ProducersComponent implements OnInit{
     }
 
     console.log(idcustomer);
-    console.log(this.listOrder[k]);
+    console.log(this.listOrder);
     //busca si hay una orden a nombre del cliente y si esa orden esta activa
     var k;
     for (k = 0; k <= this.listOrder.length - 1; k++) {
@@ -223,12 +220,12 @@ export class ProducersComponent implements OnInit{
         return;
       }
     }
-      
+
+
         //si no hay una orden activa, se crea una nueva orden
         
-
     const order: order = {
-          id: null,
+          id: 1,
           idCustomer: idcustomer,
           subtotal: 0, 
           tax: 0,

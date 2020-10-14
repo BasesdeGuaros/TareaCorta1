@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tarea_Corta_1.Models;
+using Tarea_Corta_1.Models.Request;
 
 namespace Tarea_Corta_1.Controllers
 {
@@ -38,6 +39,69 @@ namespace Tarea_Corta_1.Controllers
                 reply.message = ex.Message;
             }
             return Ok(reply); //convierte la lista a Json
+        }
+        [HttpPost] //protocolo Post
+        public IActionResult Post(ProductsProducerRequest request)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    ProductsProducer PP = new ProductsProducer();
+                    PP.Quantity = request.Quantity;
+                    PP.IdProducer = request.IdProducer;
+                    PP.IdProduct = request.IdProduct;
+                    PP.Price = request.Price;
+                    
+
+                    db.ProductsProducer.Add(PP);
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Orden agregada";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
+        }
+
+        [HttpPut] //protocolo Put (editar)
+        public IActionResult Put(ProductsProducerRequest request)
+        {
+            MyReply reply = new MyReply();
+
+            try
+            {
+                using (TareaCorta1Context db = new TareaCorta1Context())
+                {
+                    ProductsProducer PP = new ProductsProducer(request.IdProduct);
+                    PP.Quantity = request.Quantity;
+                    PP.IdProducer = request.IdProducer;
+                    PP.IdProduct = request.IdProduct;
+                    //PP.Price = request.Price;
+
+
+                    db.Entry(PP).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  
+                    db.SaveChanges();
+                    reply.conexionSuccess = 1;
+                    reply.message = "Orden editado";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+
+            return Ok(reply);
         }
     }
        

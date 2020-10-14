@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrderProducts } from '../Models/orderproducts'
+import { ProductsProducer } from '../Models/productsProducer'
 import { Reply } from '../Models/reply'
 
-//ng generate service services/apiuser
 const httpOption = {
   headers: new HttpHeaders({
     'Contend-Type': 'appliacation/json'
@@ -27,7 +26,10 @@ export class ApiproductsproducerService {
     return this._http.get<Reply>(this.url);
   }
 
-  add(PP: OrderProducts): Observable<Reply> {
+  add(PP: ProductsProducer): Observable<Reply> {
     return this._http.post<Reply>(this.url, PP, httpOption)
+  }
+  edit(PP: ProductsProducer): Observable<Reply> {
+    return this._http.put<Reply>(this.url, PP, httpOption)
   }
 }

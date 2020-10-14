@@ -1,6 +1,10 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { user } from '../Models/user';
+import { producer } from '../Models/producer';
+import { ApiuserService } from '../services/apiuser.service';
+import { ApiproducerService } from '../services/apiproducer.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,15 +13,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdminComponent implements OnInit {
   public forecasts: WeatherForecast[];
+  public listUser = [];
+  public listProducer = [];
+  constructor(private apiUser: ApiuserService, private apiProducer: ApiproducerService) {
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
   }
-
-
- 
 
   productors = [
     {
@@ -33,12 +33,52 @@ export class AdminComponent implements OnInit {
 
   ngOninit(): void{
 
+    this.getUser();
+    this.getProducer();
   var i;
   for (i = 0; i < this.productors.length; i++) {
     if (this.productors[i].afil = 1) {
       this.afilNumber++;
     }
   }
+  }
+
+  getUser() {
+    this.apiUser.getUser().subscribe(reply => {
+      console.log(reply);
+      this.listUser = reply.data;
+
+   
+    });
+  }
+  getProducer() {
+    this.apiProducer.getProducer().subscribe(reply => {
+      console.log(reply);
+      this.listProducer = reply.data;
+
+    });
+  }
+
+  addUserC() {
+    const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.location, birthDate: this.model.birthD, phoneNumber: parseInt(this.model.phone), username: this.model.user, password: this.model.password, rol: "producer" };
+    const producer: producer = { idUser: parseInt(this.model.id), idProducer: parseInt(this.model.id), sinpe: parseInt(this.model.sinpe), isAcepted: parseInt(this.model.afil) };
+
+    console.log(producer)
+    this.apiUser.add(user).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+
+    });
+
+    this.apiProducer.add(producer).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+
+    });
+
+
+
+
   }
 
 

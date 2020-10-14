@@ -1,0 +1,258 @@
+<div class="row">
+
+  <div class=" text-center">
+    <h1 class="h3 mb-3 font-weight-normal">
+      Productor
+    </h1>
+  </div>
+
+
+</div>
+  
+
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Options</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample01">
+
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" (click) ="activateModal()" >Solicitar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/productos']" > Productos</a>
+        </li>
+
+      </ul>
+
+    </div>
+  </nav>
+
+  
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col"># Pedido</th>
+          <th scope="col"> Lugar </th>
+          <th scope="col">Actions</th>
+          <th scope="col">I</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let pedido of pedidos; let i = index">
+
+
+          <td>{{pedido.id}}</td>
+          <td>{{pedido.dir}}</td>
+          <td>
+            <button data-toggle="collapse" [attr.data-target]="'#demo'">Ver productos</button>
+
+            <div id ="demo" class="collapse" *ngFor="let p of pedido.lista">
+
+              {{p.name}}: {{p.price}}
+            </div>
+          </td>
+          <td>{{i}}</td>
+
+
+        </tr>
+        
+
+      </tbody>
+    </table>
+
+
+    <div style="position:absolute; left: 800px; top: 300px">
+
+
+      <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Solicitar afiliación</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+
+              <div class="row">
+
+                <div class="col-md-8 order-md-1">
+                  <form class="needs-validation " novalidate id="form1">
+                    <div class="row">
+
+                      <div class="col-md-6 mb-3">
+                        <label for="firstName">Nombre</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="" name="name" [(ngModel)]=model.name required>
+                        <div class="invalid-feedback">
+                          Ingrese un nombre valido
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="lastName">Apellido</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" name="lastName" [(ngModel)]=model.lastName required>
+                        <div class="invalid-feedback">
+                          Ingrese apellido Valido
+                        </div>
+                      </div>
+
+
+
+                    </div>
+
+                    <div class="row ">
+
+                      <div class="col-md-6 mb-3">
+                        <label for="username">Usuario</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">@</span>
+                          </div>
+                          <input type="text" class="form-control" id="username" placeholder="Nombre_Usuario" name=" user" [(ngModel)]=model.user required>
+                          <div class="invalid-feedback" style="width: 100%;">
+                            Ingrese un usuario valido
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="email">Cédula <span class="text-muted"></span></label>
+                        <input type="email" class="form-control" id="ced" name="id" [(ngModel)]=" model.id">
+                        <div class="invalid-feedback">
+                          Ingrese un número de identificación valido
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="email">Télefono <span class="text-muted"></span></label>
+                        <input type="email" class="form-control" id="email" name="phone" [(ngModel)]=model.phone>
+                        <div class="invalid-feedback">
+                          Ingrese un número de telefono valido
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="address">Dirección</label>
+                        <input type="text" class="form-control" id="address" placeholder="" name="location" [(ngModel)]=model.location required>
+                        <div class="invalid-feedback">
+                          Ingrese su dirección
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                      <div class="col-md-5 mb-3">
+                        <label for="country">Provincia</label>
+                        <select class="custom-select d-block w-100" id="country" required>
+                          <option value="">Choose...</option>
+                          <option>San José</option>
+                          <option>Heredia</option>
+                          <option>Alajuela</option>
+                          <option>Cartago</option>
+                          <option>Guanacaste</option>
+                          <option>Limón</option>
+                          <option>El Puerto</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Por favor seleccione una provincia
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label for="zip">Cantón</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                        <div class="invalid-feedback">
+                          Se requiere ingresar un cantón
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 mb-3">
+                        <label for="zip">Distrito</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                        <div class="invalid-feedback">
+                          Se requiere ingresar un distrito
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-6 mb-3">
+                        <label for="zip">Fecha de nacimiento</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" name="birthD" [(ngModel)]=model.birthD required>
+                        <div class="invalid-feedback">
+                          Se requiere ingresar una fecha de nacimiento
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 mb-3">
+                        <label for="zip">Lugares de entrega</label>
+                        <input type="text" class="form-control" id="zip" placeholder="" name="places" [(ngModel)]=model.places required>
+                        <div class="invalid-feedback">
+                          Se requiere que ingrese lugares de entrega
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+                      <label>Contraseña</label>
+                      <div class="input-group" id="show_hide_password">
+                        <input class="form-control" type="password" name="password" [(ngModel)]=model.password>
+                        <div class="input-group-addon">
+                          <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <hr class="mb-4">
+
+                  </form>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success" (click)="addProductor()" data-dismiss="modal">
+                Enviar
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+    </div>
+
+
+
+
+

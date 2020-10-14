@@ -1,0 +1,4 @@
+C:\Users\danie\source\repos\TareaCorta 1\obj\Debug\netcoreapp3.1\TareaCorta 1.csprojAssemblyReference.cache
+C:\Users\danie\source\repos\TareaCorta 1\obj\Debug\netcoreapp3.1\TareaCorta 1.AssemblyInfoInputs.cache
+C:\Users\danie\source\repos\TareaCorta 1\obj\Debug\netcoreapp3.1\TareaCorta 1.AssemblyInfo.cs
+C:\Users\danie\source\repos\TareaCorta 1\obj\Debug\netcoreapp3.1\TareaCorta 1.csproj.CoreCompileInputs.cache

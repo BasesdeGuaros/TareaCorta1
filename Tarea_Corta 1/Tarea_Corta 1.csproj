@@ -45,6 +45,8 @@
     <TypeScriptCompile Remove="ClientApp\src\app\feedback\feedback.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\main-window\main-window.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\Models\orderproducts.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\Models\producer.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\Models\productsProducer.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\producers\producers.component.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\sign-up\sign-up.component.ts" />
   </ItemGroup>
