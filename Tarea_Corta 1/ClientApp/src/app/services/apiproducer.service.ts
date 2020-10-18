@@ -14,6 +14,12 @@ const httpOption = {
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+* Servicio que ofrece el protocolo https para Producers
+* Permite obtener, editar, anadir y eliminar un productor
+* */
+
 export class ApiproducerService {
 
   url: string = "https://localhost:44372/api/producers";

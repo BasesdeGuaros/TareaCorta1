@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Tarea_Corta_1.Models.Request
 {
+    /**
+     * Modelo para la tabla de Orden
+     */
     public class OrderRequest
     {
         public int Id { get; set; }

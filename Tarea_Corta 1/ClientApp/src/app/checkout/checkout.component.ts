@@ -6,10 +6,7 @@ import { ApiuserService } from '../services/apiuser.service';
 import { order } from '../Models/order'
 import { productsproducer } from '../Models/productsProducer'
 import { orderproducts } from '../Models/orderproducts'
-import { subscribeToIterable } from 'rxjs/internal-compatibility';
 import { ApiproductsproducerService } from '../services/apiproductsproducer.service';
-
-
 
 @Component({
     selector: 'app-checkout',
@@ -27,6 +24,7 @@ export class CheckoutComponent implements OnInit{
   public idCustomer;
   public total = 0;
   public size = 0;
+  public priceAux = 0;
 
 
     /** checkout ctor */
@@ -36,10 +34,13 @@ export class CheckoutComponent implements OnInit{
     private route: ActivatedRoute,
     private apiUser: ApiuserService,
     private apiProductsP: ApiproductsproducerService
-
     ) {
   }
-  
+
+
+/**
+* Funcion que se ejecuta al inicio
+* */
   ngOnInit(): void {
     this.getUser();
     this.getOrder();
@@ -47,6 +48,9 @@ export class CheckoutComponent implements OnInit{
     this.getProductsP();
   }
 
+  /**
+   * Solicitud para editar una orden general
+   * */
   editOrder() {
     var idP;
     var subtotal;
@@ -78,6 +82,10 @@ export class CheckoutComponent implements OnInit{
     this.apiOrder.edit(order).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
       console.log(Reply.message);
+
+      if (Reply.conexionSuccess == 1) {
+        $('#buyModal').modal('show');
+      }
     });
 
     /*
@@ -87,7 +95,9 @@ export class CheckoutComponent implements OnInit{
     });*/
   }
 
-
+/**
+* Solicitud para editar una orden de productos
+* */
   editOrderp(orderp) {
     this.apiOrderP.edit(orderp).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
@@ -95,6 +105,10 @@ export class CheckoutComponent implements OnInit{
     });
   }
 
+  /**
+   * Calcula el total
+   * A veces no lo hace ??
+   * */
   calcTotal() {
     let user = this.route.snapshot.paramMap.get('userName')
     var i;
@@ -104,8 +118,6 @@ export class CheckoutComponent implements OnInit{
       }
     }
 
-
-    console.log(this.listOrder);
     var i;
     for (i = 0; i <= this.listOrder.length - 1; i++) {
       if (this.listOrder[i].idCustomer == this.idCustomer && this.listOrder[i].isActive == 1) {
@@ -116,10 +128,14 @@ export class CheckoutComponent implements OnInit{
     }
   }
 
-
+  /**
+   * Permite editar el cantidad de productos a comprar
+   * @param i
+   */
   public add(i) {
+    this.priceAux = this.listMyOrders[i].total / (this.listMyOrders[i].quantity);
     this.listMyOrders[i].quantity = this.listMyOrders[i].quantity + 1;
-    this.listMyOrders[i].total += this.listMyOrders[i].total / (this.listMyOrders[i].quantity - 1);   
+    this.listMyOrders[i].total += this.priceAux;   
 
     this.total += this.listMyOrders[i].total / (this.listMyOrders[i].quantity);
 
@@ -134,6 +150,10 @@ export class CheckoutComponent implements OnInit{
     
   }
 
+/**
+ * Permite editar el cantidad de productos a comprar
+ * @param i
+ */
   public less(i) {
     if (this.listMyOrders[i].quantity > 0) {
       this.listMyOrders[i].quantity = this.listMyOrders[i].quantity - 1;
@@ -150,9 +170,17 @@ export class CheckoutComponent implements OnInit{
       }
 
       this.editOrderp(orderp);
+    } else {
+      
+      this.priceAux = this.listMyOrders[i].total / (this.listMyOrders[i].quantity);
+      this.listMyOrders[i].quantity = 0;
+      this.listMyOrders[i].total = 0;
     }
   }
 
+/**
+* Solicitud a la base de datos para obtener los Usuarios
+* */
   getUser() {
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
@@ -161,6 +189,9 @@ export class CheckoutComponent implements OnInit{
     });
   }
 
+/**
+* Solicitud a la base de datos para obtener la orden de productos
+* */
   getOrderp() {
     this.apiOrderP.getOrderP().subscribe(reply => {
       console.log(reply);
@@ -176,16 +207,20 @@ export class CheckoutComponent implements OnInit{
     });
   }
 
+/**
+* Solicitud a la base de datos para obtener las Ordenes
+* */
   getOrder() {
     this.apiOrder.getOrder().subscribe(reply => {
       console.log(reply);
       this.listOrder = reply.data;
       console.log(this.listOrder.length);
-
     });
   }
 
-
+/**
+* Solicitud a la base de datos para obtener los Productos de los productores
+* */
   getProductsP() {
     this.apiProductsP.getPP().subscribe(reply => {
       console.log(reply);

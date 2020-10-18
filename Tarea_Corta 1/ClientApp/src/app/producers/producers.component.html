@@ -1,32 +1,11 @@
 <img class="mb-4 rounded float-right" typeof="button" (click)="checkout()" src="https://image.flaticon.com/icons/png/512/107/107831.png" alt="" width="75" height="75">
 
 <h2>Productos del vendedor {{producer}}</h2>
-<table class="table table-hover table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Producto</th>
-      <th scope="col">Cantidad Disponible</th>
-      <th scope="col">Precio</th>
-      <th scope="col">Cantidad a comprar</th>
-      <th scope="col"></th>
 
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let PP of listMyProducers; let i = index">
-      <td>{{PP.idProductNavigation.product}}</td>
-      <td>{{PP.quantity}}</td>
-      <td>{{PP.price}}</td>
-      <td>{{cantidad}}</td>
-      <td> <button class="btn btn-primary" (click)="add(i)">+</button> </td>
-      <td> <button class="btn btn-primary" (click)="less(i)">-</button> </td>
-    </tr>
-  </tbody>
-</table>
 
 <div class="align-content-end">
-  <h2 class="blockquote text-right">El subtotal es {{subtotal}}</h2>
-  <button class="btn btn-primary" (click)="addOrder()">Realizar Compra</button>
+  <h2 class="blockquote text-right">.    .</h2>
+  <button class="btn btn-primary" (click)="addOrder()"></button>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -73,7 +52,7 @@
               <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
             </svg>Actualizar Carrito
           </button>
-          <button class="btn btn-outline-danger btn-sm btn-block mb-2" type="button"  (click)="delete()">
+          <button class="btn btn-outline-danger btn-sm btn-block mb-2" type="button"  (click)="delete(i)">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 mr-1">
               <polyline points="3 6 5 6 21 6"></polyline>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>

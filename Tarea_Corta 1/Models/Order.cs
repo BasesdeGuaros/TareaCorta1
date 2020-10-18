@@ -10,9 +10,9 @@ namespace Tarea_Corta_1.Models
             OrderProducts = new HashSet<OrderProducts>();
         }
 
-        public Order(int idCustomer)
+        public Order(int id)
         {
-            IdCustomer = idCustomer;
+            Id = id;
         }
 
         public int Id { get; set; }

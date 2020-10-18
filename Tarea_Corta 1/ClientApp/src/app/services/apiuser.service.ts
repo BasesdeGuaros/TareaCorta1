@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'oidc-client/dist/oidc-client';
+import { User } from '../Models/User';
 import { Observable } from 'rxjs';
 import { Reply } from '../Models/reply'
 
@@ -14,6 +14,12 @@ const httpOption = {
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+* Servicio que ofrece el protocolo https para User
+* Permite obtener, editar, anadir y eliminar un usuario
+* */
+
 export class ApiuserService {
 
   url: string = "https://localhost:44372/api/user";
@@ -23,6 +29,10 @@ export class ApiuserService {
 
   getUser(): Observable<Reply> {
     return this._http.get<Reply>(this.url);
+  }
+
+  getProducer(rol: string): Observable<Reply> {
+    return this._http.get<Reply>(this.url+rol);
   }
 
   add(user: User): Observable<Reply> {
@@ -37,30 +47,4 @@ export class ApiuserService {
     return this._http.delete<Reply>(`${this.url}/${userName}`)
   }
 }
-
-
-/* servicio de Customer
-constructor(
-  //atributo para hacer solicitudes
-  private _http: HttpClient) { }
-
-//se ejecuta despues del constructor y dentro del ciclo de vida de angular
-
-//Observable se usa para hacer solicitudes a servicios
-getCustomer(): Observable < Reply > {
-  return this._http.get<Reply>(this.url);
-}
-
-add(customer: customer): Observable < Reply > {
-  return this._http.post<Reply>(this.url, customer, httpOption)
-}
-
-edit(customer: customer): Observable < Reply > {
-  return this._http.put<Reply>(this.url, customer, httpOption)
-}
-
-delete (userName: string): Observable < Reply > {
-  return this._http.delete<Reply>(`${this.url}/${userName}`)
-}
-  */
 

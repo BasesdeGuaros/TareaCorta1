@@ -54,7 +54,6 @@ namespace Tarea_Corta_1.Controllers
                     producer.Id = request.Id;
                     producer.Sinpe = request.Sinpe;
                     producer.IsAccepted = request.IsAccepted;
-                    producer.IdProducer = request.IdProducer;
                     
 
                     db.Producers.Add(producer);

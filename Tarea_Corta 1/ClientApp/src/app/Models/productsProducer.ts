@@ -1,5 +1,5 @@
 export interface productsproducer {
-  quantity: number,
+  quantity: number;
   idProduct: number;
   idProducer: number;
   price: number;

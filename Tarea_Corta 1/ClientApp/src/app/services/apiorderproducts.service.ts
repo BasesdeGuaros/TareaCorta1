@@ -13,6 +13,12 @@ const httpOption = {
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+* Servicio que ofrece el protocolo https para Order_Productos
+* Permite obtener, editar y anadir una order de productos
+* */
+
 export class ApiorderproductsService {
 
   url: string = "https://localhost:44372/api/orderproducts";

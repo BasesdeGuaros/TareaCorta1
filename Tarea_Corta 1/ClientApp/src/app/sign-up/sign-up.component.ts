@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { user } from '../Models/user';
+import { producer } from '../Models/producer';
+import { ApiproducerService } from '../services/apiproducer.service';
 import { ApiuserService } from '../services/apiuser.service';
 
 
@@ -15,25 +17,27 @@ export class SignUpComponent implements OnInit{
   public listUser;
   public isNew;
 
-
-
     /** signUp ctor */
   constructor(
    // private apiCustomer: ApicustomerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private apiUser: ApiuserService,
-
+    private apiProducer: ApiproducerService
   ) { }
 
+/**
+* Funcion que se ejecuta al inicio
+* */
   ngOnInit(): void {
-    
     this.isNew = this.activatedRoute.snapshot.paramMap.get('userName');
-
     this.getUser();
   }
 
-
+/**
+* Accedemos al API, el cual nos provee retorna una lista con los usuarios
+* Se itera la lista para acceder a los usuarios que son necesarios
+* */
   getUser() {
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
@@ -46,19 +50,39 @@ export class SignUpComponent implements OnInit{
     });
   }
 
+  /**
+   * Se hace una solicitud a la base de datos para agregar un nuevo Usuario
+   * */
   addUserC() {
-    const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.address, birthDate: this.model.birth_date, phoneNumber: parseInt(this.model.phone_number), username: this.model.username, password: this.model.password, rol: "customer" };
+    var rolF;
+    console.log(this.model.rol);
+    if (this.model.rol == "Cliente") {
+      rolF = "customer";
+    } else {
+      rolF = "producer";
+    }
+
+    const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.address, birthDate: this.model.birth_date, phoneNumber: parseInt(this.model.phone_number), username: this.model.username, password: this.model.password, rol: rolF };
+
     if (this.isNew == 'null') {
       this.apiUser.add(user).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
         console.log(Reply.message);
 
         if (Reply.conexionSuccess === 1) {
-          this.router.navigateByUrl('/loginG');
-          console.log(user);
           $('#addModal').modal('show');
+          console.log(user);
         }
       });
+      if (rolF == "producer") {
+        const producer: producer = { id: parseInt(this.model.id), sinpe: parseInt(this.model.phone_number), isAccepted: 0 };
+
+        this.apiProducer.add(producer).subscribe(Reply => {
+          console.log(Reply.conexionSuccess);
+          console.log(Reply.message);
+
+        });
+      }
     } else{
       this.apiUser.edit(user).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
@@ -72,6 +96,10 @@ export class SignUpComponent implements OnInit{
     }
   }
 
+  /**
+   * Se hace una solicitud para editar un usuario
+   * @param userName sirve para identificar el usuario a editar
+   */
   editUserC(userName: string) {
     console.log(userName);
     var i;
@@ -89,6 +117,11 @@ export class SignUpComponent implements OnInit{
     }
   }
 
+
+  /**
+   * Se hace una solicitud para eliminar un usuario
+   * @param userName sirve para identificar el usuario a editar
+   */
   deleteUser(userName: string) {
     var i;
     for (i = 0; i <= this.listUser.length - 1; i++) {
@@ -96,7 +129,6 @@ export class SignUpComponent implements OnInit{
         this.apiUser.delete(this.listUser[i].idUser).subscribe(Reply => {
           console.log(Reply.conexionSuccess);
           if (Reply.conexionSuccess === 1) {
-            this.router.navigateByUrl('/loginG');
             $('#deleteModal').modal('show');
           }
         });

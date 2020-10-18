@@ -14,44 +14,53 @@ export class LoginGeneralComponent implements OnInit{
   model: any = {};
   public cond = true;
 
-
-
     /** loginGeneral ctor */
   constructor(
     private apiUser: ApiuserService,
     private router: Router
-) {
+) {}
 
-  }
-
+  /**
+  * Funcion que se ejecuta al inicio
+  * */
   ngOnInit(): void {
     this.getUser();
   }
-  
+
+
+  /**
+   * Verifica si el usuario y contrasena ingresadas estan en la base de datos
+   * */
   public authorization() {
     var i;
     for (i = 0; i <= this.listUser.length - 1; i++) {
-      if (this.model.user == this.listUser[i].username && this.model.password == this.listUser[i].password && this.listUser[i].rol == "customer") {
-        this.router.navigate(['/tramo-producto', this.listUser[i].username]);
+      if (this.model.user == this.listUser[i].username && this.model.password == this.listUser[i].password) {
+        if (this.listUser[i].rol == "customer") {
+          this.router.navigate(['/tramo-producto', this.listUser[i].username]);
+          this.cond = false;
+
+        } else if (this.listUser[i].rol == "producer") {
+          this.router.navigate(['/productor', this.listUser[i].idUser]);
+          this.cond = false;
+        }
+      } else if (this.model.user == "admin" && this.model.password == "admin") {
+        this.router.navigate(['/admin']);
         this.cond = false;
       }
-      
-       
     }
     if (this.cond) {
       $('#exampleModal').modal('show')  
     }
 
-    console.log(this.listUser.length);
-    console.log(this.model.user);
-    console.log(this.model.password);
-  }
 
+  }
+  /**
+  * Solicitud a la base de datos para obtener los Usuarios
+  * */
   getUser() {
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
       this.listUser = reply.data;
-      
     });
   }
 

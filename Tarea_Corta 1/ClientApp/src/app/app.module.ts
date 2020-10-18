@@ -22,11 +22,9 @@ import { FeedbackComponent } from  './feedback/feedback.component';
 import { ProductorComponent } from './productor/productor.component';
 import { ProductosComponent } from './productos/productos.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
@@ -48,12 +46,13 @@ import { ProductosComponent } from './productos/productos.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: '', component: MainWindowComponent },
-      { path: 'loginG', component: LoginGeneralComponent },
+      { path: 'main', component: MainWindowComponent },
+      { path: '', component: LoginGeneralComponent },
       { path: 'tramo-producto/:userName', component: TramoProductoComponent },
       { path: 'signup/:userName', component: SignUpComponent },
       { path: 'checkout/:userName', component: CheckoutComponent },
@@ -62,8 +61,8 @@ import { ProductosComponent } from './productos/productos.component';
       { path: 'categorias', component: CategoriasComponent },
       { path: 'reportes', component: ReportesComponent },
       { path: 'feedback', component: FeedbackComponent },
-      { path: 'productor', component: ProductorComponent },
-      { path: 'productos', component: ProductosComponent},
+      { path: 'productor/:idUser', component: ProductorComponent },
+      { path: 'productos/:idUser', component: ProductosComponent},
 
 
     ])

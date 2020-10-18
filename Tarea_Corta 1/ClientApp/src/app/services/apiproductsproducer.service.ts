@@ -10,11 +10,15 @@ const httpOption = {
   })
 };
 
-
-
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+* Servicio que ofrece el protocolo https para ProductsProducer
+* Permite obtener, editar y anadir datos de los productores
+* */
+
 export class ApiproductsproducerService {
 
   url: string = "https://localhost:44372/api/productsproducer";

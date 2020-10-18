@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace Tarea_Corta_1.Models.Request
 {
-  
+    /**
+     * Modelo para la tabla de Orden_Products
+     */ 
     public class OrderProductsRequest
     {
         public int IdOrder { get; set; }

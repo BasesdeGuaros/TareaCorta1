@@ -11,6 +11,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <RootNamespace>Tarea_Corta_1</RootNamespace>
+    <UserSecretsId>50fb79df-95d1-4c4b-9420-6139a2c70839</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,7 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\Models\category.ts" />
     <None Remove="ClientApp\src\app\Models\order.ts" />
+    <None Remove="ClientApp\src\app\Models\products.ts" />
     <None Remove="ClientApp\src\app\Models\reply.ts" />
   </ItemGroup>
 

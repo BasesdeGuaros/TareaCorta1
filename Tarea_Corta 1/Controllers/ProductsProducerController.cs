@@ -28,6 +28,7 @@ namespace Tarea_Corta_1.Controllers
                     var list = db.ProductsProducer
                         .Include(s => s.IdProducerNavigation)
                         .Include(s => s.IdProductNavigation)
+                        .Include(s => s.IdProductNavigation.Category)
                         .ToList(); //variable con la lista de datos de la tabla productores
                     reply.conexionSuccess = 1;
                     reply.data = list;
@@ -85,7 +86,7 @@ namespace Tarea_Corta_1.Controllers
                     PP.Quantity = request.Quantity;
                     PP.IdProducer = request.IdProducer;
                     PP.IdProduct = request.IdProduct;
-                    //PP.Price = request.Price;
+                    PP.Price = request.Price;
 
 
                     db.Entry(PP).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  

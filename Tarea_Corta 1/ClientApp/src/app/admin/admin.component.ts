@@ -12,43 +12,34 @@ import { ApiproducerService } from '../services/apiproducer.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  public forecasts: WeatherForecast[];
   public listUser = [];
   public listProducer = [];
-  constructor(private apiUser: ApiuserService, private apiProducer: ApiproducerService) {
+  public afilNumber = 0;
+
+  constructor(
+    private apiUser: ApiuserService,
+    private apiProducer: ApiproducerService) {
 
   }
 
-  productors = [
-    {
-      'name': 'Daniel', id: '117460001', lastName: 'Garcia Fallas', location: 'Desamparados', birthD: '11/06/1999'
-      , phone: '61834960', sinpe: '61834960', places: 'desamparados', afil: 1, user: 'garza', password: 'hola123'
-    },
-    {
-      'name': 'quiero ser afiliado', id: '11111111', lastName: 'lastname', location: 'none', birthD: 'none'
-      , phone: '101010', sinpe: '10101010', places: 'none', afil: 0, user: 'user', password: 'hola123'
-    },
-    
-  ];
-
-  ngOninit(): void{
-
+  ngOnInit(): void{
     this.getUser();
     this.getProducer();
-  var i;
-  for (i = 0; i < this.productors.length; i++) {
-    if (this.productors[i].afil = 1) {
-      this.afilNumber++;
-    }
-  }
   }
 
   getUser() {
-    this.apiUser.getUser().subscribe(reply => {
+    this.apiUser.getProducer('producer').subscribe(reply => {
       console.log(reply);
       this.listUser = reply.data;
 
-   
+      /*
+      var i;
+      for (i = 0; i < this.listUser.length; i++) {
+        if (this.listUser[i].producers[0].isAccepted = 0) {
+          this.afilNumber++;
+        }
+      }
+      */
     });
   }
   getProducer() {
@@ -60,30 +51,22 @@ export class AdminComponent implements OnInit {
   }
 
   addUserC() {
+    this.model.afil = 1;
     const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.location, birthDate: this.model.birthD, phoneNumber: parseInt(this.model.phone), username: this.model.user, password: this.model.password, rol: "producer" };
-    const producer: producer = { idUser: parseInt(this.model.id), idProducer: parseInt(this.model.id), sinpe: parseInt(this.model.sinpe), isAcepted: parseInt(this.model.afil) };
-
-    console.log(producer)
+    const producer: producer = { id: parseInt(this.model.id), sinpe: parseInt(this.model.sinpe), isAccepted: 1 };
+    console.log(producer);
     this.apiUser.add(user).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
       console.log(Reply.message);
-
     });
 
+    
     this.apiProducer.add(producer).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
       console.log(Reply.message);
 
     });
-
-
-
-
   }
-
-
-
-
 
   model: any = {};
   model2: any = {};
@@ -92,7 +75,6 @@ export class AdminComponent implements OnInit {
   currentProductorUpdate;
   currentCategoryUpdate;
   currentAfiliation;
-  afilNumber: number = 0;
 
 
   activateModal(): void {
@@ -108,16 +90,15 @@ export class AdminComponent implements OnInit {
 
   loadAfiliation(i): void {
 
-    this.model4.name = this.productors[i].name;
-    this.model4.lastName = this.productors[i].lastName;
-    this.model4.id = this.productors[i].id;
-    this.model4.location = this.productors[i].location;
-    this.model4.birthD = this.productors[i].birthD;
-    this.model4.phone = this.productors[i].phone;
-    this.model4.sinpe = this.productors[i].sinpe;
-    this.model4.places = this.productors[i].places;
-    this.model4.user = this.productors[i].user;
-    this.model4.password = this.productors[i].password;
+    this.model4.name = this.listUser[i].name;
+    this.model4.lastName = this.listUser[i].lastName;
+    this.model4.id = this.listUser[i].idUser;
+    this.model4.location = this.listUser[i].address;
+    this.model4.birthD = this.listUser[i].birthDate;
+    this.model4.phone = this.listUser[i].phoneNumber;
+    this.model4.sinpe = this.listUser[i].producers[0].sinpe;
+    this.model4.user = this.listUser[i].username;
+    this.model4.password = this.listUser[i].password;
 
     this.currentAfiliation = i;
   }
@@ -128,7 +109,7 @@ export class AdminComponent implements OnInit {
     if (asnwer) {
 
 
-      this.productors[this.currentAfiliation] = this.model4;
+      this.listUser[this.currentAfiliation] = this.model4;
       this.model4.afil = 1;
       this.model4 = {};
 
@@ -138,11 +119,10 @@ export class AdminComponent implements OnInit {
 
   deleteAfiliation(ident): void {
     var i;
-    for (i = 0; i < this.productors.length; i++) {
-      if (this.productors[i].id == ident) {
-        this.productors.splice(i,1);
+    for (i = 0; i < this.listUser.length; i++) {
+      if (this.listUser[i].id == ident) {
+        this.listUser.splice(i,1);
       }
-
     }
   }
 
@@ -159,7 +139,7 @@ export class AdminComponent implements OnInit {
 
   addProductor(): void {
     this.model.afil = 1;
-    this.productors.push(this.model);
+    this.listUser.push(this.model);
     this.model = {};
 
   }
@@ -168,7 +148,7 @@ export class AdminComponent implements OnInit {
 
     var asnwer = confirm("are you sure you want to delete this productor? ");
     if (asnwer) {
-      this.productors.splice(i, 1);
+      this.listUser.splice(i, 1);
       
     }
 
@@ -176,17 +156,15 @@ export class AdminComponent implements OnInit {
 
   editProductor(i): void {
 
-   
-    this.model2.name = this.productors[i].name;
-    this.model2.lastName = this.productors[i].lastName;
-    this.model2.id = this.productors[i].id;
-    this.model2.location = this.productors[i].location;
-    this.model2.birthD = this.productors[i].birthD;
-    this.model2.phone = this.productors[i].phone;
-    this.model2.sinpe = this.productors[i].sinpe;
-    this.model2.places = this.productors[i].places;
-    this.model2.user = this.productors[i].user;
-    this.model2.password = this.productors[i].password;
+    this.model2.name = this.listUser[i].name;
+    this.model2.lastName = this.listUser[i].lastName;
+    this.model2.id = this.listUser[i].idUser;
+    this.model2.location = this.listUser[i].address;
+    this.model2.birthD = this.listUser[i].birthDate;
+    this.model2.phone = this.listUser[i].phoneNumber;
+    this.model2.sinpe = this.listUser[i].producers[0].sinpe;
+    this.model2.user = this.listUser[i].username;
+    this.model2.password = this.listUser[i].password;
     
     this.currentProductorUpdate = i;
   }
@@ -198,7 +176,7 @@ export class AdminComponent implements OnInit {
     if (asnwer) {
 
       this.model2.afil = 1;
-      this.productors[this.currentProductorUpdate] = this.model2;
+      this.listUser[this.currentProductorUpdate] = this.model2;
       this.model2 = {};
 
     }
@@ -207,9 +185,3 @@ export class AdminComponent implements OnInit {
 
 }
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}

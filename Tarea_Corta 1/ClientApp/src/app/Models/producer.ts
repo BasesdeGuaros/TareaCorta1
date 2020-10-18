@@ -1,7 +1,5 @@
 export interface producer {
-  idUser: number;
-  idProducer: number;
+  id: number;
   sinpe: number;
-  isAcepted: number;
-
+  isAccepted: number;
 }

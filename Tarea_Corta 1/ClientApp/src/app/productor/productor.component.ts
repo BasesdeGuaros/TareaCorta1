@@ -1,6 +1,7 @@
 
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-productor',
@@ -8,14 +9,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./productor.component.scss']
 })
 export class ProductorComponent {
-  public forecasts: WeatherForecast[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'weatherforecast').subscribe(result => {
-      this.forecasts = result;
-    }, error => console.error(error));
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router) {
   }
-
 
 
 
@@ -46,15 +44,7 @@ export class ProductorComponent {
     
   ];
 
-  
-
   model: any = {};
-
-
-  activateModal(): void {
-    $('#addModal').modal('show');
-  }
-
 
   addProductor(): void {
     this.model.afil = 0;
@@ -63,12 +53,11 @@ export class ProductorComponent {
 
   }
 
+  products() {
+    let idUser = this.route.snapshot.paramMap.get('idUser'); //agarrar el producerId del link
+    this.router.navigate(['/productos', idUser]);
+  }
+
 
 }
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}

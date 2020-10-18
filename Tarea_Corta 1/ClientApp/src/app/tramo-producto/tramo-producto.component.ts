@@ -25,56 +25,40 @@ export class TramoProductoComponent implements OnInit{
     private router: Router) {
   }
 
+  /**
+   * Funcion que se ejecuta al inicio
+   * */
   ngOnInit(): void {
-  
-   // this.getCustomer();
-    //this.getProducer();
     this.getUser();
-    //this.getStock();
-    
   }
 
+  /**
+   * Nos dirijimos a la pagina web del carrito y le agregamos el username al link
+   * */
   checkout() {
     this.router.navigate(['/checkout', this.userName]);
   }
 
+  /**
+   * Redirecciona a trama de un productor especifico
+   * @param i el indice del producto que el usuario escogio
+   */
   producers(i) {
     console.log(this.listProducers[i].idProducer);
     this.router.navigate(['/producers', this.userName, this.listProducers[i].name]);
   }
 
+  /**
+   * Para editar o eliminar el perfil donde nos encontramos en el momento
+   * */
   editDelete() {
     this.router.navigate(['/signup', this.userName]);
   }
 
-
-  /*getStock() {
-    this.apiStock.getStock().subscribe(reply => {
-      console.log(reply);
-      this.listStock = reply.data;
-
-      console.log("hora ci")
-
-    })
-  }
-
-  getCustomer() {
-    this.apiCustomer.getCustomer().subscribe(reply => {
-      console.log(reply);
-      this.listCustomers = reply.data;
-
-      let user = this.route.snapshot.paramMap.get('userName'); //agarrar el userName del link
-      this.userName = user;
-      var i;
-      for (i = 0; i <= this.listCustomers.length - 1; i++) { //recorrer la lista con el userName que agarramos 
-        if (this.listCustomers[i].userName == user) {
-          this.firstName = this.listCustomers[i].name;
-        }
-      }
-    });
-  }
-  */
-
+  /**
+   * Accedemos al API, el cual nos provee retorna una lista con los usuarios
+   * Se itera la lista para acceder a los usuarios que son necesarios
+   * */
   getUser() {
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
@@ -94,16 +78,5 @@ export class TramoProductoComponent implements OnInit{
       }
     });
   }
-
-
-  /*
-  getProducer() {
-    this.apiProducer.getProducer().subscribe(reply => {
-      console.log(reply);
-      this.listProducers = reply.data;
-      console.log(this.listProducers[0].product.product);
-    })
-  }
-  */
 
 }

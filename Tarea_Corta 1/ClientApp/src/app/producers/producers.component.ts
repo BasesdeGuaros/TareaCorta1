@@ -30,8 +30,6 @@ export class ProducersComponent implements OnInit{
   public listOrderP;
   public listMyProducers = [];
   model: any = {};
-
-  url: string = "https://localhost:44372/producers";
  
     /** producers ctor */
   constructor(
@@ -42,13 +40,14 @@ export class ProducersComponent implements OnInit{
     private apiOrderP: ApiorderproductsService,
     private apiOrder: ApiorderService,
     private route: ActivatedRoute) {
-
   }
 
+
+  /**
+  * Funcion que se ejecuta al inicio
+  * */
   ngOnInit(): void {
-    //this.getProducer();
     this.userName = this.route.snapshot.paramMap.get('userName');
-    //this.getPP();
     this.getUser();
     this.getOrder();
     let produ = this.route.snapshot.paramMap.get('producerName'); //agarrar el producerId del link
@@ -56,8 +55,12 @@ export class ProducersComponent implements OnInit{
     
   }
 
+  /**
+   * Crea una lista con los productos solicitados por el cliente
+   * @param i indice de los productos
+   */
   public refresh(i) {
-    if (this.listMyProducers[i].quantity > this.model.quantity && this.model.quantity > 0) {
+    if (this.listMyProducers[i].quantity >= this.model.quantity && this.model.quantity > 0) {
       this.listMyProducers[i].quantity -= this.model.quantity;
       let p = { idProduct: this.listMyProducers[i].idProductNavigation.id, product: this.listMyProducers[i].idProductNavigation.product, quantity: this.model.quantity, price: this.listMyProducers[i].price };
       this.listPurchase.push(p);
@@ -68,54 +71,46 @@ export class ProducersComponent implements OnInit{
     }
   }
 
-  public delete() { //hay que arreglarlo
-    var i;
-    for (i = 0; i <= this.listPurchase.length - 1; i++) {
-      
+  /**
+   * Elimina los productos de la lista  
+   * */
+  public delete(j) {
+    if (this.listPurchase[j] == undefined) {
+      alert('No hay productos agregados');
+    } else {
+
+      var i;
+      for (i = 0; i <= this.listPurchase.length - 1; i++) {
         if (this.listPurchase[i].product == this.listMyProducers[i].idProductNavigation.product) {
           this.listPurchase.splice(i, 1);
           console.log(this.listPurchase);
-        } else {
-          alert('No hay productos agregados');
-        
+        }
       }
     }
   }
 
-  public add(i) {
-    //this.listNumber[i]++;
-    if (this.listMyProducers[i].quantity > 0) {
-      this.listMyProducers[i].quantity = this.listMyProducers[i].quantity - 1; //aca va un edit
-      this.amount++;
-      this.subtotal = this.amount * this.listMyProducers[i].price; //cambiar esto porque solo sirve para un solo producto
-    } else {
-      $('#exampleModal').modal('show')  
-    }
-  }
-
-  public less(i) {
-    //this.listNumber[i]++;
-    if (this.amount > 0) {
-      this.listMyProducers[i].quantity = this.listMyProducers[i].quantity + 1; //aca va un edit
-      this.amount--;
-      this.subtotal = this.amount * this.listMyProducers[i].price; //cambiar esto porque solo sirve para un solo producto
-    }
-  }
-
-
-
-  checkout() { //aca se hace la orden HAY QUE HACERLA 
+  /**
+   * Agregar la orden y nos envia a la direccion del carrito
+   * */
+  checkout() {
+    this.addOrder();
     let user = this.route.snapshot.paramMap.get('userName')
     this.router.navigate(['/checkout', user]);
   }
-  
+
+  /**
+   * Solicitud a la base de datos para obtener los Productos de los productores
+   * */
   getPP() {
     this.apiPP.getPP().subscribe(reply => {
       console.log(reply);
       this.listPP = reply.data;
     })
   }
-  
+
+/**
+ * Solicitud a la base de datos para obtener los Productores
+ * */
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
     this.listProducers = reply.data;
@@ -123,6 +118,9 @@ export class ProducersComponent implements OnInit{
     })
   }
 
+/**
+ * Solicitud a la base de datos para obtener los Usuarios
+ * */
   getUser() {
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
@@ -135,6 +133,9 @@ export class ProducersComponent implements OnInit{
     });
   }
 
+/**
+ * Solicitud a la base de datos para obtener la orden los productos
+ * */
   getOrderp() {
     this.apiOrderP.getOrderP().subscribe(reply => {
       console.log(reply);
@@ -143,15 +144,26 @@ export class ProducersComponent implements OnInit{
   }
 
 
+  /**
+   * Agrega una orden de productos asociada a una orden general
+   * 
+   * @param k identoificar la orde de productos
+   * @param idcustomer identificar la orden general
+   */
   addOrderP(k, idcustomer) {
-    
     var w;
     for (w = 0; w <= this.listPurchase.length - 1; w++) {
       var totalP = this.listPurchase[w].quantity * this.listPurchase[w].price;
       console.log('multi')
       console.log(totalP);
     
-      const orderP: orderproducts = { idorder: this.listOrder[k].id, idproduct: this.listPurchase[w].idProduct, quantity: this.listPurchase[w].quantity, total: totalP};
+      const orderP: orderproducts = {
+        id: 0,
+        idorder: this.listOrder[k].id,
+        idproduct: this.listPurchase[w].idProduct,
+        quantity: this.listPurchase[w].quantity,
+        total: totalP
+      };
       this.apiOrderP.add(orderP).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
         console.log(Reply.message);
@@ -171,7 +183,7 @@ export class ProducersComponent implements OnInit{
             }
           }
 
-          //aca se hace el edit
+          //Edir de orden ya existente
           const order: order = {
             id: idP,
             idCustomer: idcustomer,
@@ -190,6 +202,9 @@ export class ProducersComponent implements OnInit{
     }
   }
 
+/**
+ * Solicitud a la base de datos para obtener las ordenes generales
+ * */
   getOrder() {
     this.apiOrder.getOrder().subscribe(reply => {
       console.log(reply);
@@ -197,9 +212,10 @@ export class ProducersComponent implements OnInit{
     });
   }
 
-  addOrder() {
-    console.log(this.listOrder);
-    
+/**
+ * Agrega una orden general
+ * */
+  addOrder() {    
     var idcustomer;
     var i;
     for (i = 0; i <= this.listUser.length - 1; i++) {
@@ -208,22 +224,16 @@ export class ProducersComponent implements OnInit{
       }
     }
 
-    console.log(idcustomer);
-    console.log(this.listOrder);
     //busca si hay una orden a nombre del cliente y si esa orden esta activa
     var k;
     for (k = 0; k <= this.listOrder.length - 1; k++) {
       if (this.listOrder[k].idCustomer == idcustomer && this.listOrder[k].isActive == 1) {
         //si la orden esta activa entonces se crea una ordenP
-        console.log('Esta activo');
         this.addOrderP(k, idcustomer); //meter nueva orden de productos
         return;
       }
     }
-
-
-        //si no hay una orden activa, se crea una nueva orden
-        
+    //si no hay una orden activa, se crea una nueva orden    
     const order: order = {
           id: 1,
           idCustomer: idcustomer,
@@ -250,11 +260,14 @@ export class ProducersComponent implements OnInit{
         }
   }
 
+/**
+ * Lista que incluye solamente los product
+ * */
   myProducers() {
     let produ = this.route.snapshot.paramMap.get('producerName');
     var idProducer;
 
-    console.log(this.listUser);
+    //console.log(this.listUser);
     var k;
     for (k = 0; k <= this.listUser.length - 1; k++) {
       if (this.listUser[k].name == produ) {

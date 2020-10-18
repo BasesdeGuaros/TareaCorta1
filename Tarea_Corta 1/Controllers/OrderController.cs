@@ -14,8 +14,12 @@ namespace Tarea_Corta_1.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        //IActionResult es una inteface
-        [HttpGet] //protocolo get
+        /**
+         *  Protocolo get
+         *  IActionResult es una inteface
+         *  Retorna una lista si la conexion fue extiosa, sino devuelve un mesanje de error
+         */
+        [HttpGet]
         public IActionResult Get()
         {
             MyReply reply = new MyReply();
@@ -39,8 +43,11 @@ namespace Tarea_Corta_1.Controllers
             }
             return Ok(reply); //convierte la lista a Json
         }
-
-        [HttpPost] //protocolo Post
+        /**
+         * Protocolo Post
+         * 
+         */
+        [HttpPost]
         public IActionResult Post(OrderRequest request)
         {
             MyReply reply = new MyReply();
@@ -52,11 +59,9 @@ namespace Tarea_Corta_1.Controllers
                     Order order = new Order();
                     order.IdCustomer = request.IdCustomer;
                     order.Subtotal = request.Subtotal;
-                    order.Tax = 0.0;
+                    order.Tax = 15.0; //I.V.A
                     order.Total = 0.0;
                     order.IsActive = 1;
-                    //order.IdCustomerNavigation = request.IdCustomerNavigation;
-                    //order.OrderProducts
 
                     db.Order.Add(order);
                     db.SaveChanges();
@@ -70,11 +75,13 @@ namespace Tarea_Corta_1.Controllers
                 reply.conexionSuccess = 0;
                 reply.message = ex.Message;
             }
-
             return Ok(reply);
         }
 
-        [HttpPut] //protocolo Put (editar)
+        /**
+         * protocolo Put (editar)
+         */
+        [HttpPut] 
         public IActionResult Put(OrderRequest request)
         {
             MyReply reply = new MyReply();
@@ -90,8 +97,6 @@ namespace Tarea_Corta_1.Controllers
                     order.Tax = request.Tax;
                     order.Total = request.Total;
                     order.IsActive = request.isActive;
-                    //order.IdCustomerNavigation = request.IdCustomerNavigation;
-
 
                     db.Entry(order).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  
                     db.SaveChanges();
@@ -105,7 +110,6 @@ namespace Tarea_Corta_1.Controllers
                 reply.conexionSuccess = 0;
                 reply.message = ex.Message;
             }
-
             return Ok(reply);
         }
     }

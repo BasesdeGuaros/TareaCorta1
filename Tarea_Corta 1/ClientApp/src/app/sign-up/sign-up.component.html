@@ -73,6 +73,19 @@
           </div>
 
           <div class="mb-3">
+            <label for="country">Rol</label>
+            <select class="custom-select d-block w-100" id="rol" name="rol" [(ngModel)]=model.rol required>
+              <option value="">Seleccionar una opcion ...</option>
+              <option>Cliente</option>
+              <option>Productor</option>
+
+            </select>
+            <div class="invalid-feedback">
+              Por favor seleccione una provincia
+            </div>
+          </div>
+
+          <div class="mb-3">
             <label for="email">Télefono <span class="text-muted"></span></label>
             <input type="email" class="form-control" id="phone_number" name="phone_number" [(ngModel)]=model.phone_number>
             <div class="invalid-feedback">
@@ -202,7 +215,7 @@
           Clinte Eliminado Exitosamente
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']">OK</button>
         </div>
       </div>
     </div>
@@ -221,7 +234,7 @@
           Cliente Actualizado
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']">OK</button>
         </div>
       </div>
     </div>
@@ -240,7 +253,7 @@
           Cliente agregado
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']" >OK</button>
         </div>
       </div>
     </div>

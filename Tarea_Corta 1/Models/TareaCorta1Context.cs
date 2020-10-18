@@ -146,9 +146,9 @@ namespace Tarea_Corta_1.Models
 
             modelBuilder.Entity<ProductsProducer>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("productsProducer");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.IdProducer).HasColumnName("id_producer");
 
@@ -159,13 +159,13 @@ namespace Tarea_Corta_1.Models
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.HasOne(d => d.IdProducerNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProductsProducer)
                     .HasForeignKey(d => d.IdProducer)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_productsProducer_producers");
 
                 entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProductsProducer)
                     .HasForeignKey(d => d.IdProduct)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_stock_products");

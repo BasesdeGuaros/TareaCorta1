@@ -2,23 +2,12 @@
 <div class="row">
 
   <div class=" text-center">
-    <a [routerLink]="['/admin']">
-      <h1 class="h3 mb-3 font-weight-normal">
-        Productos !
-      </h1>
-    </a>
-    
+    <h1 class="h3 mb-3 font-weight-normal">Productos!</h1>
   </div>
 
-  <div style="position:absolute; left: 1010px; top: 60px">
-
-    <button type="submit" class="btn btn-success" (click)="activateModal()" >Agregar producto</button>
-
-  </div>
+  
 
 </div>
-
-
 
 <table class="table table-dark">
   <thead>
@@ -31,13 +20,11 @@
       <th scope="col">Precio</th>
       <th scope="col">Modo/Venta</th>
       <th scope="col">Acciones</th>
-
     </tr>
+
   </thead>
   <tbody>
-
     <tr *ngFor="let product of products; let i = index">
-
 
       <td>{{i+1}}</td>
       <td>{{product.name}}</td>
@@ -47,76 +34,52 @@
       <td>{{product.price}}</td>
       <td>{{product.mode}}</td>
 
-
       <td>
-
-
         <button type="button" id="button1" class="btn btn-secondary" (click)="editCategory(i)" data-toggle="modal" data-target="#editModal" data-whatever="@mdo">Edit</button>
-
-
         <a (click)="deleteCategory(i)" class="btn btn-danger">
           Delete
         </a>
-
       </td>
-
-
     </tr>
-
 
   </tbody>
 </table>
 
+<div class="align-text-bottom">
+  <button type="submit" class="btn btn-success" (click)="activateModal()">Agregar producto</button>
+</div>
+
 
 <div style="position:absolute; left: 800px; top: 300px">
-
-
   <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit productor</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Añadir producto</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
 
         <div class="modal-body">
-
           <div class="row">
-
             <div class="col-md-8 order-md-1">
               <form class="needs-validation " novalidate id="form1">
-
                 <div class="row">
 
                   <div class="col-md-6 mb-3">
-                    <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="name" placeholder="Nombre" value="" name="name" [(ngModel)]=model.name required>
+                    <label for="country">Producto</label>
+                    <select class="custom-select d-block w-100" id="name" placeholder="Nombre" value="" name="name" [(ngModel)]=model.name required>
+
+                     
+
+                      <option value="">Seleccionar una opcion ...</option>
+                      <<option *ngFor="let PP of listProductsProducer" >{{PP.idProductNavigation.product}}</option>
+                      <option>Otro</option>
+
+                    </select>
                     <div class="invalid-feedback">
-                      Ingrese un nombre valido
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 mb-3">
-                    <label for="category">Categoria</label>
-                    <input type="text" class="form-control" id="category" placeholder="Categoria" value="" name="category" [(ngModel)]=model.category required>
-                    <div class="invalid-feedback">
-                      Ingrese categoria valida
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="row">
-
-                  <div class="col-md-6 mb-3">
-                    <label for="photo">Foto</label>
-                    <input type="text" class="form-control" id="photo" placeholder="Foto" value="" name="photo" [(ngModel)]=model.photo required>
-                    <div class="invalid-feedback">
-                      Ingrese una imagen valida
+                      Por favor seleccione una provincia
                     </div>
                   </div>
 
@@ -127,22 +90,12 @@
                       Ingrese precio valido
                     </div>
                   </div>
-
                 </div>
 
                 <div class="row">
-
-                  <div class="col-md-6 mb-3">
-                    <label for="mode">Modo de venta</label>
-                    <input type="text" class="form-control" id="mode" placeholder="Modo de venta" value="" name="mode" [(ngModel)]=model.mode required>
-                    <div class="invalid-feedback">
-                      Ingrese una entrada valida
-                    </div>
-                  </div>
-
                   <div class="col-md-6 mb-3">
                     <label for="cuantity">Cantidad</label>
-                    <input type="text" class="form-control" id="cuantity" placeholder="Cantidad" value="" name="cuantity" [(ngModel)]=model.cuantity required>
+                    <input type="text" class="form-control" id="quantity" placeholder="Cantidad" value="" name="quantity" [(ngModel)]=model.quantity required>
                     <div class="invalid-feedback">
                       Ingrese una cantidad valida
                     </div>
@@ -150,30 +103,83 @@
 
                 </div>
 
-                <hr class="mb-4">
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" (click)="addProduct()" data-dismiss="modal">Agregar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addNewProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Añadir producto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8 order-md-1">
+              <form class="needs-validation " novalidate id="form1">
+                <div class="row">
+
+                  <div class="col-md-6 mb-3">
+                    <label for="price">Producto</label>
+                    <input type="text" class="form-control" id="name" placeholder="Nombre" value="" name="name" [(ngModel)]=modelN.name required>
+                    <div class="invalid-feedback">
+                      Ingrese producto valido
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="price">Modo de Venta</label>
+                    <input type="text" class="form-control" id="saleMode" placeholder="Modo de Venta" value="" name="saleMode" [(ngModel)]=modelN.sale required>
+                    <div class="invalid-feedback">
+                      Ingrese un modo de venta valido
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                  <label for="country">Category</label>
+                  <select class="custom-select d-block w-100" id="category" placeholder="Categoria" value="" name="category" [(ngModel)]=modelN.category required>
+
+                    <option value="">Seleccionar una opcion ...</option>
+                    <!--- <option>{{categories.name}}</option -->
+                    
+
+                  </select>
+                  <div class="invalid-feedback">
+                    Por favor seleccione una cateogoria valida
+                  </div>
+                </div>
 
               </form>
             </div>
           </div>
-
         </div>
-
 
         <div class="modal-footer">
-
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" (click)="addCategory()" data-dismiss="modal">
-            Add
-          </button>
-
+          <button type="submit" class="btn btn-success" (click)="addNewProduct()" data-dismiss="modal">Agregar</button>
         </div>
+
       </div>
     </div>
   </div>
 
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -289,9 +295,3 @@
   </script>
 
 </div>
-
-
-
-
-
-

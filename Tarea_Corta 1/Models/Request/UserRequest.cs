@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Tarea_Corta_1.Models.Request
 {
+    /**
+     * Modelo para la tabla de User
+     */
     public class UserRequest
     {
         public int IdUser { get; set; }

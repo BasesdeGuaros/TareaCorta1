@@ -8,6 +8,7 @@ namespace Tarea_Corta_1.Models
         public Products()
         {
             OrderProducts = new HashSet<OrderProducts>();
+            ProductsProducer = new HashSet<ProductsProducer>();
         }
 
         public string Product { get; set; }
@@ -17,5 +18,6 @@ namespace Tarea_Corta_1.Models
 
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderProducts> OrderProducts { get; set; }
+        public virtual ICollection<ProductsProducer> ProductsProducer { get; set; }
     }
 }

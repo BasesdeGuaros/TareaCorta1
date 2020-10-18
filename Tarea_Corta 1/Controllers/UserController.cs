@@ -10,13 +10,13 @@ using Tarea_Corta_1.Models.Request;
 
 namespace Tarea_Corta_1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
 
         //IActionResult es una inteface
         [HttpGet] //protocolo get
+        [Route("api/[controller]")]
         public IActionResult Get()
         {
             MyReply reply = new MyReply();
@@ -39,8 +39,35 @@ namespace Tarea_Corta_1.Controllers
             return Ok(reply); //convierte la lista a Json
         }
 
+        [HttpGet] //protocolo get
+        [Route("api/userproducer")]
+        public IActionResult GetProd(string rol)
+        {
+            MyReply reply = new MyReply();
+            try
+            {
+                //el codigo se elimina una vez ejecutado lo que tenga dentro del using()
+                using (TareaCorta1Context db = new TareaCorta1Context()) //coneccion a la base de datos
+                {
+                    var list = db.User
+                        .Where(a => a.Rol == "producer")
+                        .Include(a => a.Producers)
+                        .ToList(); //variable con la lista de datos de la tabla 
+                    reply.conexionSuccess = 1;
+                    reply.data = list;
+                }
+            }
+            catch (Exception ex)
+            {
+                reply.conexionSuccess = 0;
+                reply.message = ex.Message;
+            }
+            return Ok(reply); //convierte la lista a Json
+        }
+
 
         [HttpPost] //protocolo Post
+        [Route("api/[controller]")]
         public IActionResult Post(UserRequest request)
         {
             MyReply reply = new MyReply();
@@ -77,6 +104,7 @@ namespace Tarea_Corta_1.Controllers
         }
 
         [HttpPut] //protocolo Put (editar)
+        [Route("api/[controller]")]
         public IActionResult Put(UserRequest request)
         {
             MyReply reply = new MyReply();
@@ -85,7 +113,7 @@ namespace Tarea_Corta_1.Controllers
             {
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
-                    User user = new User();
+                    User user = db.User.Find(request.Username);
                     user.IdUser = request.IdUser;
                     user.Name = request.Name;
                     user.LastName = request.LastName;
@@ -112,7 +140,9 @@ namespace Tarea_Corta_1.Controllers
             return Ok(reply);
         }
 
+       /* 
         [HttpDelete("{id}")] //protocolo Delete
+        [Route("api/[controller]")]
         public IActionResult Delete(int id)
         {
             MyReply reply = new MyReply();
@@ -136,7 +166,7 @@ namespace Tarea_Corta_1.Controllers
             }
 
             return Ok(reply);
-        }
+        }*/
     }
 
 }
