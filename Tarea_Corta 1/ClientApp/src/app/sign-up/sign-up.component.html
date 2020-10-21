@@ -72,7 +72,7 @@
             </div>
           </div>
 
-          <div class="mb-3">
+          <div *ngIf="edited" class="mb-3"> 
             <label for="country">Rol</label>
             <select class="custom-select d-block w-100" id="rol" name="rol" [(ngModel)]=model.rol required>
               <option value="">Seleccionar una opcion ...</option>
@@ -81,7 +81,7 @@
 
             </select>
             <div class="invalid-feedback">
-              Por favor seleccione una provincia
+              Por favor seleccione un rol
             </div>
           </div>
 
@@ -215,7 +215,7 @@
           Clinte Eliminado Exitosamente
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['']">OK</button>
         </div>
       </div>
     </div>
@@ -234,7 +234,7 @@
           Cliente Actualizado
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['']">OK</button>
         </div>
       </div>
     </div>
@@ -253,7 +253,7 @@
           Cliente agregado
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']" >OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['']" >OK</button>
         </div>
       </div>
     </div>

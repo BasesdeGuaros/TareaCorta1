@@ -3,5 +3,6 @@ export interface productsproducer {
   idProduct: number;
   idProducer: number;
   price: number;
+  id: number;
 }
 

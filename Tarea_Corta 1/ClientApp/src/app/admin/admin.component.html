@@ -6,20 +6,15 @@
     </h1>
   </div>
 
-  <div class="align-content-center">
-
-    <a class="notification btn btn-secondary dropdown-toggle" (click)="resetAfiliationNumber()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-
-      <span (click)="resetAfiliationNumber()">Solicitudes</span>
+  <div style="position:absolute; left: 1320px; top: 10px">
+    <a class="notification btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span>Solicitudes</span>
       <span class="badge">{{afilNumber}}</span>
-
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <tr *ngFor="let producer of listUser; let i = index">
           <ng-container *ngIf="producer.producers[0]?.isAccepted == 0">
             <a class="dropdown-item" (click)="activateModal3(i)">Afiliation {{i}}</a>
           </ng-container>
-
         </tr>    
       </div>
     </a>

@@ -113,7 +113,7 @@ namespace Tarea_Corta_1.Controllers
             {
                 using (TareaCorta1Context db = new TareaCorta1Context())
                 {
-                    User user = db.User.Find(request.Username);
+                    User user = db.User.Find(request.IdUser);
                     user.IdUser = request.IdUser;
                     user.Name = request.Name;
                     user.LastName = request.LastName;
@@ -122,7 +122,6 @@ namespace Tarea_Corta_1.Controllers
                     user.PhoneNumber = request.PhoneNumber;
                     user.Username = request.Username;
                     user.Password = request.Password;
-                    user.Rol = request.Rol;
 
                     db.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //le dice a la base de datos que se ha modificado  
                     db.SaveChanges();
@@ -140,9 +139,10 @@ namespace Tarea_Corta_1.Controllers
             return Ok(reply);
         }
 
-       /* 
-        [HttpDelete("{id}")] //protocolo Delete
-        [Route("api/[controller]")]
+
+        //[HttpDelete("{id}")] //protocolo Delete
+        [HttpDelete]
+        [Route("api/[controller]/{id}")]
         public IActionResult Delete(int id)
         {
             MyReply reply = new MyReply();
@@ -166,7 +166,7 @@ namespace Tarea_Corta_1.Controllers
             }
 
             return Ok(reply);
-        }*/
+        }
     }
 
 }

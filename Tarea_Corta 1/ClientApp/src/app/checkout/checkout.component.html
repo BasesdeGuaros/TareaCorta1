@@ -27,8 +27,8 @@
     </div>
 
     <div class="row">
-      >
-      <div class="col-md-3 order-md-2 mb-4">
+      
+      <div class="col-md-4 order-md-2 mb-0">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-muted">Su compra</span>
           <span class="badge badge-secondary badge-pill">{{size}}</span>
@@ -37,9 +37,11 @@
           <span class="text-muted">Producto</span>
           <span class="text-muted">Cantidad</span>
           <span class="text-muted">Precio</span>
+          <span class="text-muted">Mas</span>
+          <span class="text-muted">Menos</span>
 
         </h6>
-        <ul class="list-group mb-3">
+        <ul class="list-group m-xl-0">
           <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let products of listMyOrders; let i = index">
             <div>
               <h6 class="my-0">{{products.idProductNavigation.product}}</h6>
@@ -47,8 +49,8 @@
             <span class="text-muted">{{products.quantity}}</span>
             <span class="text-muted">₡ {{products.total}}</span>
 
-            <button class="btn btn-primary" (click)="add(i)">+</button>
-            <button class="btn btn-primary" (click)="less(i)">-</button>
+            <button class="btn btn-dark" (click)="add(i)"> + </button>
+            <button class="btn btn-primary" (click)="less(i)"> - </button>
           </li>
 
           <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -102,10 +104,10 @@
           </button>
         </div>
         <div class="modal-body">
-          Clinte Eliminado Exitosamente
+          Compra realizada
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/loginG']">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/feedback']">OK</button>
         </div>
       </div>
     </div>

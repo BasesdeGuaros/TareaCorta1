@@ -14,6 +14,8 @@ namespace Tarea_Corta_1.Models.Request
         public int IdProduct { get; set; }
         public int IdProducer { get; set; }
         public int Price { get; set; }
+        public int Id { get; set; }
+
 
         public virtual Producers IdProducerNavigation { get; set; }
         public virtual Products IdProductNavigation { get; set; }

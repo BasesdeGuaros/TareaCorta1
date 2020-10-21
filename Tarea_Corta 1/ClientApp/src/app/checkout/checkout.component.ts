@@ -26,7 +26,6 @@ export class CheckoutComponent implements OnInit{
   public size = 0;
   public priceAux = 0;
 
-
     /** checkout ctor */
   constructor(
     private apiOrderP: ApiorderproductsService,
@@ -66,9 +65,9 @@ export class CheckoutComponent implements OnInit{
       id: idP,
       idCustomer: this.idCustomer,
       subtotal: subtotal,
-      tax: 0,
+      tax: 15.0,
       total: this.total,
-      isActive: 0
+      isActive: 0 
     };
 
     /*
@@ -87,6 +86,7 @@ export class CheckoutComponent implements OnInit{
         $('#buyModal').modal('show');
       }
     });
+
 
     /*
     this.apiProductsP.edit(pp).subscribe(Reply => {
@@ -107,7 +107,6 @@ export class CheckoutComponent implements OnInit{
 
   /**
    * Calcula el total
-   * A veces no lo hace ??
    * */
   calcTotal() {
     let user = this.route.snapshot.paramMap.get('userName')
@@ -117,7 +116,6 @@ export class CheckoutComponent implements OnInit{
         this.idCustomer = this.listUser[i].idUser;
       }
     }
-
     var i;
     for (i = 0; i <= this.listOrder.length - 1; i++) {
       if (this.listOrder[i].idCustomer == this.idCustomer && this.listOrder[i].isActive == 1) {
@@ -146,8 +144,8 @@ export class CheckoutComponent implements OnInit{
       idproduct: this.listMyOrders[i].idProduct,
       total: this.total
     }
+
     this.editOrderp(orderp);
-    
   }
 
 /**
@@ -185,7 +183,32 @@ export class CheckoutComponent implements OnInit{
     this.apiUser.getUser().subscribe(reply => {
       console.log(reply);
       this.listUser = reply.data;
-      this.calcTotal();
+
+      
+      let user = this.route.snapshot.paramMap.get('userName')
+      var i;
+      for (i = 0; i <= this.listUser.length - 1; i++) {
+        if (this.listUser[i].username == user) {
+          this.idCustomer = this.listUser[i].idUser;
+        }
+      }
+
+      this.apiOrder.getOrder().subscribe(reply => {
+        console.log(reply);
+        this.listOrder = reply.data;
+        console.log(this.listOrder.length);
+
+        var i;
+        for (i = 0; i <= this.listOrder.length - 1; i++) {
+
+
+          if (this.listOrder[i].idCustomer == this.idCustomer && this.listOrder[i].isActive == 1) {
+            this.listOrder[i].total += (this.listOrder[i].tax / 100 * this.listOrder[i].subtotal) + this.listOrder[i].subtotal;
+            this.total = this.listOrder[i].total;
+            console.log(this.total)
+          }
+        }
+      });
     });
   }
 

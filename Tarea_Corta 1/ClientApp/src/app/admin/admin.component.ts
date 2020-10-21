@@ -31,15 +31,6 @@ export class AdminComponent implements OnInit {
     this.apiUser.getProducer('producer').subscribe(reply => {
       console.log(reply);
       this.listUser = reply.data;
-
-      /*
-      var i;
-      for (i = 0; i < this.listUser.length; i++) {
-        if (this.listUser[i].producers[0].isAccepted = 0) {
-          this.afilNumber++;
-        }
-      }
-      */
     });
   }
   getProducer() {
@@ -47,13 +38,23 @@ export class AdminComponent implements OnInit {
       console.log(reply);
       this.listProducer = reply.data;
 
+
+      var i;
+      for (i = 0; i <= this.listProducer.length - 1; i++) {
+        console.log(this.listProducer[i].isAccepted)
+        if (this.listProducer[i].isAccepted == 0) {
+          this.afilNumber += 1;
+        }
+      }
+      
+
     });
   }
 
   addUserC() {
     this.model.afil = 1;
     const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.location, birthDate: this.model.birthD, phoneNumber: parseInt(this.model.phone), username: this.model.user, password: this.model.password, rol: "producer" };
-    const producer: producer = { id: parseInt(this.model.id), sinpe: parseInt(this.model.sinpe), isAccepted: 1 };
+    const producer: producer = { id: parseInt(this.model.id), idProducer:0, sinpe: parseInt(this.model.sinpe), isAccepted: 1 };
     console.log(producer);
     this.apiUser.add(user).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
@@ -68,8 +69,8 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  model: any = {};
   model2: any = {};
+  model: any = {};
   model4: any = {};
 
   currentProductorUpdate;
@@ -104,17 +105,30 @@ export class AdminComponent implements OnInit {
   }
 
   addAfiliation(): void {
-    var asnwer = confirm("Are you sure you want to add this productor? ");
+    var id;
+    var i;
+    for (i = 0; i <= this.listProducer.length - 1; i++) {
+      if (this.listProducer[i].id == this.model4.id) {
+        id = this.listProducer[i].idProducer;
+      }
+    }
 
-    if (asnwer) {
+    const producer: producer = {
+      id: this.model4.id,
+      idProducer: id,
+      sinpe: parseInt(this.model4.sinpe),
+      isAccepted: 1
+    };
+    console.log(producer)
 
+    this.apiProducer.edit(producer).subscribe(Reply => {
+        console.log(Reply.conexionSuccess);
+        console.log(Reply.message);
+      });
 
       this.listUser[this.currentAfiliation] = this.model4;
       this.model4.afil = 1;
       this.model4 = {};
-
-    }
-
   }
 
   deleteAfiliation(ident): void {
@@ -126,36 +140,20 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  plusAfilNumber(): void {
-    this.afilNumber++;
-  }
-
-  resetAfiliationNumber(): void {
-
-    this.afilNumber = 0;
-  }
-
-
-
   addProductor(): void {
     this.model.afil = 1;
     this.listUser.push(this.model);
     this.model = {};
-
   }
 
   deleteProductor(i): void {
-
     var asnwer = confirm("are you sure you want to delete this productor? ");
     if (asnwer) {
       this.listUser.splice(i, 1);
-      
     }
-
   }
 
   editProductor(i): void {
-
     this.model2.name = this.listUser[i].name;
     this.model2.lastName = this.listUser[i].lastName;
     this.model2.id = this.listUser[i].idUser;
@@ -165,21 +163,49 @@ export class AdminComponent implements OnInit {
     this.model2.sinpe = this.listUser[i].producers[0].sinpe;
     this.model2.user = this.listUser[i].username;
     this.model2.password = this.listUser[i].password;
-    
     this.currentProductorUpdate = i;
+
+    
   }
 
   updateProductor(): void {
-
-    var asnwer = confirm("are you sure you want to update this productor? ");
-
-    if (asnwer) {
-
-      this.model2.afil = 1;
-      this.listUser[this.currentProductorUpdate] = this.model2;
-      this.model2 = {};
-
+    var id;
+    var j;
+    for (j = 0; j <= this.listProducer.length - 1; j++) {
+      if (this.listProducer[j].id == this.model2.id) {
+        id = this.listProducer[j].idProducer;
+      }
     }
+
+    const user: user = {
+      idUser: parseInt(this.model2.id),
+      name: this.model2.name,
+      lastName: this.model2.lastName,
+      address: this.model2.location,
+      birthDate: this.model2.birthD,
+      phoneNumber: parseInt(this.model2.phone),
+      username: this.model2.user,
+      password: this.model2.password,
+      rol: "producer"
+    };
+
+    const producer: producer = {
+      id: this.model2.id,
+      idProducer: id,
+      sinpe: parseInt(this.model2.sinpe),
+      isAccepted: 1
+    };
+
+    this.apiUser.edit(user).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+    });
+
+    this.apiProducer.edit(producer).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+    });
+   
 
   }
 

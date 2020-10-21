@@ -16,7 +16,6 @@
       <th scope="col">Producto</th>
       <th scope="col">Categoria</th>
       <th scope="col">Cantidad</th>
-      <th scope="col">Foto</th>
       <th scope="col">Precio</th>
       <th scope="col">Modo/Venta</th>
       <th scope="col">Acciones</th>
@@ -24,15 +23,14 @@
 
   </thead>
   <tbody>
-    <tr *ngFor="let product of products; let i = index">
+    <tr *ngFor="let product of listMyProductsP; let i = index">
 
       <td>{{i+1}}</td>
-      <td>{{product.name}}</td>
-      <td>{{product.category}}</td>
-      <td>{{product.cuantity}}</td>
-      <td>{{product.photo}}</td>
+      <td>{{product.idProductNavigation.product}}</td>
+      <td>{{product.idProductNavigation.category.name}}</td>
+      <td>{{product.quantity}}</td>
       <td>{{product.price}}</td>
-      <td>{{product.mode}}</td>
+      <td>{{product.idProductNavigation.saleMode}}</td>
 
       <td>
         <button type="button" id="button1" class="btn btn-secondary" (click)="editCategory(i)" data-toggle="modal" data-target="#editModal" data-whatever="@mdo">Edit</button>
@@ -74,7 +72,7 @@
                      
 
                       <option value="">Seleccionar una opcion ...</option>
-                      <<option *ngFor="let PP of listProductsProducer" >{{PP.idProductNavigation.product}}</option>
+                      <<option *ngFor="let PP of listProducts" >{{PP.product}}</option>
                       <option>Otro</option>
 
                     </select>
@@ -141,6 +139,7 @@
                     </div>
                   </div>
 
+
                   <div class="col-md-6 mb-3">
                     <label for="price">Modo de Venta</label>
                     <input type="text" class="form-control" id="saleMode" placeholder="Modo de Venta" value="" name="saleMode" [(ngModel)]=modelN.sale required>
@@ -150,20 +149,16 @@
                   </div>
                 </div>
 
+                <div class="row">
 
-                <div class="col-md-6 mb-3">
-                  <label for="country">Category</label>
-                  <select class="custom-select d-block w-100" id="category" placeholder="Categoria" value="" name="category" [(ngModel)]=modelN.category required>
-
-                    <option value="">Seleccionar una opcion ...</option>
-                    <!--- <option>{{categories.name}}</option -->
-                    
-
-                  </select>
-                  <div class="invalid-feedback">
-                    Por favor seleccione una cateogoria valida
+                  <div class="col-md-6 mb-3">
+                    <label for="price">Categoria</label>
+                    <input type="text" class="form-control" id="category" placeholder="Categoria" value="" name="category" [(ngModel)]=modelN.category required>
+                    <div class="invalid-feedback">
+                      Ingrese un modo de venta valido
+                    </div>
                   </div>
-                </div>
+                  </div>
 
               </form>
             </div>
@@ -198,39 +193,6 @@
               <div class="form-group">
 
                 <div class="row">
-                  <div class="col-sm-5">
-
-                    <label for="name" class="control-label col-sm-2">
-                      Nombre
-                    </label>
-
-                    <input type="text" class="form-control" id="name"
-                           name="name" [(ngModel)]=model2.name
-                           placeholder="Nombre">
-                  </div>
-
-                  <div class="col-sm-5">
-                    <label for="category" class="control-label col-sm-2">
-                      Categoria
-                    </label>
-
-                    <input type="text" class="form-control" id="category"
-                           name="category" [(ngModel)]=model2.category
-                           placeholder="Categoria">
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-5">
-
-                    <label for="photo" class="control-label col-sm-2">
-                      Foto
-                    </label>
-
-                    <input type="text" class="form-control" id="photo"
-                           name="photo" [(ngModel)]=model2.photo
-                           placeholder="Foto">
-                  </div>
 
                   <div class="col-sm-5">
                     <label for="price" class="control-label col-sm-2">
@@ -241,45 +203,28 @@
                            name="price" [(ngModel)]=model2.price
                            placeholder="Precio">
                   </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-sm-5">
-
-                    <label for="mode" class="control-label col-sm-2">
-                      Modo de venta
-                    </label>
-
-                    <input type="text" class="form-control" id="mode"
-                           name="mode" [(ngModel)]=model2.mode
-                           placeholder="Modo">
-                  </div>
 
                   <div class="col-sm-5">
-                    <label for="cuantity" class="control-label col-sm-2">
+                    <label for="quantity" class="control-label col-sm-2">
                       Cantidad
                     </label>
 
                     <input type="text" class="form-control" id="cuantity"
-                           name="cuantity" [(ngModel)]=model2.cuantity
+                           name="quantity" [(ngModel)]=model2.quantity
                            placeholder="Cantidad">
                   </div>
                 </div>
-
-
               </div>
-
             </form>
           </div>
-
         </div>
 
 
         <div class="modal-footer">
 
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" (click)="updateCategory()" data-dismiss="modal">
-            Save
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-success" (click)="editProductsP()" data-dismiss="modal">
+            Guardar
           </button>
 
         </div>

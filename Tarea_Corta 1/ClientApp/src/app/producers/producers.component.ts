@@ -66,6 +66,7 @@ export class ProducersComponent implements OnInit{
       this.listPurchase.push(p);
       console.log(this.listPurchase);
       this.subtotal += this.model.quantity * this.listMyProducers[i].price;
+      this.addOrder();
     } else {
       $('#exampleModal').modal('show') 
     }
@@ -105,7 +106,7 @@ export class ProducersComponent implements OnInit{
     this.apiPP.getPP().subscribe(reply => {
       console.log(reply);
       this.listPP = reply.data;
-    })
+    });
   }
 
 /**
@@ -154,7 +155,6 @@ export class ProducersComponent implements OnInit{
     var w;
     for (w = 0; w <= this.listPurchase.length - 1; w++) {
       var totalP = this.listPurchase[w].quantity * this.listPurchase[w].price;
-      console.log('multi')
       console.log(totalP);
     
       const orderP: orderproducts = {
@@ -164,6 +164,7 @@ export class ProducersComponent implements OnInit{
         quantity: this.listPurchase[w].quantity,
         total: totalP
       };
+
       this.apiOrderP.add(orderP).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
         console.log(Reply.message);
@@ -183,7 +184,7 @@ export class ProducersComponent implements OnInit{
             }
           }
 
-          //Edir de orden ya existente
+          //Edit de orden ya existente
           const order: order = {
             id: idP,
             idCustomer: idcustomer,
@@ -238,7 +239,7 @@ export class ProducersComponent implements OnInit{
           id: 1,
           idCustomer: idcustomer,
           subtotal: 0, 
-          tax: 0,
+          tax: 15.0,
           total: 0,
           isActive: 1
         };
@@ -249,15 +250,21 @@ export class ProducersComponent implements OnInit{
 
           if (Reply.conexionSuccess === 1) {
             console.log(order);
+            this.getOrder();
           }
         });
 
-        var w;
-        for (w = 0; w <= this.listOrder.length - 1; w++) {
-          if (this.listOrder[w].username) {
-            this.addOrderP(w, idcustomer) //igual se inserta una orden de productos
-          }
-        }
+    //aca ya hay una orden 
+    this.getOrder();
+    console.log(this.listOrder);
+    
+    var w;
+    for (w = 0; w <= this.listOrder.length - 1; w++) {
+      console.log(this.listOrder[w].idCustomer == idcustomer);
+      if (this.listOrder[w].idCustomer == idcustomer) {
+         this.addOrderP(w, idcustomer) //igual se inserta una orden de productos
+         }
+      }
   }
 
 /**
@@ -270,7 +277,7 @@ export class ProducersComponent implements OnInit{
     //console.log(this.listUser);
     var k;
     for (k = 0; k <= this.listUser.length - 1; k++) {
-      if (this.listUser[k].name == produ) {
+      if (this.listUser[k].name == produ && this.listUser[k].rol == "producer") {
         idProducer = this.listUser[k].idUser;
       }
     }
@@ -281,5 +288,6 @@ export class ProducersComponent implements OnInit{
         this.listMyProducers.push(this.listPP[i]);
       }
     }
+    console.log(this.listMyProducers)
   }
 }

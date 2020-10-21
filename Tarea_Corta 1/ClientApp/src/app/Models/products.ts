@@ -1,5 +1,5 @@
 export interface products {
-  sale_mode: string;
-  category_id: number;
+  SaleMode: string;
+  CategoryId: number;
   product: string;
 }

@@ -16,6 +16,7 @@ export class SignUpComponent implements OnInit{
   model: any = {};
   public listUser;
   public isNew;
+  public edited = true;
 
     /** signUp ctor */
   constructor(
@@ -44,18 +45,18 @@ export class SignUpComponent implements OnInit{
       this.listUser = reply.data;
 
       if (this.isNew != 'null') {
-        console.log(this.isNew);
         this.editUserC(this.isNew);
       }
     });
   }
 
+
   /**
    * Se hace una solicitud a la base de datos para agregar un nuevo Usuario
    * */
   addUserC() {
+    this.edited = true;
     var rolF;
-    console.log(this.model.rol);
     if (this.model.rol == "Cliente") {
       rolF = "customer";
     } else {
@@ -75,7 +76,7 @@ export class SignUpComponent implements OnInit{
         }
       });
       if (rolF == "producer") {
-        const producer: producer = { id: parseInt(this.model.id), sinpe: parseInt(this.model.phone_number), isAccepted: 0 };
+        const producer: producer = { id: parseInt(this.model.id), idProducer: 0, sinpe: parseInt(this.model.phone_number), isAccepted: 0 };
 
         this.apiProducer.add(producer).subscribe(Reply => {
           console.log(Reply.conexionSuccess);
@@ -83,7 +84,8 @@ export class SignUpComponent implements OnInit{
 
         });
       }
-    } else{
+    } else {
+      this.edited = false;
       this.apiUser.edit(user).subscribe(Reply => {
         console.log(Reply.conexionSuccess);
         console.log(Reply.message);
@@ -95,6 +97,7 @@ export class SignUpComponent implements OnInit{
       });
     }
   }
+
 
   /**
    * Se hace una solicitud para editar un usuario
@@ -116,7 +119,6 @@ export class SignUpComponent implements OnInit{
       }
     }
   }
-
 
   /**
    * Se hace una solicitud para eliminar un usuario

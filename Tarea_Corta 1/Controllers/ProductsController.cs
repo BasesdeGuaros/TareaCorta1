@@ -60,7 +60,6 @@ namespace Tarea_Corta_1.Controllers
                     Products products = new Products();
                     products.CategoryId = request.CategoryId;
                     products.SaleMode = request.SaleMode;
-                    products.Id = request.Id;
                     products.Product = request.Product;
 
                     db.Products.Add(products);

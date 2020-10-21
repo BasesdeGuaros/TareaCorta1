@@ -68,7 +68,7 @@
             <div class="card mb-auto box-shadow">
               <img class="mb-4 justify-content-center" (click)="producers(i)" src="https://www.tec.ac.cr/sites/default/files/styles/node/public/media/img/main/rsz_alimentos_0.jpg" alt="" width="335" height="250">
               <div class="card-body">
-                <p class="card-text">Tramo del productor <b> {{producer.name}} {{producer.lastName}} </b> </p>
+                <p class="card-text">Tramo del productor <b> {{producer.idNavigation.name}} {{producer.idNavigation.lastName}} </b> </p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary" (click)="producers(i)">Ver</button>

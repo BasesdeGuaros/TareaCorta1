@@ -1,18 +1,23 @@
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiorderService } from '../services/apiorder.service';
+import { ApiorderproductsService } from '../services/apiorderproducts.service';
 
 @Component({
   selector: 'app-productor',
   templateUrl: './productor.component.html',
   styleUrls: ['./productor.component.scss']
 })
-export class ProductorComponent {
+export class ProductorComponent implements OnInit {
+  model: any = {};
+  public listMyOrders = [];
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private apiOrderproducts: ApiorderproductsService) {
   }
 
 
@@ -26,25 +31,24 @@ export class ProductorComponent {
       'name': 'quiero ser afiliado', id: '11111111', lastName: 'lastname', location: 'none', birthD: 'none'
       , phone: '101010', sinpe: '10101010', places: 'none', afil: 0, user: 'user', password: 'hola123'
     },
-
   ];
 
-
-
   pedidos = [
-
-
     {
       id: 2312, lista: [{ 'name': 'Tomate', id: 'Verdura', cuantity: 5, price: 100 }, { 'name': 'Lechuga', id: 'Verdura', cuantity: 6, price: 50 }], dir: "algun lugar"
     }, {
       id: 4356, lista: [{ 'name': 'Manzana', id: 'Fruta', cuantity: 3, price: 400 }], dir: "algun lugar"
-    }
-      
-    
-    
+    }  
   ];
 
-  model: any = {};
+
+  getOrderProducts() {
+    this.apiOrderproducts.getmyOrderP().subscribe(reply => {
+      console.log(reply);
+      this.listMyOrders = reply.data;
+    });
+  }
+
 
   addProductor(): void {
     this.model.afil = 0;

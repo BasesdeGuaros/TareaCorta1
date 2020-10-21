@@ -19,6 +19,8 @@ const httpOption = {
 * Permite obtener, editar y anadir datos de los productores
 * */
 
+
+
 export class ApiproductsproducerService {
 
   url: string = "https://localhost:44372/api/productsproducer";
@@ -35,5 +37,8 @@ export class ApiproductsproducerService {
   }
   edit(PP: ProductsProducer): Observable<Reply> {
     return this._http.put<Reply>(this.url, PP, httpOption)
+  }
+  delete(userName: string): Observable<Reply> {
+    return this._http.delete<Reply>(`${this.url}/${userName}`)
   }
 }

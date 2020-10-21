@@ -17,24 +17,19 @@ export class ProductosComponent implements OnInit{
   public listProductsProducer = [];
   public listProducers = [];
   public listProducts = [];
+  public listMyProductsP = [];
   public userName;
-  currentCategoryUpdate;
-
-  products = [
-    {
-      'name': 'Tomate', category: 'Verdura', photo: 'photo1', price: 100, mode: 'kilo', cuantity: 200
-    },
-
-  ];
-
+  public idUser;
+  public idProducer;
 
   model: any = {};
   modelN: any = {};
   model2: any = {}
 
+
   constructor(
     private apiProductsProducer: ApiproductsproducerService,
-    private apiProducers: ApiproducerService, //creo que no se ocupa
+    private apiProducers: ApiproducerService,
     private apiProducts: ApiproductsService,
     private route: ActivatedRoute
   ) {
@@ -45,9 +40,40 @@ export class ProductosComponent implements OnInit{
 * */
   ngOnInit(): void {
     this.userName = this.route.snapshot.paramMap.get('userName');
+    this.idUser = this.route.snapshot.paramMap.get('idUser'); //agarrar el producerId del link
 
+    this.getProducers();
     this.getProducts();
     this.getPP();
+  }
+
+
+  getProducers() {
+    this.apiProducers.getProducer().subscribe(reply => {
+      console.log(reply);
+      this.listProducers = reply.data;
+
+      var i;
+      for (i = 0; i <= this.listProducers.length - 1; i++) {
+        if (this.listProducers[i].id == this.idUser) {
+          this.idProducer = this.listProducers[i].idProducer;
+        }
+      }
+    });
+  }
+
+  getPP() {
+    this.apiProductsProducer.getPP().subscribe(reply => {
+      console.log(reply);
+      this.listProductsProducer = reply.data;
+
+      var i;
+      for (i = 0; i <= this.listProductsProducer.length - 1; i++) {
+        if (this.listProductsProducer[i].idProducerNavigation.id == this.idUser) {
+          this.listMyProductsP.push(this.listProductsProducer[i]);
+        }
+      }
+    });
   }
 
   getProducts() {
@@ -57,20 +83,10 @@ export class ProductosComponent implements OnInit{
     });
   }
 
-
-  getPP() {
-    this.apiProductsProducer.getPP().subscribe(reply => {
-      console.log(reply);
-      this.listProductsProducer = reply.data;
-    });
-  }
-
-
   addProduct() {
     if (this.model.name == 'Otro') {
       $('#addNewProductModal').modal('show');
     } else {
-      let idUser = this.route.snapshot.paramMap.get('idUser'); //agarrar el producerId del link
       
       var idProduct;
       var i;
@@ -84,8 +100,9 @@ export class ProductosComponent implements OnInit{
       const productsP: productsproducer = {
         quantity: parseInt(this.model.quantity),
         idProduct: idProduct,
-        idProducer: parseInt(idUser), //hay que pasarle el id de productor, que es diferente al id del usuario
+        idProducer: parseInt(this.idProducer),
         price: parseInt(this.model.price),
+        id: 0
       }
 
       this.apiProductsProducer.add(productsP).subscribe(Reply => {
@@ -95,89 +112,88 @@ export class ProductosComponent implements OnInit{
     }
   }
 
-
-
-
-  addNewProduct() {
-    var idCategory;
-    var i;
-    for (i = 0; this.listProducts.length; i++) {
-      if (this.listProducts[i].category.name == this.modelN.category) {
-        idCategory = this.listProducts[i].categoryId;
-      }
-    }
-
-    const category: category = {
-      name: this.modelN.category
-    }
-
-    const products: products = {
-      sale_mode: this.modelN.sale,
-      category_id: idCategory,
+  addNewProduct() { 
+    const product: products = {
+      SaleMode: this.modelN.sale,
+      CategoryId: 1, //hay que cambiarlo
       product: this.modelN.name
     }
 
+    this.apiProducts.add(product).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+    });
 
-
-    let idUser = this.route.snapshot.paramMap.get('idUser'); //agarrar el producerId del link
-    var idCategory;
-    var idProduct;
-    var idProducer;
-    var i;
-    for (i = 0; this.listProductsProducer.length; i++) {
-      if (this.listProductsProducer[i].idProducerNavigation.id == idUser) {
-        idProduct = this.listProductsProducer[i].idProduct;
-        idProducer = this.listProductsProducer[i].idProducer;
-        idCategory = this.listProductsProducer[i];
-      }
-    }
+    var idProduct = this.listProducts[this.listProducts.length - 1].id + 1;
+    
     const productsP: productsproducer = {
       quantity: parseInt(this.model.quantity),
       idProduct: idProduct,
-      idProducer: idProducer,
-      price: parseInt(this.model.price)
+      idProducer: parseInt(this.idProducer),
+      price: parseInt(this.model.price),
+      id: 0
     }
+
+    console.log(productsP);
+    this.apiProductsProducer.add(productsP).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+    });
   }
-
-
 
   activateModal(): void {
     $('#addCategoryModal').modal('show');
   }
 
 
-
-  addCategory(): void {
-    this.products.push(this.model);
-    this.model = {};
-  }
-
   deleteCategory(i): void {
     var asnwer = confirm("are you sure you want to delete this category? ");
     if (asnwer) {
-      this.products.splice(i, 1);
+      this.apiProductsProducer.delete(this.listMyProductsP[i].id).subscribe(Reply => {
+        console.log(Reply.conexionSuccess);
+        console.log(Reply.message);
+      });
     }
   }
 
   editCategory(i): void {
-    this.model2.name = this.products[i].name;
-    this.model2.category = this.products[i].category;
-    this.model2.photo = this.products[i].photo;
-    this.model2.price = this.products[i].price;
-    this.model2.mode = this.products[i].mode;
-    this.model2.cuantity = this.products[i].cuantity;
-
-
-    this.currentCategoryUpdate = i;
+    this.model2.name = this.listMyProductsP[i].idProductNavigation.product;
+    this.model2.category = this.listMyProductsP[i].idProductNavigation.category.name;
+    this.model2.price = this.listMyProductsP[i].price;
+    this.model2.mode = this.listMyProductsP[i].idProductNavigation.saleMode;
+    this.model2.quantity = this.listMyProductsP[i].quantity;
+    console.log(this.listMyProductsP)
   }
 
-  updateCategory(): void {
-    var asnwer = confirm("are you sure you want to update this category? ");
-    if (asnwer) {
-      this.products[this.currentCategoryUpdate] = this.model2;
-      this.model2 = {};
-
+  editProductsP() {
+    var id;
+    var i;
+    for (i = 0; i <= this.listMyProductsP.length - 1; i++) {
+      if (this.model2.name == this.listMyProductsP[i].idProductNavigation.product) {
+        id = this.listMyProductsP[i].id;
+      }
     }
 
+    var idProduct;
+    var i;
+    for (i = 0; i <= this.listProducts.length - 1; i++) {
+      if (this.listProducts[i].product == this.model2.name) {
+        idProduct = this.listProducts[i].id;
+      }
+    }
+
+    const productsP: productsproducer = {
+      quantity: parseInt(this.model2.quantity),
+      idProduct: idProduct,
+      idProducer: parseInt(this.idProducer),
+      price: parseInt(this.model2.price),
+      id: id
+    }
+      
+    this.apiProductsProducer.edit(productsP).subscribe(Reply => {
+      console.log(Reply.conexionSuccess);
+      console.log(Reply.message);
+    });
   }
+
 }

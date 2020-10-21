@@ -12,6 +12,7 @@ import { ApiuserService } from '../services/apiuser.service';
 export class TramoProductoComponent implements OnInit{
   //public listCustomers: any[];
   public listProducers: any[] = [];
+  public listMyProducers = [];
   public listUser;
   public userName;
   public firstName;
@@ -30,6 +31,7 @@ export class TramoProductoComponent implements OnInit{
    * */
   ngOnInit(): void {
     this.getUser();
+    this.getProducer();
   }
 
   /**
@@ -71,9 +73,21 @@ export class TramoProductoComponent implements OnInit{
         if (this.listUser[i].username == user) {
           this.firstName = this.listUser[i].name;
         }
-        if (this.listUser[i].rol == "producer") {
-          this.listProducers.push(this.listUser[i]);
-          console.log(this.listProducers);
+        
+      }
+    });
+  }
+
+
+  getProducer() {
+    this.apiProducer.getProducer().subscribe(reply => {
+      console.log(reply);
+      this.listMyProducers = reply.data;
+
+      var i;
+      for (i = 0; i <= this.listMyProducers.length - 1; i++) { //recorrer la lista con el userName que agarramos 
+        if (this.listMyProducers[i].isAccepted == 1) {
+          this.listProducers.push(this.listMyProducers[i]);
         }
       }
     });
