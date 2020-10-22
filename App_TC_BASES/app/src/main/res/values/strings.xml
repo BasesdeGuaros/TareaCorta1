@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">enFeriaTec</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="cuenta_num_cedula">Numero de cedula</string>
+    <string name="cuenta_num_cedula_hint">Con ceros incluidos</string>
+    <string name="cuenta_nombre">Nombre</string>
+    <string name="cuenta_apellidos">Apellidos</string>
+    <string name="cuenta_direccion">Direccion de su residencia(Provincia, canton, distrito)</string>
+    <string name="cuenta_nacimiento">Fecha de nacimiento(dd/mm/yy)</string>
+    <string name="cuenta_num_celular">Numero de telefono</string>
+    <string name="cuenta_usuario">Usuario</string>
+    <string name="cuenta_contraseña">Contraseña</string>
+    <string name="cuenta_contraseña_hint">seis o mas caracteres</string>
+    <string name="cuenta_dd">dd</string>
+    <string name="cuenta_mm">mm</string>
+    <string name="cuenta_yyyy">yyyy</string>
+    <string name="cuenta_guardar">Guardar</string>
+    <string name="cuenta_cancelar">Cancelar</string>
+
+    <string name="feedback_intro">Escribe tu comentario sobre la aplicación para futuras versiones!</string>
+    <string name="feedback_end">Gracias por tu comentario, lo tomaremos en cuenta</string>
+    <string name="feedback_enviar">Enviar feedback!</string>
+
+    <string name="menu_home">Tramo del productor</string>
+    <string name="menu_gallery">Mis compras</string>
+    <string name="menu_slideshow">Feedback</string>
+    <string name="sign_out">Sign out</string>
+    <string name="edit">Edit account</string>
+    <string name="example_text">This is another activity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+</resources>
