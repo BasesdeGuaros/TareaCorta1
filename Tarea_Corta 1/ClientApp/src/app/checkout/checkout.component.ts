@@ -67,16 +67,8 @@ export class CheckoutComponent implements OnInit{
       subtotal: subtotal,
       tax: 15.0,
       total: this.total,
-      isActive: 0 
+      isActive: 0
     };
-
-    /*
-    const pp: productsproducer = {
-      quantity: number,
-      idProduct: number,
-      idProducer: number,
-      price: 0
-    };*/
 
     this.apiOrder.edit(order).subscribe(Reply => {
       console.log(Reply.conexionSuccess);
@@ -86,13 +78,6 @@ export class CheckoutComponent implements OnInit{
         $('#buyModal').modal('show');
       }
     });
-
-
-    /*
-    this.apiProductsP.edit(pp).subscribe(Reply => {
-      console.log(Reply.conexionSuccess);
-      console.log(Reply.message);
-    });*/
   }
 
 /**

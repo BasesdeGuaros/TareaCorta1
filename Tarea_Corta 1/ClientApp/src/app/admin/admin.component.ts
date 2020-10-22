@@ -22,17 +22,27 @@ export class AdminComponent implements OnInit {
 
   }
 
+  /**
+   *Funcion que se realiza cuando se carga la pagina
+   * */
   ngOnInit(): void{
     this.getUser();
     this.getProducer();
   }
 
+/**
+* Solicitud a la base de datos para obtener los Usuarios
+* */
   getUser() {
     this.apiUser.getProducer('producer').subscribe(reply => {
       console.log(reply);
       this.listUser = reply.data;
     });
   }
+
+/**
+* Solicitud a la base de datos para obtener los Productores
+* */
   getProducer() {
     this.apiProducer.getProducer().subscribe(reply => {
       console.log(reply);
@@ -50,7 +60,9 @@ export class AdminComponent implements OnInit {
 
     });
   }
-
+/**
+ * Solicitud a la base de datos para agregar los Productores
+ * */
   addUserC() {
     this.model.afil = 1;
     const user: user = { idUser: parseInt(this.model.id), name: this.model.name, lastName: this.model.lastName, address: this.model.location, birthDate: this.model.birthD, phoneNumber: parseInt(this.model.phone), username: this.model.user, password: this.model.password, rol: "producer" };
@@ -88,7 +100,10 @@ export class AdminComponent implements OnInit {
 
 
   }
-
+/**
+ * Carga la información de una solicitud de usuario a un modelo
+ * @param i indice de la tabla a cargar
+ */
   loadAfiliation(i): void {
 
     this.model4.name = this.listUser[i].name;
@@ -104,6 +119,9 @@ export class AdminComponent implements OnInit {
     this.currentAfiliation = i;
   }
 
+  /**
+   * Añade un nuevo elemento productor a la tabla si se acepta la afiliación
+   * */
   addAfiliation(): void {
     var id;
     var i;
@@ -131,6 +149,10 @@ export class AdminComponent implements OnInit {
       this.model4 = {};
   }
 
+  /**
+   * Busca en la lista de usuarios y productores y elimina de acuerdo a un índice
+   * @param ident indice del usuario a eliminar
+   */
   deleteAfiliation(ident): void {
     var i;
     for (i = 0; i < this.listUser.length; i++) {
@@ -140,12 +162,20 @@ export class AdminComponent implements OnInit {
     }
   }
 
+/**
+* Replica la información de la base de datos de la tabla productor
+* */
   addProductor(): void {
     this.model.afil = 1;
     this.listUser.push(this.model);
     this.model = {};
   }
 
+  /**
+   *
+   * Busca en la lista de usuarios y productores y elimina de acuerdo a un índice
+   * @param i
+   */
   deleteProductor(i): void {
     var asnwer = confirm("are you sure you want to delete this productor? ");
     if (asnwer) {
@@ -168,6 +198,9 @@ export class AdminComponent implements OnInit {
     
   }
 
+  /**
+   *Actualiza los datos del productor en las tablas
+   * */
   updateProductor(): void {
     var id;
     var j;

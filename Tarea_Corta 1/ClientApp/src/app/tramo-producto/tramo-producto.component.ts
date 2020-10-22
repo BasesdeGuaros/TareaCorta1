@@ -11,11 +11,11 @@ import { ApiuserService } from '../services/apiuser.service';
 /** tramoProducto component*/
 export class TramoProductoComponent implements OnInit{
   //public listCustomers: any[];
-  public listProducers: any[] = [];
-  public listMyProducers = [];
-  public listUser;
-  public userName;
-  public firstName;
+    public listProducers: any[] = [];
+    public listMyProducers = [];
+    public listUser;
+    public userName;
+    public firstName;
 
 
     /** tramoProducto ctor */
@@ -30,6 +30,8 @@ export class TramoProductoComponent implements OnInit{
    * Funcion que se ejecuta al inicio
    * */
   ngOnInit(): void {
+    this.userName = this.route.snapshot.paramMap.get('userName'); //agarrar el userName del link
+
     this.getUser();
     this.getProducer();
   }
@@ -46,8 +48,7 @@ export class TramoProductoComponent implements OnInit{
    * @param i el indice del producto que el usuario escogio
    */
   producers(i) {
-    console.log(this.listProducers[i].idProducer);
-    this.router.navigate(['/producers', this.userName, this.listProducers[i].name]);
+    this.router.navigate(['/producers', this.userName, this.listProducers[i].idNavigation.name]);
   }
 
   /**
@@ -66,11 +67,10 @@ export class TramoProductoComponent implements OnInit{
       console.log(reply);
       this.listUser = reply.data;
 
-      let user = this.route.snapshot.paramMap.get('userName'); //agarrar el userName del link
-      this.userName = user;
+      
       var i;
       for (i = 0; i <= this.listUser.length - 1; i++) { //recorrer la lista con el userName que agarramos 
-        if (this.listUser[i].username == user) {
+        if (this.listUser[i].username == this.userName) {
           this.firstName = this.listUser[i].name;
         }
         

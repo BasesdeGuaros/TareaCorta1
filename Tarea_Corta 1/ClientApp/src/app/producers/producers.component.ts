@@ -186,10 +186,10 @@ export class ProducersComponent implements OnInit{
 
           //Edit de orden ya existente
           const order: order = {
-            id: idP,
+            id: idP+1,
             idCustomer: idcustomer,
             subtotal: this.totalOrder,
-            tax: 0,
+            tax: 15.0,
             total: 0,
             isActive: 1
           };
@@ -256,7 +256,6 @@ export class ProducersComponent implements OnInit{
 
     //aca ya hay una orden 
     this.getOrder();
-    console.log(this.listOrder);
     
     var w;
     for (w = 0; w <= this.listOrder.length - 1; w++) {

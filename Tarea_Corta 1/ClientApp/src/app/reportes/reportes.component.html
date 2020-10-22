@@ -32,42 +32,54 @@
 
 <div id="more1">
   <h3>Top 10 Más vendidos</h3>
-  <div *ngFor="let product of productsSold; let i = index">
-    <h3>{{product.name}}</h3>
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{product.num}}" aria-valuemin="0" aria-valuemax="1000" [style.width]="product.num + '%'">{{product.num}}</div>
+  <img src="assets/productosVendidos.jpeg">
+  <!---
+    <div *ngFor="let product of productsSold; let i = index">
+      <h3>{{product.name}}</h3>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{product.num}}" aria-valuemin="0" aria-valuemax="1000" [style.width]="product.num + '%'">{{product.num}}</div>
+      </div>
     </div>
-  </div>
+  -->
 </div>
 
-<div id="more2"  style="display:none">
+<div id="more2" style="display:none">
   <h3>Top 10 Mayores ganancias</h3>
-  <div *ngFor="let product of productsSold; let i = index">
-    <h3>{{product.name}}</h3>
-    <div class="progress">
-      <div class="progress-bar" [id]="pricebar" role="progressbar" attr.aria-valuenow="{{product.num * product.price}}" aria-valuemin="0" aria-valuemax="1000000" [style.width]="(product.num*product.price)//100 + '%'">{{product.num * product.price}}</div>
+  <img src="assets/ProductosGanancias.jpeg">
+  <!---
+    <div *ngFor="let product of productsSold; let i = index">
+      <h3>{{product.name}}</h3>
+      <div class="progress">
+        <div class="progress-bar" [id]="pricebar" role="progressbar" attr.aria-valuenow="{{product.num * product.price}}" aria-valuemin="0" aria-valuemax="1000000" [style.width]="(product.num*product.price)//100 + '%'">{{product.num * product.price}}</div>
+      </div>
     </div>
-  </div>
+      -->
 </div>
 
 <div id="more3" style="display:none">
   <h3>Top 10 Más vendidos por productor</h3>
+  <img src="assets/VendidosProductor.jpeg">
+  <!--
   <div *ngFor="let product of productsSold; let i = index">
     <h3>{{product.name}}</h3>
     <div class="progress">
       <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{product.num}}" aria-valuemin="0" aria-valuemax="1000" [style.width]="product.num + '%'">{{product.num}}</div>
     </div>
   </div>
+    -->
 </div>
 
 <div id="more4" style="display:none">
-  <h3>Top 10 Clientes con más compras</h3>
+  <h3>Top 10 Clientes con más Ventas</h3>
+  <img src="assets/ClientesVentas.jpeg">
+  <!--
   <div *ngFor="let customer of customers; let i = index">
     <h3>{{customer.name}}</h3>
     <div class="progress">
       <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{customer.bought}}" aria-valuemin="0" aria-valuemax="1000" [style.width]="customer.bought + '%'">{{customer.bought}}</div>
     </div>
   </div>
+  -->
 </div>
 
 
